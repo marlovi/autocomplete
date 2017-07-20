@@ -1,0 +1,171 @@
+<div class="row center s12 ">
+
+    <div class="col s12 ">
+        <div class="col s12 card-panel">
+
+            <h2 class="center">Deletar Empresa</h2>
+
+
+            <div class="row">
+                <div class="col s5 input-field">
+                    <input id="nome" type="text" ng-model="empresa.nome" event-focus-id="email" readonly="readonly">
+                    <label for="nome">Nome</label>
+                  
+                </div>
+            </div>
+            <div class="row">
+            </div>
+            <div id="divFisica" class="col">
+                <div class="col s12 input-field">
+                    <input id="cpf" type="text" ng-model="empresa.cpf" mask="999.999.999-99" ng-Disabled="empresa.cnpj">
+                    <label for="cpf">CPF</label>
+                 
+                </div>
+            </div>
+            <div id="divJuridica" class="col">
+                <div class="col s12 input-field">
+                    <input id="divJuridica" type="text" ng-model="empresa.cnpj" mask="99.999.999/9999-99" ng-Disabled="empresa.cpf">
+                    <label for="cnpj">CNPJ</label>
+             
+                </div>
+            </div>
+            <div class="row s12 ">
+            </div>
+            <div class="row s6 input-field">
+                <input id="endereco" type="text" ng-model="empresa.endereco">
+                <label for="endereco">Endereço</label>
+           
+            </div>
+            <div class="col s3 input-field">
+                <input id="cidade" type="text" ng-model="empresa.cidade">
+                <label for="cidade">Cidade</label>
+           
+            </div>
+            <div class="col s3 input-field">
+                <input id="estado" type="text" ng-model="empresa.estado">
+                <label for="estado">Estado</label>
+            
+            </div>
+            <div class="col s6 input-field">
+                <input id="telefone" type="text" ng-model="empresa.telefone" mask="(99) 9?9999-9999">
+                <label for="telefone">Telefone</label>
+                
+            </div>
+            <div class="col s6 input-field">
+                <input id="email" type="text" ng-model="empresa.email">
+                <label for="email">Email</label>
+             
+            </div>
+ 
+            <div class="row s12 center">
+                <div class="col s12 center">
+                    <th>LISTA DE VEÍCULOS PARA CADASTRO </th>
+                    <div class="row s12 center">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Placa</th>
+                                    <th>Tipo</th>
+                                    <th>Motorista</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+ 
+                            <tr ng-repeat="linha in lines  | filter:{linha: '!'}">
+                                
+                                    <td> <input id="placa" type="text" ng-model="linha.placa"> </td>
+                                    <td><input id="tipo" type="text" ng-model="linha.tipo"></td>
+                         <td><input id="motorista" type="text" ng-model="linha.motorista"></td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <div class="row s12 center">
+                        <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="!empresa.nome" ng-click="deletar()">Deletar Registro</button>
+                        <button class="waves-effect waves-teal btn-flat" id="voltar" ui-sref="home">Voltar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- até aqui é a pagina cadastro empresa 
+daqui pra baixo é a tela cadastro veiculo-->
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+
+        $('.modal').modal({
+            dismissible: true, // Modal can be dismissed by clicking outside of the modal
+            opacity: .9, // Opacity of modal background
+            inDuration: 900, // Transition in duration
+            outDuration: 200, // Transition out duration
+            startingTop: '4%', // Starting top style attribute
+            endingTop: '4%', // Ending top style attribute
+            ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+
+                console.log(modal, trigger);
+            },
+            complete: function() {
+
+
+                } // Callback for Modal close
+        });
+
+    });
+
+    var adicionarVeiculo = function() {
+        //console.log('aqui ');
+        $('#modal1').modal('open');
+    }
+</script>
+<!-- Modal Trigger -->
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+
+        <div class="col s12 card-panel">
+            <h2 class="center">Cadastro de Veiculo </h2>
+            <div class="row">
+                <div class="col s3 input-field">
+                    <input id="placa" type="text" ng-model="veiculo.placa">
+                    <label for="placa">Placa</label>
+                    <!--      {{veiculo}}       -->
+                </div>
+                <div class="col    s4 input-field">
+                    <input id="descricao" type="text" ng-model="veiculo.descricao" ng-Disabled="!veiculo.placa">
+                    <label for="descricao">Descrição</label>
+                    <!--    {{veiculo}}     -->
+                </div>
+                <div class="col s4 input-field">
+                    <input id="tipo" type="text" ng-model="veiculo.tipo" ng-Disabled="!veiculo.placa">
+                    <label for="tipo">Tipo</label>
+                    <!--      {{veiculo}}    -->
+                </div>
+            </div>
+            <!--
+            <div class="col s6 input-field">
+                <input id="motorista" type="text" ng-model="veiculo.motorista" ng-Disabled="!veiculo.placa">
+                <label for="motorista">Motorista</label>
+               
+            </div>
+             -->
+            <div class="row">
+                <div class="col s12 center">
+                    <button href="#!" class="btn waves-effect waves-light modal-action modal-close" id="enviar" ng-click="salvarVeiculo()" ng-Disabled="!veiculo.placa">CONCLUIDO</button>
+
+                    <button href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="voltar">Voltar</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
