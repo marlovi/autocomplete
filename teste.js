@@ -6,7 +6,7 @@
 
     function DemoCtrl($timeout, $q, $log) {
         var self = this;
-
+// deu ruim
         self.simulateQuery = false;
         self.isDisabled = false;
 
