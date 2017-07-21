@@ -36,11 +36,12 @@
             <!-- COMEÇA A DIV CLIENTE.
             - FALTA COLOCAR A FUNÇAO QUE CAPTURA O ID SELECIONADO E COLOCA NO OBJETO PESAGEM 
             --> 
-             <div class="col s5 input-field">
-           <label for="cliente" class= "active"> Cliente </label>
- <div class="col s5 input-field " data-ng-controller="pesagemManualClienteController as ctrl">
+             <div class="col s5 left-align ">
+             <label for="motorista" class="active "> Cliente </label> 
+            
+ <div data-ng-controller="pesagemManualClienteController as ctrl">
             <md-autocomplete   id="auto" ngb-disabled="ctrl.isDisabled " md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText " md-selected-item-change="ctrl.selectedItemChange(item)"
-               md-items="item in ctrl.querySearch(ctrl.searchText) " md-item-text="item.nome " md-min-length="0" placeholder="Pesquise um Cliente" style="text-align: left;" md-menu-class="autocomplete-custom-template "> 
+               md-items="item in ctrl.querySearch(ctrl.searchText) " md-item-text="item.nome " md-min-length="0" placeholder="Pesquise um Cliente"  md-menu-class="autocomplete-custom-template "> 
                <md-item-template >
                   <span class="item-title">
                      <md-icon ><i class="material-icons">account_circle</i></md-icon>
@@ -51,37 +52,16 @@
                   <span>
                   <strong> CPF: </strong>
                   <strong>{{item.cpf}}</strong>
+                  <strong> CNPJ: </strong>
+                  <strong>{{item.cnpj}}</strong>
                   </span>
                   </span>
                </md-item-template>
             </md-autocomplete>
+         </div>
          </div>
             </div> 
 <!-- FIM DA DIV SELEÇAO CLIENTE  -->
-
-<div class="col s4 input-field">
-           <label for="forneccedor" class= "active"> Fornecedor </label>
- <div class="col s4 input-field" data-ng-controller="pesagemManualClienteController as ctrl">
-            <md-autocomplete id="auto" ngb-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)"
-               md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.nome" md-min-length="0" placeholder="Pesquise um Fornecedor" md-menu-class="autocomplete-custom-template">
-               <md-item-template >
-                  <span class="item-title">
-                     <md-icon ><i class="material-icons">account_circle</i></md-icon>
-                     <strong> Nome: </strong>
-                     <strong> {{item.nome}} </strong> 
-                  </span>
-                  <span class="item-metadata">
-                  <span>
-                  <strong> CPF: </strong>
-                  <strong>{{item.cpf}}</strong>
-                  </span>
-                  </span>
-               </md-item-template>
-            </md-autocomplete>
-         </div>
-            </div> 
-
-
 
 
 
