@@ -7,12 +7,12 @@
 
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
-    <link type="text/css"  href="teste.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="css/autocomplete.css" />
 
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SPA 3 TENTATIVA</title>
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
     <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/angular.js"></script>
     <script type="text/javascript" src="js/angular-cookies.js"></script>
@@ -23,21 +23,19 @@
     <script src="js/angular-sanitize.js"></script>
     <script src="off_js/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 
- 
-  <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 
-  <script type="text/javascript" src="js/autocomplete.min.js"></script>
-  
-    <meta charset="utf-8"/>
+
+    <!-- Angular Material Library -->
+
+    <script type="text/javascript" src="js/autocomplete.min.js"></script>
+
+    <meta charset="utf-8" />
 </head>
 
 <body ng-app="home">
     <script>
-          
-      
     </script>
     <!-- para travar o tamanho <div class="row center" style= "width: 1200px; height: 800px;" >-->
     <div class=" row container ">
@@ -45,7 +43,7 @@
             <!-- Menu Cadastro -->
             <ul id="dropdown1" class="dropdown-content ">
                 <li class="divider"></li>
-                <li><a ui-sref="cadastroempresa"  ng-click="$event.stopPropagation();">Cadastro da Empresa</a></li>
+                <li><a ui-sref="cadastroempresa" ng-click="$event.stopPropagation();">Cadastro da Empresa</a></li>
                 <li class="divider"></li>
                 <li><a ui-sref="cadastrocliente">Cadastro de Clientes</a></li>
                 <li class="divider"></li>
@@ -55,48 +53,48 @@
                 <li class="divider"></li>
                 <li><a ui-sref="cadastrodesconto">NÃO FEITO Cadastro de Descontos</a></li>
                 <li class="divider"></li>
-                 
+
             </ul>
             <!-- Menu pesquisa -->
             <ul id="dropdown2" class="dropdown-content ">
-            <li class="divider"></li>
+                <li class="divider"></li>
                 <li><a ui-sref="pesquisaempresa">Pesquisar Empresa</a></li>
-            <li class="divider"></li>
+                <li class="divider"></li>
                 <li><a ui-sref="pesquisacliente">Pesquisar Clientes</a></li>
-            <li class="divider"></li>
+                <li class="divider"></li>
                 <li><a ui-sref="pesquisafornecedor">Pesquisar Fornecedores</a></li>
-            <li class="divider"></li>
+                <li class="divider"></li>
                 <li class="divider"></li>
                 <li><a ui-sref="pesquisaproduto">Pesquisar Produtos</a></li>
-            <li class="divider"></li>
+                <li class="divider"></li>
                 <li><a ui-sref="Pesquisadesconto">NÃO FEITO Pesquisar Descontos</a></li>
-            <li class="divider"></li>
+                <li class="divider"></li>
             </ul>
             <ul id="dropdown3" class="dropdown-content ">
-            <li class="divider"></li>
+                <li class="divider"></li>
                 <li><a ui-sref="pesquisaempresa">Relatório Tipo 1</a></li>
-            <li class="divider"></li>
+                <li class="divider"></li>
                 <li><a ui-sref="pesquisacliente">Relatório Tipo 2</a></li>
-            <li class="divider"></li>
+                <li class="divider"></li>
                 <li><a ui-sref="pesquisafornecedor">Relatório Tipo 3</a></li>
-            <li class="divider"></li>
+                <li class="divider"></li>
                 <li class="divider"></li>
                 <li><a ui-sref="pesquisaproduto">Relatório Tipo 4</a></li>
-            <li class="divider"></li>
+                <li class="divider"></li>
                 <li><a ui-sref="Pesquisadesconto">Relatório Tipo 5</a></li>
-            <li class="divider"></li>
+                <li class="divider"></li>
             </ul>
             <ul id="dropdown4" class="dropdown-content ">
-            <li class="divider"></li>
+                <li class="divider"></li>
                 <li><a ui-sref="pesagemmanual">Pesagem Manual</a></li>
-            <li class="divider"></li>
+                <li class="divider"></li>
                 <li><a ui-sref="pesquisacliente">Pesagem de Entrada NAO</a></li>
-            <li class="divider"></li>
+                <li class="divider"></li>
                 <li><a ui-sref="pesquisafornecedor">Pesagem de Saida NAO</a></li>
-            <li class="divider"></li>
+                <li class="divider"></li>
                 <li class="divider"></li>
                 <li><a ui-sref="pesquisaproduto">Pesagem Avulsa NAO</a></li>
-            <li class="divider"></li>
+                <li class="divider"></li>
             </ul>
 
 
@@ -105,7 +103,7 @@
             <nav>
                 <div class="nav-wrapper ">
                     <ul class="center hide-on-med-and-down">
-                    <!-- Aqui tenho que colocar aquela tela de automação das cancelas e semaforos-->
+                        <!-- Aqui tenho que colocar aquela tela de automação das cancelas e semaforos-->
                         <li><a ui-sref="home">Controle Balança</a></li>
 
                         <li><a class="dropdown-button " href="#!" data-activates="dropdown4">Pesagem<i class="material-icons right">arrow_drop_down</i></a></li>
@@ -116,7 +114,7 @@
 
                         <li><a class="dropdown-button " href="#!" data-activates="dropdown3">Relatórios<i class="material-icons right">arrow_drop_down</i></a></li>
 
-                         
+
                     </ul>
                 </div>
             </nav>
@@ -126,11 +124,11 @@
 
             </div>
             <script type="text/javascript" src="app.js"></script>
-           
+
             <script type="text/javascript" src="router/route.js"></script>
             <script type="text/javascript" src="controller/home.js"></script>
             <script type="text/javascript" src="controller/cadastroproduto.js"></script>
-            
+
             <!--
             <script type="text/javascript" src="controller/pesquisaproduto.js"></script>
             <script type="text/javascript" src="controller/editarproduto.js"></script>
@@ -157,9 +155,9 @@
             <script type="text/javascript" src="controller/deletefornecedor.js"></script>
 
             <script type="text/javascript" src="controller/pesagemmanual.js"></script>
-          
 
-       
+
+
 
         </div>
     </div>

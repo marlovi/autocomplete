@@ -1,39 +1,35 @@
-
- <style type="text/css">
-                    input[type="number"][disabled] {   
-                        color: black; 
-                        font-weight:  bold;
-
-                    }
-                    label[id =label_liquido] {   
-                        color: red; 
-                        font-weight:  bold;
-
-                    }
-
+<style type="text/css">
+    input[type="number"][disabled] {
+        color: black;
+        font-weight: bold;
+    }
+    
+    label[id=label_liquido] {
+        color: red;
+        font-weight: bold;
+    }
 </style>
 
 
 
 <div class=" row center s12 ">
- <div class="col s12 ">
-            <div class="col s12 card-panel">
+    <div class="col s12 ">
+        <div class="col s12 card-panel">
             <div class="row">
-                    <div class="col s12 center" >
+                <div class="col s12 center">
                     <h3>PESAGEM MANUAL</h3>
-                    </div>
+                </div>
             </div>
-        <div class="row">
+            <div class="row">
 
-            <div class="col s12">
+                <div class="col s12">
 
-                <div class="col s3 input-field">
-                    <input id="placa" type="text" ng-model="pesagem.placa" mask="AAA-9999">
-                    <label for="placa"> Placa </label>
-                    {{pesagem}}
-                </div>   
-                    
-<!-- 
+                    <div class="col s3 input-field">
+                        <input id="placa" type="text" ng-model="pesagem.placa" mask="AAA-9999">
+                        <label for="placa"> Placa </label> {{pesagem}}
+                    </div>
+
+                    <!-- 
                 <div class="col s4 input-field">
                     <input id="placa" type="text" ng-model="pesagem.tipo" >
                     <label for="placa"> Tipo Veículo </label>
@@ -50,50 +46,51 @@
                     <div class="col s4">
                         <auto-complete-input auto-data="data" ac-title="'Pesquise um Produto'" color="004" ng-model="produto.nome" ng-keyup="pesquisar(produto.nome)"></auto-complete-input>                       
                     </div>
-        -->            
-<!-- aqui começa o teste da div com alto complete com objeto-->
- 
+        -->
+                    <!-- aqui começa o teste da div com alto complete com objeto-->
 
-    <div data-ng-controller="pesagemManualClienteController as ctrl" layout="column" ng-cloak>
-        <md-content layout-padding layout="column">
-            <form ng-submit="$event.preventDefault()">
-                <p>Use <code>&lt;md-autocomplete&gt;</code> with custom templates to show styled autocomplete results.</p>
-                <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)"
-                    md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.nome" md-min-length="0" placeholder="Pick an Angular repository" md-menu-class="autocomplete-custom-template">
-                    <md-item-template>
-                        <span class="item-title">
-          
-            <span> {{item.nome}} </span>
-                        </span>
-                        <span class="item-metadata">
+                    <div class="col s4 input-field" data-ng-controller="pesagemManualClienteController as ctrl">
+                       
+                        <label for="auto"> Cliente </label>
+                        <md-autocomplete id="auto" ngb-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)"
+                            md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.nome" md-min-length="0" placeholder="Pesquise um Cliente" md-menu-class="autocomplete-custom-template">
+                            <md-item-template>
+                                <span class="item-title">
+             <md-icon ><i class="material-icons">account_circle</i></md-icon>
+           
+               <strong> {{item.nome}} </strong> 
+           
+                                        </span>
+                                <span class="item-metadata">
             <span>
-              <strong>{{item.watchers}}</strong> watchers
+                <strong>{{item.cpf}}</strong>
             </span>
-                        <span>
-              <strong>{{item.forks}}</strong> forks
+                                <span>
+              <strong>{{item.email}}</strong> 
             </span>
-                        </span>
-                        <span>
-                        telefone {{item.telefone}}
+                                <span>
+                        <strong>{{item.telefone}}</strong>
                     </span>
-                    </md-item-template>
-                </md-autocomplete>
-            </form>
-        </md-content>
-    </div>
+                                </span>
 
-
-
-<!--aqui roda o produtio -->
-
-
-
-<!-- aqui termina o teste da div com alto complete com objeto-->
+                            </md-item-template>
+                        </md-autocomplete>
 
 
 
 
-<!--
+                    </div>
+
+                    <!--aqui roda o produtio -->
+
+
+
+                    <!-- aqui termina o teste da div com alto complete com objeto-->
+
+
+
+
+                    <!--
 
 
                     <div class="col s4">
@@ -139,7 +136,6 @@
             </div>
            
 -->
-</div>
-</div>
+                </div>
+            </div>
         </div>
-       
