@@ -1,7 +1,7 @@
 .autocomplete-custom-template li {
     border-bottom: 2px solid #ccc;
-    height: auto;
-   
+    height: 100vh
+   color:red;
     padding-top: 8px;
     padding-bottom: 8px;
     white-space: normal;
@@ -12,18 +12,26 @@
   
 }
  
-
 .autocomplete-custom-template .item-title,
 .autocomplete-custom-template .item-metadata {
     display: block;
-    height: auto;
+    height: 2.5vh;
     line-height: 1;
-   
+    color: red;
+    font-size:small;
+   /*  
+    height: 2.5vh; vh UNIDADE DE MEDIDA ESTAVA ERRADA. 
+    Tirei essa merda daqui
+    http://desenvolvimentoparaweb.com/css/unidades-css-rem-vh-vw-vmin-vmax-ex-ch/
+   font-size:small; aqui era o que eu tinha mexido antes para entrar 3 linhas.
+   Com a organização dos elementos por span conseguimos  o 
+   efeito quebrar linhas dentro do menu de seleção.*/ 
 }
 
+/* desativado não consegui organizar esse icone no layout.
 .autocomplete-custom-template .item-title md-icon {
-    height: 18px;
-    width: 18px;
-   
+    height: 1px;
+    width: 1px;
 
 }
+*/
