@@ -1,7 +1,7 @@
 .autocomplete-custom-template li {
     border-bottom: 2px solid #ccc;
     height: 100vh
-   color:red;
+  /* color:red; */
     padding-top: 8px;
     padding-bottom: 8px;
     white-space: normal;
@@ -17,7 +17,7 @@
     display: block;
     height: 2.5vh;
     line-height: 1;
-    color: red;
+     /* color:red; */
     font-size:small;
    /*  
     height: 2.5vh; vh UNIDADE DE MEDIDA ESTAVA ERRADA. 
@@ -27,6 +27,25 @@
    Com a organização dos elementos por span conseguimos  o 
    efeito quebrar linhas dentro do menu de seleção.*/ 
 }
+.autocomplete-custom-template .item-produto {
+    display: block;
+    height: 1vh;
+    line-height: 3;
+     /* color:red; */
+    font-size:small;
+
+    height: 100vh
+  /* color:red; */
+    padding-top: 16px;
+    padding-bottom: 16px;
+    white-space: normal;
+   
+    
+}
+
+
+
+
 
 /* desativado não consegui organizar esse icone no layout.
 .autocomplete-custom-template .item-title md-icon {

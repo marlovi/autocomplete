@@ -138,7 +138,7 @@ angular
 
 //////////////////////////////////////////////////////////////////////////////////
 
-
+// inicio controller pesagemManualClienteController
 function pesagemManualClienteController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log){
 
    
@@ -268,7 +268,275 @@ var request = $http({
       .module('home')
       .controller('pesagemManualClienteController', pesagemManualClienteController);
 
+    // fim controller pesagemManualClienteController
 
-/////// aqui roda o controler 2
+// inicio controler 
+// falta criar as rotinas para pesquisa de fornecedor
+function pesagemManualFornecedorController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log){
+
+   
+        // onde era DemoCtrl vira pesagemManualCliente
+        var self = this;
+ 
+        self.simulateQuery = false;
+        self.isDisabled = false;
+
+        self.repos = loadAll();
+        self.querySearch = querySearch;
+        self.selectedItemChange = selectedItemChange;
+        self.searchTextChange = searchTextChange;
+
+        // ******************************
+        // Internal methods
+        // ******************************
+
+        /**
+         * Search for repos... use $timeout to simulate
+         * remote dataservice call.
+         */
+        function querySearch(query) {
+            var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
+                deferred;
+            if (self.simulateQuery) {
+                deferred = $q.defer();
+                $timeout(function() { deferred.resolve(results); }, Math.random() * 1000, false);
+                return deferred.promise;
+            } else {
+                return results;
+            }
+        }
+
+        function searchTextChange(text) {
+            $log.info('Text changed to ' + text);
+             loadAll();
+        }
+
+        function selectedItemChange(item) {
+            $log.info('Item changed to ' + JSON.stringify(item));
+        }
+
+        /**
+         * Build `components` list of key/value pairs
+         */
+       
+        function loadAll() {
+
+  var repos = [{
+                    'nome': 'AngularJS',
+                    'url': 'https://github.com/angular/angular.js',
+                    'watchers': '3,623',
+                    'forks': '16,175'
+                }];
+
+   
+var request = $http({
+                method: "post",
+                url: "php/cliente/pesquisarcliente.php",
+                data: $scope.cliente,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+            /* Successful HTTP post request or not */
+            request.then(function(response) {
+
+                repos = response.data;
+               
+                if (angular.isUndefined(response.data.status)) {
+                    // JSON retornado do banco
+                    exibir = false;
+                    $scope.dicas = response.data;
+                   $scope.teste = response.data;
+                  // console.log(response.data);
+                     
+                } else {
+                    console.log("Nenhum cliente retornado");
+                   
+                   
+                    exibir = true;
+                }
+            }, function(response) {
+                console.log("ERROR" + response);
+            });
+
+            console.log($scope.teste);
+
+            if(!angular.isUndefined($scope.teste)){
+                repos = $scope.teste;
+                 self.repos = repos;
+                return repos.map(function(repo) {
+                repo.value = repo.nome.toLowerCase();
+                return repo;
+            });            
+            }else{
+               repos = [{
+                    'nome': 'AngularJS',
+                    'url': 'https://github.com/angular/angular.js',
+                    'watchers': '3,623',
+                    'forks': '16,175'
+                }];
+
+
+
+                return repos.map(function(repo) {
+                repo.value = repo.nome.toLowerCase();
+                return repo;
+            }); 
+            }    
+        }
+
+        /**
+         * Create filter function for a query string
+         */
+        function createFilterFor(query) {
+            var lowercaseQuery = angular.lowercase(query);
+
+            return function filterFn(item) {
+                return (item.value.indexOf(lowercaseQuery) === 0);
+            };
+
+        }
+    }
+    angular
+      .module('home')
+      .controller('pesagemManualFornecedorController', pesagemManualFornecedorController);
+
+// fim controler
+
+ // inicio controler prodtuo
+
+
+
+// inicio controler 
+// falta criar as rotinas para pesquisa de fornecedor
+function pesagemManualProdutoController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log){
+
+   
+        // onde era DemoCtrl vira pesagemManualCliente
+        var self = this;
+ 
+        self.simulateQuery = false;
+        self.isDisabled = false;
+
+        self.repos = loadAll();
+        self.querySearch = querySearch;
+        self.selectedItemChange = selectedItemChange;
+        self.searchTextChange = searchTextChange;
+
+        // ******************************
+        // Internal methods
+        // ******************************
+
+        /**
+         * Search for repos... use $timeout to simulate
+         * remote dataservice call.
+         */
+        function querySearch(query) {
+            var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
+                deferred;
+            if (self.simulateQuery) {
+                deferred = $q.defer();
+                $timeout(function() { deferred.resolve(results); }, Math.random() * 1000, false);
+                return deferred.promise;
+            } else {
+                return results;
+            }
+        }
+
+        function searchTextChange(text) {
+            $log.info('Text changed to ' + text);
+             loadAll();
+        }
+
+        function selectedItemChange(item) {
+            $log.info('Item changed to ' + JSON.stringify(item));
+        }
+
+        /**
+         * Build `components` list of key/value pairs
+         */
+       
+        function loadAll() {
+
+  var repos = [{
+                    'nome': 'AngularJS',
+                    'url': 'https://github.com/angular/angular.js',
+                    'watchers': '3,623',
+                    'forks': '16,175'
+                }];
+
+   
+var request = $http({
+                method: "post",
+                url: "php/cliente/pesquisarcliente.php",
+                data: $scope.cliente,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+            /* Successful HTTP post request or not */
+            request.then(function(response) {
+
+                repos = response.data;
+               
+                if (angular.isUndefined(response.data.status)) {
+                    // JSON retornado do banco
+                    exibir = false;
+                    $scope.dicas = response.data;
+                   $scope.teste = response.data;
+                  // console.log(response.data);
+                     
+                } else {
+                    console.log("Nenhum cliente retornado");
+                   
+                   
+                    exibir = true;
+                }
+            }, function(response) {
+                console.log("ERROR" + response);
+            });
+
+            console.log($scope.teste);
+
+            if(!angular.isUndefined($scope.teste)){
+                repos = $scope.teste;
+                 self.repos = repos;
+                return repos.map(function(repo) {
+                repo.value = repo.nome.toLowerCase();
+                return repo;
+            });            
+            }else{
+               repos = [{
+                    'nome': 'AngularJS',
+                    'url': 'https://github.com/angular/angular.js',
+                    'watchers': '3,623',
+                    'forks': '16,175'
+                }];
+
+
+
+                return repos.map(function(repo) {
+                repo.value = repo.nome.toLowerCase();
+                return repo;
+            }); 
+            }    
+        }
+
+        /**
+         * Create filter function for a query string
+         */
+        function createFilterFor(query) {
+            var lowercaseQuery = angular.lowercase(query);
+
+            return function filterFn(item) {
+                return (item.value.indexOf(lowercaseQuery) === 0);
+            };
+
+        }
+    }
+    angular
+      .module('home')
+      .controller('pesagemManualProdutoController', pesagemManualProdutoController);
+
 
 
