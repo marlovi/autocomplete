@@ -8,36 +8,38 @@
    font-weight: bold;
    }
 </style>
-<div class=" row center s12 ">
-   <div class="col s12 ">
-      <div class="col s12 card-panel">
-         <div class="row">
+<div class="col s12 card-panel center">
+         <div class="row center">
             <div class="col s12 center">
                <h3>PESAGEM MANUAL</h3>
             </div>
          </div>
-         <div class="row">
-            {{pesagem}}
-            <div class="col s12">
+
+              <div class="col s12 center">
+              <div class="col s1 ">
+              </div>
                <div class="col s3 input-field">
                   <input id="placa" type="text" ng-model="pesagem.placa" mask="AAA-9999">
                   <label for="placa"> Placa </label> 
                </div>
-               <div class="col s4 input-field">
+               <div class="col s3 input-field">
                   <input id="placa" type="text" ng-model="pesagem.tipo" >
                   <label for="placa"> Tipo Veículo </label>
                </div>
-               <div class="col s5 input-field">
+               <div class="col s4 input-field">
                   <input id="motorista" type="text" ng-model="pesagem.motorista" >
                   <label for="motorista"> Motorista </label>              
                </div>
-               <!-- COMEÇA A DIV CLIENTE.
-                  - FALTA COLOCAR A FUNÇAO QUE CAPTURA O ID SELECIONADO E COLOCA NO OBJETO PESAGEM 
-                  --> 
-               <div class="col s4 left-align ">
+              </div>
+
+          <div class="col s12 center">
+              <div class="col s1 ">
+              </div>
+
+ <div class="col s3 left-align  " >
                   <label for="cliente" class="active "> Cliente </label> 
-                  <div data-ng-controller="pesagemManualClienteController as Pcliente">
-                     <md-autocomplete   id="auto" ngb-disabled="Pcliente.isDisabled " md-no-cache="Pcliente.noCache" md-selected-item="Pcliente.selectedItem" md-search-text-change="Pcliente.searchTextChange(Pcliente.searchText)" md-search-text="Pcliente.searchText " md-selected-item-change="Pcliente.selectedItemChange(item)"
+                  <div data-ng-controller="pesagemManualClienteController as Pcliente" >
+                     <md-autocomplete ng-Disabled="!pesagem.placa"  id="auto" ngb-disabled="Pcliente.isDisabled " md-no-cache="Pcliente.noCache" md-selected-item="Pcliente.selectedItem" md-search-text-change="Pcliente.searchTextChange(Pcliente.searchText)" md-search-text="Pcliente.searchText " md-selected-item-change="Pcliente.selectedItemChange(item)"
                         md-items="item in Pcliente.querySearch(Pcliente.searchText) " md-item-text="item.nome " md-min-length="0" placeholder="Pesquise um Cliente"  md-menu-class="autocomplete-custom-template ">
                         <md-item-template>
                            <span class="item-title" >
@@ -56,11 +58,10 @@
                      </md-autocomplete>
                   </div>
                </div>
-               <!-- FIM DA DIV SELEÇAO CLIENTE  -->
-               <div class="col s4 left-align ">
+<div class="col s3 left-align ">
                   <label for="fornecedor" class="active "> Fornecedor </label> 
                   <div data-ng-controller="pesagemManualFornecedorController as Pfornecedor">
-                     <md-autocomplete   id="auto" ngb-disabled="Pfornecedor.isDisabled " md-no-cache="Pfornecedor.noCache" md-selected-item="Pfornecedor.selectedItem" md-search-text-change="Pfornecedor.searchTextChange(Pfornecedor.searchText)" md-search-text="Pfornecedor.searchText " md-selected-item-change="Pfornecedor.selectedItemChange(item)"
+                     <md-autocomplete  ng-Disabled="!pesagem.placa" id="auto" ngb-disabled="Pfornecedor.isDisabled " md-no-cache="Pfornecedor.noCache" md-selected-item="Pfornecedor.selectedItem" md-search-text-change="Pfornecedor.searchTextChange(Pfornecedor.searchText)" md-search-text="Pfornecedor.searchText " md-selected-item-change="Pfornecedor.selectedItemChange(item)"
                         md-items="item in Pfornecedor.querySearch(Pfornecedor.searchText) " md-item-text="item.nome " md-min-length="0" placeholder="Pesquise um Fornecedor"  md-menu-class="autocomplete-custom-template ">
                         <md-item-template>
                            <span class="item-title" >
@@ -79,11 +80,10 @@
                      </md-autocomplete>
                   </div>
                </div>
-               <!-- FIM DA DIV SELEÇAO FORNECEDOR  -->
-               <div class="col s4 left-align ">
+<div class="col s4 left-align ">
                   <label for="produto" class="active "> Produto </label> 
                   <div data-ng-controller="pesagemManualProdutoController as Pproduto">
-                     <md-autocomplete   id="auto" ngb-disabled="Pproduto.isDisabled " md-no-cache="Pproduto.noCache" md-selected-item="Pproduto.selectedItem" md-search-text-change="Pproduto.searchTextChange(Pproduto.searchText)" md-search-text="Pproduto.searchText " md-selected-item-change="Pproduto.selectedItemChange(item)"
+                     <md-autocomplete ng-Disabled="!pesagem.placa"  id="auto" ngb-disabled="Pproduto.isDisabled " md-no-cache="Pproduto.noCache" md-selected-item="Pproduto.selectedItem" md-search-text-change="Pproduto.searchTextChange(Pproduto.searchText)" md-search-text="Pproduto.searchText " md-selected-item-change="Pproduto.selectedItemChange(item)"
                         md-items="item in Pproduto.querySearch(Pproduto.searchText) " md-item-text="item.nome " md-min-length="0" placeholder="Pesquise um Produto"  md-menu-class="autocomplete-custom-template ">
                         <md-item-template>
                            <span class="item-produto" >
@@ -94,41 +94,53 @@
                      </md-autocomplete>
                   </div>
                </div>
-               <!--teste de layout -->
-               <div class="row">
+               </div>
+<div class="col s12 center">
+              <div class="col s1 ">
+              </div>
                   <div class="col s3 input-field">
-                     <input id="primeira" type="text" ng-model="pesagem.primeira" ng-change= "pesagem.liquido = pesagem.primeira - pesagem.segunda" >
+                     <input id="primeira" type="text" ng-model="pesagem.primeira" ng-change= "pesagem.liquido = (pesagem.primeira - pesagem.segunda - pesagem.desconto )" mask="999999" >
                      <label for="primeira"> Primeira Pesagem </label>              
                   </div>
                   <div class="col s3 input-field">
-                     <input id="segunda" type="text" ng-model="pesagem.segunda"  ng-change= "pesagem.liquido = pesagem.primeira - pesagem.segunda"  >
+                     <input id="segunda" type="text" ng-model="pesagem.segunda"  ng-change= "pesagem.liquido = (pesagem.primeira - pesagem.segunda)" mask="999999"  >
                      <label for="segunda"> Segunda Pesagem </label>              
                   </div>
-                  <div class="input-field col s6 right ">
-                     <textarea id="textarea1" class="materialize-textarea"></textarea>
+                  <div class="input-field col s4   ">
+                    <textarea id="observacao" type="text" class="materialize-textarea" ng-model=" esagem.observacao" >
+                        
+                     </textarea>
                      <label for="textarea1">Observação</label>
                   </div>
-                  <div class="row">
-                     <div class="col s3 input-field">
-                        <input id="descontos" type="text" ng-model="pesagem.descontos" >
-                        <label for="descontos"> Descontos </label>              
-                     </div>
+          </div>
+
+<div class="col s12 center">
+              <div class="col s1 ">
+              </div>
+                   <div class="col s3 input-field">
+                     <input id="liquido" type="text" ng-model="pesagem.descontos "  ng-change= "pesagem.liquido = (pesagem.primeira - pesagem.segunda - pesagem.descontos )" mask="999999"  >
+                     <label for="liquido"> Descontos </label>              
+                  </div>
+                    
                      <div class="col s3 input-field">
                         <input  id="liquido" type="number" name="liquido" ng-model= "pesagem.liquido" disabled="disabled" >
                         <label for="liquido" id ="label_liquido" class="active" > Liquido </label>              
                      </div>
                   </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-   <div class="col-md-6">
-      <h3 ng-show="exibe(cliente.nome)">Nenhum cliente encontrado </h3>
-      <h5 ng-show="exibe(cliente.nome)">Deseja cadastrar um novo cliente? </h5>
-      <button class="btn waves-effect waves-light" id="cadastrar" ui-sref="cadastrocliente" ng-show="exibe(cliente.nome)"  >Cadastrar novo cliente</button>                           
-   </div>
-   -->
+<div class="row s12 center">
+          <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="!pesagem.status " ng-click="salvar()">Enviar</button>
+                        
 </div>
-</div>
-</div>
+
+
+                  </div>
+              
+
+
+
+
+ 
+
+
+
+ 
