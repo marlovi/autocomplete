@@ -66,7 +66,7 @@ $teste = $banco->serverName;
 			/*
 			https://www.w3schools.com/php/php_mysql_insert.asp
 			*/
-			$conn = new mysqli($this->serverName,$this->user,$this->password,$this->dataBase);
+			$conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
 
 
 			if($conn->connect_error){

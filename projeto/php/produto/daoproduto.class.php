@@ -30,7 +30,7 @@
 
 				$stament = $con->prepare($sql);
 
-				$stament->bind_param('si' ,$nome, $codigo);
+				$stament->bind_param('ss' ,$nome, $codigo);
 				 
 
 				$nome = $produto->nome;
@@ -55,24 +55,19 @@
 
 public function buscar(){
 	$resultado = null;
-			$verificador = true;
-			$banco = new Banco();
-			$teste = $banco->serverName;
-			/*
-			https://www.w3schools.com/php/php_mysql_insert.asp
-			*/
-			//$con = new mysqli($this->serverName,$this->user,$this->password,$this->dataBase);
-			$conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
-			/*
-			https://www.w3schools.com/php/php_mysql_insert.asp
-			*/
-			//$conn = new mysqli($this->serverName,$this->user,$this->password,$this->dataBase);
-
-
-			if($conn->connect_error){
-				$verificador = false;
-				die("Problema na conexão ".$con->connect_error);
-			}
+      $verificador = true;
+      $banco = new Banco();
+   $teste = $banco->serverName;
+      /*
+      https://www.w3schools.com/php/php_mysql_insert.asp
+      */
+      $conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
+   
+   
+      if($conn->connect_error){
+        $verificador = false;
+        die("Problema na conexão ".$conn->connect_error);
+      }
 
 $sql = "SELECT `id_produto`, `nome`,`codigo` FROM `produto` ";
 $result = $conn->query($sql);
