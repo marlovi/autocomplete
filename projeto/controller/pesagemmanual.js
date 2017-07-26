@@ -59,14 +59,8 @@ function pesagemManualController($scope, $http, $log ,$cookieStore, $mdDialog, $
         " "
     ]; // variável que é responsável pelo gerenciamento do compoenent auto complete
 
-
-    $scope.calcular = function (peso_1, peso_2) {
-        // body...
-       return  (peso_1 - peso_2);
-        //$scope.pesagem.liquido =  (peso_1 - peso_2);
-
-    }
-
+ 
+/*
     $scope.pesquisar = function(pesquisa) {
 
         // Se a pesquisa for vazia
@@ -85,7 +79,7 @@ function pesagemManualController($scope, $http, $log ,$cookieStore, $mdDialog, $
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-            /* Successful HTTP post request or not */
+           
             request.then(function(response) {
 
 
@@ -123,7 +117,7 @@ function pesagemManualController($scope, $http, $log ,$cookieStore, $mdDialog, $
 
         }
     };
-
+*/
 
 
 
@@ -174,18 +168,19 @@ function pesagemManualClienteController($scope, $http, $cookieStore, $mdDialog, 
         }
 
         function searchTextChange(text) {
+
             $log.info('Text changed to ' + text);
              loadAll();
         }
 
         function selectedItemChange(item) {
-            $log.info('Item changed to ' + JSON.stringify(item));
+           // $log.info('Item changed to stenio' + JSON.stringify(item));
+            $scope.pesagem.id_cliente = item.id_cliente;
         }
-
         /**
          * Build `components` list of key/value pairs
          */
-       
+
         function loadAll() {
 
   var repos = [{
@@ -226,7 +221,7 @@ var request = $http({
                 console.log("ERROR" + response);
             });
 
-            console.log($scope.teste);
+           // console.log($scope.teste);
 
             if(!angular.isUndefined($scope.teste)){
                 repos = $scope.teste;
@@ -272,7 +267,7 @@ var request = $http({
 
 // inicio controler 
 // falta criar as rotinas para pesquisa de fornecedor
-function pesagemManualFornecedorController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log){
+ function pesagemManualFornecedorController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log){
 
    
         // onde era DemoCtrl vira pesagemManualCliente
@@ -307,18 +302,20 @@ function pesagemManualFornecedorController($scope, $http, $cookieStore, $mdDialo
         }
 
         function searchTextChange(text) {
+
             $log.info('Text changed to ' + text);
              loadAll();
         }
 
         function selectedItemChange(item) {
-            $log.info('Item changed to ' + JSON.stringify(item));
+            // AQUI MOSTRA O OBJETO SELECIONADO
+           // $log.info('Item changed to stenio' + JSON.stringify(item));
+            $scope.pesagem.id_fornecedor = item.id_fornecedor;
         }
-
         /**
          * Build `components` list of key/value pairs
          */
-       
+
         function loadAll() {
 
   var repos = [{
@@ -331,12 +328,13 @@ function pesagemManualFornecedorController($scope, $http, $cookieStore, $mdDialo
    
 var request = $http({
                 method: "post",
-                url: "php/cliente/pesquisarcliente.php",
-                data: $scope.cliente,
+                url: "php/fornecedor/pesquisarfornecedor.php",
+                data: $scope.fornecedor,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
+console.log($scope.fornecedor);
             /* Successful HTTP post request or not */
             request.then(function(response) {
 
@@ -350,7 +348,7 @@ var request = $http({
                   // console.log(response.data);
                      
                 } else {
-                    console.log("Nenhum cliente retornado");
+                    console.log("Nenhum fornecedor retornado");
                    
                    
                     exibir = true;
@@ -359,7 +357,7 @@ var request = $http({
                 console.log("ERROR" + response);
             });
 
-            console.log($scope.teste);
+           // console.log($scope.teste);
 
             if(!angular.isUndefined($scope.teste)){
                 repos = $scope.teste;
@@ -403,7 +401,7 @@ var request = $http({
 
 // fim controler
 
- // inicio controler prodtuo
+ // inicio controler produto
 
 
 
@@ -450,6 +448,7 @@ function pesagemManualProdutoController($scope, $http, $cookieStore, $mdDialog, 
 
         function selectedItemChange(item) {
             $log.info('Item changed to ' + JSON.stringify(item));
+            $scope.pesagem.id_produto = item.id_produto;
         }
 
         /**
@@ -468,8 +467,8 @@ function pesagemManualProdutoController($scope, $http, $cookieStore, $mdDialog, 
    
 var request = $http({
                 method: "post",
-                url: "php/cliente/pesquisarcliente.php",
-                data: $scope.cliente,
+                url: "php/produto/pesquisarproduto.php",
+                data: $scope.produto,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }

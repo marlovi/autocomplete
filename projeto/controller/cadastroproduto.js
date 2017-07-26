@@ -63,30 +63,6 @@
 
     }
 
- 
-    $scope.gerarcodigo = function () {
-var request = $http({
-method: "post",
-url: "php/produto/pesquisarultimoproduto.php",
-data: $scope.Produto,
-headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-});
-
-/* Successful HTTP post request or not */
-request.then(function(response){
-  console.log(response.data);
- $scope.Produto = response.data;
-
-  //angular.forEach()
-},function(response){
- console.log("ERROR"+response);
-});
-
- 
-
-  }
- 
-  $scope.gerarcodigo();
    
 
 

@@ -214,10 +214,10 @@ $scope.pesquisarcpf = function() {
               "<p> </p>" +
               "</div>" +
               "<div class='card-action'>" +
-              "<a class='btn  waves-effect waves-light red'  ui-sref='deletefornecedor'>Deletar</a>" +
-              "<a class='btn  waves-effect waves-light red'  ui-sref='editarfornecedor'>Editar Cadastro</a>" +
-              "<a href='' ng-click='mostrar=true'  ng-show='!mostrar'>Detalhes</a>" +
-              "<a href='' ng-click='mostrar=false'  ng-show='mostrar'>Ocultar Detalhes</a>" +
+          //    "<a class='btn  waves-effect waves-light red'  ui-sref='deletefornecedor'>Deletar</a>" +
+          //    "<a class='btn  waves-effect waves-light red'  ui-sref='editarfornecedor'>Editar Cadastro</a>" +
+          //    "<a href='' ng-click='mostrar=true'  ng-show='!mostrar'>Detalhes</a>" +
+          //    "<a href='' ng-click='mostrar=false'  ng-show='mostrar'>Ocultar Detalhes</a>" +
               "</div>" +
               " </div>" +
               " </div>" +
@@ -285,10 +285,10 @@ $scope.pesquisarcpf = function() {
               "<p> </p>" +
               "</div>" +
               "<div class='card-action'>" +
-              "<a class='btn  waves-effect waves-light red'  ui-sref='deletefornecedor'>Deletar</a>" +
-              "<a class='btn  waves-effect waves-light red'  ui-sref='editarfornecedor'>Editar Cadastro</a>" +
-              "<a href='' ng-click='mostrar=true'  ng-show='!mostrar'>Detalhes</a>" +
-              "<a href='' ng-click='mostrar=false'  ng-show='mostrar'>Ocultar Detalhes</a>" +
+            //  "<a class='btn  waves-effect waves-light red'  ui-sref='deletefornecedor'>Deletar</a>" +
+            //  "<a class='btn  waves-effect waves-light red'  ui-sref='editarfornecedor'>Editar Cadastro</a>" +
+            //  "<a href='' ng-click='mostrar=true'  ng-show='!mostrar'>Detalhes</a>" +
+            //  "<a href='' ng-click='mostrar=false'  ng-show='mostrar'>Ocultar Detalhes</a>" +
               "</div>" +
               " </div>" +
               " </div>" +
@@ -360,10 +360,10 @@ $scope.pesquisarcnpj = function() {
               "<p> </p>" +
               "</div>" +
               "<div class='card-action'>" +
-              "<a class='btn  waves-effect waves-light red'  ui-sref='deletefornecedor'>Deletar</a>" +
-              "<a class='btn  waves-effect waves-light red'  ui-sref='editarfornecedor'>Editar Cadastro</a>" +
-              "<a href='' ng-click='mostrar=true'  ng-show='!mostrar'>Detalhes</a>" +
-              "<a href='' ng-click='mostrar=false'  ng-show='mostrar'>Ocultar Detalhes</a>" +
+          //    "<a class='btn  waves-effect waves-light red'  ui-sref='deletefornecedor'>Deletar</a>" +
+          //    "<a class='btn  waves-effect waves-light red'  ui-sref='editarfornecedor'>Editar Cadastro</a>" +
+          //    "<a href='' ng-click='mostrar=true'  ng-show='!mostrar'>Detalhes</a>" +
+          //    "<a href='' ng-click='mostrar=false'  ng-show='mostrar'>Ocultar Detalhes</a>" +
               "</div>" +
               " </div>" +
               " </div>" +
