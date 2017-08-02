@@ -3,111 +3,179 @@
 	class Pesagem
 	{
 		public $id_pesagem; // add nas outras class
-		public $data;
 		public $status;
+		public $placa;
+		public $data;
 		public $motorista;
-		public $peso;
 		public $fornecedor_id_fornecedor;
 		public $empresa_id_empresa;
+		public $produto_id_produto;
 		public $cliente_id_cliente;
 		public $veiculo_id_veiculo;
+		public $tipo_veiculo;
+		public $peso_1;
+		public $peso_2;
+		public $peso_descontos;
+		public $peso_liquido;
 
 
-
-		/*
-Foi necessario fazer esse teste com if para que corrigisse esse erro
-no retorno dos dados armazenados no banco de dados
-Undefined property: stdClass::$cpf esse erro acontecia quando nao colocava todos os
-dados no cadastro. 
-Essa mudança faz parte da implementação para cadastro de veiculos associados a
-clientes. associação de tabelas.
-
-*/
 
 		function __construct(){}
 
 		public function  preencher($request){
 
-			$this->nome = $request->nome;//$request->nome;
-		if(isset($request->id_cliente)){
-			$this->id_cliente = $request->id_cliente;
+			 
+		if(isset($request->id_pesagem )){
+			$this->id_pesagem = $request->id_pesagem;
 		}
-		
-		if(isset($request->cpf)){
-			$this->cpf = $request->cpf;
+		if(isset($request->status )){
+			$this->status = $request->status;
 		}
-		if(isset($request->cnpj)){
-			$this->cnpj = $request->cnpj;
+		if(isset($request->placa )){
+			$this->placa = $request->placa;
 		}
-		if(isset($request->endereco)){
-			$this->endereco = $request->endereco;
+		if(isset($request->data )){
+			$this->data = $request->data;
 		}
-		if(isset($request->cidade)){
-			$this->cidade = $request->cidade;
+		if(isset($request->motorista )){
+			$this->motorista = $request->motorista;
 		}
-		if(isset($request->estado)){
-			$this->estado = $request->estado;
+		if(isset($request->fornecedor_id_fornecedor )){
+			$this->fornecedor_id_fornecedor = $request->fornecedor_id_fornecedor;
 		}
-		if(isset($request->telefone)){
-			$this->telefone = $request->telefone;
+		if(isset($request->empresa_id_empresa )){
+			$this->empresa_id_empresa = $request->empresa_id_empresa;
 		}
-		if(isset($request->email)){
-			$this->email = $request->email;
+		if(isset($request->produto_id_produto )){
+			$this->produto_id_produto = $request->produto_id_produto;
 		}
+		if(isset($request->cliente_id_cliente )){
+			$this->cliente_id_cliente = $request->cliente_id_cliente;
 		}
-		public function getId_cliente(){
-			return $this->id_cliente;
+		if(isset($request->veiculo_id_veiculo )){
+			$this->veiculo_id_veiculo = $request->veiculo_id_veiculo;
 		}
-		public function setId_cliente($id_cliente){
-			$this->id_cliente = $id_cliente;
+		if(isset($request->tipo_veiculo )){
+			$this->tipo_veiculo = $request->tipo_veiculo;
 		}
-		public function getNome(){
-			return $this->nome;
+		if(isset($request->peso_1 )){
+			$this->peso_1 = $request->peso_1;
 		}
-		public function setNome($nome){
-			$this->nome = $nome;
+		if(isset($request->peso_2 )){
+			$this->peso_2 = $request->peso_2;
 		}
-		public function getCpf(){
-			return $this->cpf;
+		if(isset($request->peso_descontos )){
+			$this->peso_descontos = $request->peso_descontos;
 		}
-		public function setCpf($cpf){
-			$this->cpf = $cpf;
-		}		
-		public function getCnpj(){
-			return $this->cnpj;
+		if(isset($request->peso_liquido )){
+			$this->peso_liquido = $request->peso_liquido;
 		}
-		public function setCnpj($cnpj){
-			$this->cnpj = $cnpj;
+
 		}
-		public function getEndereco(){
-			return $this->endereco;
+
+		public function getId_pesagem(){
+			return $this->id_pesagem;
 		}
-		public function setEndereco($endereco){
-			$this->endereco = $endereco;
+		public function setId_pesagem($id_pesagem){
+			$this->id_pesagem = $id_pesagem;
 		}
-		public function getCidade(){
-			return $this->cidade;
+
+		public function getStatus(){
+			return $this->status;
 		}
-		public function setCidade($cidade){
-			$this->cidade = $cidade;
+		public function setStatus($status){
+			$this->status = $status;
 		}
-		public function getEstado(){
-			return $this->estado;
+
+		public function getPlaca(){
+			return $this->placa;
 		}
-		public function setEstado($estado){
-			$this->estado = $estado;
+		public function setPlaca($placa){
+			$this->placa = $placa;
 		}
-		public function getTelefone(){
-			return $this->telefone;
+
+		public function getData(){
+			return $this->data;
 		}
-		public function setTelefone($telefone){
-			$this->telefone = $telefone;
+		public function setData($data){
+			$this->data = $data;
 		}
-		public function getEmail(){
-			return $this->email;
+
+		public function getMotorista(){
+			return $this->motorista;
 		}
-		public function setEmail($email){
-			$this->email = $email;
+		public function setMotorista($motorista){
+			$this->motorista = $motorista;
+		}
+
+		public function getFornecedor_id_fornecedor(){
+			return $this->fornecedor_id_fornecedor;
+		}
+		public function setFornecedor_id_fornecedor($fornecedor_id_fornecedor){
+			$this->fornecedor_id_fornecedor = $fornecedor_id_fornecedor;
+		}
+
+		public function getEmpresa_id_empresa(){
+			return $this->empresa_id_empresa;
+		}
+		public function setEmpresa_id_empresa($empresa_id_empresa){
+			$this->empresa_id_empresa = $empresa_id_empresa;
+		}
+
+		public function getProduto_id_produto(){
+			return $this->produto_id_produto;
+		}
+		public function setProduto_id_produto($produto_id_produto){
+			$this->produto_id_produto = $produto_id_produto;
+		}
+
+		public function getCliente_id_cliente(){
+			return $this->cliente_id_cliente;
+		}
+		public function setCliente_id_cliente($cliente_id_cliente){
+			$this->cliente_id_cliente = $cliente_id_cliente;
+		}
+
+		public function getVeiculo_id_veiculo(){
+			return $this->veiculo_id_veiculo;
+		}
+		public function setVeiculo_id_veiculo($veiculo_id_veiculo){
+			$this->veiculo_id_veiculo = $veiculo_id_veiculo;
+		}
+
+		public function getTipo_veiculo(){
+			return $this->tipo_veiculo;
+		}
+		public function setTipo_veiculo($tipo_veiculo){
+			$this->tipo_veiculo = $tipo_veiculo;
+		}
+
+		public function getPeso_1(){
+			return $this->peso_1;
+		}
+		public function setPeso_1($peso_1){
+			$this->peso_1 = $peso_1;
+		}
+
+		public function getPeso_2(){
+			return $this->peso_2;
+		}
+		public function setPeso_2($peso_2){
+			$this->peso_2 = $peso_2;
+		}
+
+		public function getPeso_descontos(){
+			return $this->peso_descontos;
+		}
+		public function setPeso_descontos($peso_descontos){
+			$this->peso_descontos = $peso_descontos;
+		}
+
+		public function getPeso_liquido(){
+			return $this->peso_liquido;
+		}
+		public function setPeso_liquido($peso_liquido){
+			$this->peso_liquido = $peso_liquido;
 		}
 
 	}

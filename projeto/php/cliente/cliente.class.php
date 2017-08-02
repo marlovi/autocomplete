@@ -52,6 +52,7 @@ clientes. associação de tabelas.
 			$this->email = $request->email;
 		}
 		}
+		
 		public function getId_cliente(){
 			return $this->id_cliente;
 		}
