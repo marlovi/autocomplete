@@ -45,6 +45,43 @@ function pesagemManualController($scope, $http, $log ,$cookieStore, $mdDialog, $
         return (("".localeCompare(nome) != 0) && exibir);
     };
 
+    $scope.autorizar_envio = function() {
+        //OBJETIVO
+// aqui defini que a pesagem foi manual   
+// contar quantas string tem no objeto campo pesagem.placa
+// se igual a 8 E se existe ALGUM PESO DIGITADO.
+// então ative botão enviar.
+// coloque 3 no pesagem.status
+
+// fazer o teste de liberação do botao.
+
+        var teste = $scope.pesagem.placa; // RETIREI A STRING DA PLACA
+        var teste_tamanho = teste.length;  // DESCOBRI O TAMANHO
+        
+      //  console.log(teste_tamanho);  // FAÇO O TESTE DE APROVAÇÃO DE ENVIO
+
+if($scope.pesagem.liquido!=null && teste_tamanho==8 ){
+   
+$scope.pesagem.status = 3;
+}else{
+   $scope.pesagem.status = null; 
+}
+
+    }
+
+$scope.modulo = function() {
+
+ $scope.pesagem.liquido = ($scope.pesagem.primeira - $scope.pesagem.segunda);   
+
+if($scope.pesagem.liquido<0){
+$scope.pesagem.liquido = ($scope.pesagem.liquido * -1); 
+}
+
+if($scope.pesagem.descontos>0){
+ $scope.pesagem.liquido = ($scope.pesagem.liquido - $scope.pesagem.descontos);   
+}
+return $scope.pesagem.liquido;
+}
 
     $scope.isEmpty = function(obj) {
         for (var prop in obj) {
