@@ -55,6 +55,58 @@
    		return $last_id;
    	}
    
+ public function buscarnome($nome){
+   $resultado = null;
+         $verificador = true;
+         $banco = new Banco();
+   $teste = $banco->serverName;
+         /*
+         https://www.w3schools.com/php/php_mysql_insert.asp
+         */
+         $conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
+
+         if($conn->connect_error){
+            $verificador = false;
+            die("Problema na conexão ".$conn->connect_error);
+         }
+
+   $sql = "SELECT `nome`,`id_cliente`, `cpf`, `cnpj`, `endereco`,`cidade`, `estado`, `telefone`, `email` FROM `cliente` WHERE `nome` LIKE '".$nome."%' LIMIT 30";
+   $result = $conn->query($sql);
+   
+   if ($result->num_rows > 0) {
+      // output data of each row
+      $resultado = array();
+      while($row = $result->fetch_assoc()) {
+         $cliente = new Cliente();
+         $cliente->id_cliente = $row['id_cliente'];
+         $cliente->nome = $row['nome'];
+         $cliente->cpf = $row['cpf'];
+         $cliente->cnpj = $row['cnpj'];
+         $cliente->endereco = $row['endereco'];
+         $cliente->cidade = $row['cidade'];
+         $cliente->estado = $row['estado'];
+         $cliente->telefone = $row['telefone'];
+         $cliente->email = $row['email'];
+  
+         array_push($resultado,$cliente);
+   
+      }
+   } else {
+     $r = new Resposta();
+     $r->status="vazio";
+      $resultado = $r;
+   }
+   $conn->close();
+   
+   
+   return $resultado;
+   
+   }
+   
+
+
+
+
 
   public function buscar(){
    $resultado = null;
@@ -95,12 +147,14 @@
          array_push($resultado,$cliente);
    
       }
-   } else {
-      echo "0 results";
-   }
+   }else {
+     $r = new Resposta();
+     $r->status="vazio";
+      $resultado = $r;
+   } 
+
    $conn->close();
-   
-   
+
    return $resultado;
    
    }
@@ -184,61 +238,7 @@
    
    ////////////////////////////////////////////////////////////////////////////////////////
   
-   public function buscarnome($nome){
-   $resultado = null;
-         $verificador = true;
-         $banco = new Banco();
-   $teste = $banco->serverName;
-         /*
-         https://www.w3schools.com/php/php_mysql_insert.asp
-         */
-         $conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
    
-   
-         if($conn->connect_error){
-            $verificador = false;
-            die("Problema na conexão ".$conn->connect_error);
-         }
-   
-   
-   
-   
-   
-   $sql = "SELECT `nome`,`id_cliente`, `cpf`, `cnpj`, `endereco`,`cidade`, `estado`, `telefone`, `email` FROM `cliente` WHERE `nome` LIKE '".$nome."%' LIMIT 30";
-   $result = $conn->query($sql);
-   
-   if ($result->num_rows > 0) {
-      // output data of each row
-      $resultado = array();
-      while($row = $result->fetch_assoc()) {
-         $cliente = new Cliente();
-         $cliente->id_cliente = $row['id_cliente'];
-         $cliente->nome = $row['nome'];
-         $cliente->cpf = $row['cpf'];
-         $cliente->cnpj = $row['cnpj'];
-         $cliente->endereco = $row['endereco'];
-         $cliente->cidade = $row['cidade'];
-         $cliente->estado = $row['estado'];
-         $cliente->telefone = $row['telefone'];
-         $cliente->email = $row['email'];
-          
-          
-   
-         array_push($resultado,$cliente);
-   
-      }
-   } else {
-     $r = new Resposta();
-     $r->status="vazio";
-      $resultado = $r;
-   }
-   $conn->close();
-   
-   
-   return $resultado;
-   
-   }
-    
    public function buscarcpf($cpf){
 
    $resultado = null;

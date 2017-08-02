@@ -58,7 +58,7 @@ function pesagemManualController($scope, $http, $log ,$cookieStore, $mdDialog, $
         var teste = $scope.pesagem.placa; // RETIREI A STRING DA PLACA
         var teste_tamanho = teste.length;  // DESCOBRI O TAMANHO
         
-      //  console.log(teste_tamanho);  // FAÇO O TESTE DE APROVAÇÃO DE ENVIO
+        //console.log(teste_tamanho);  // FAÇO O TESTE DE APROVAÇÃO DE ENVIO
 
 if($scope.pesagem.liquido!=null && teste_tamanho==8 ){
    
@@ -68,7 +68,9 @@ $scope.pesagem.status = 3;
 }
 
     }
-
+// aqui faz com que o resultado das pesagem
+// aponte peso liquido positivo se o desconto não for
+// maior que o peso liquido
 $scope.modulo = function() {
 
  $scope.pesagem.liquido = ($scope.pesagem.primeira - $scope.pesagem.segunda);   
@@ -206,7 +208,7 @@ function pesagemManualClienteController($scope, $http, $cookieStore, $mdDialog, 
 
         function searchTextChange(text) {
 
-            $log.info('Text changed to ' + text);
+            $log.info('pesquisando por: ' + text);
              loadAll();
         }
 
