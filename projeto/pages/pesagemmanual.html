@@ -99,15 +99,15 @@
               <div class="col s1 ">
               </div>
                   <div class="col s3 input-field">
-                     <input id="primeira" type="text" ng-model="pesagem.primeira" ng-change= "modulo(pesagem.primeira)" mask="999999" ng-keyup="autorizar_envio()" ng-Disabled="!pesagem.placa " >
+                     <input id="primeira" type="text" ng-model="pesagem.peso_1" ng-change= "modulo(pesagem.peso_1)" mask="999999" ng-keyup="autorizar_envio()" ng-Disabled="!pesagem.placa " >
                      <label for="primeira"> Primeira Pesagem </label>              
                   </div>
                   <div class="col s3 input-field">
-                     <input id="segunda" type="text" ng-model="pesagem.segunda"  ng-change= "modulo(pesagem.segunda)" mask="999999" ng-Disabled="!pesagem.placa " ng-keyup="autorizar_envio()" >
+                     <input id="segunda" type="text" ng-model="pesagem.peso_2"  ng-change= "modulo(pesagem.peso_2)" mask="999999" ng-Disabled="!pesagem.placa " ng-keyup="autorizar_envio()" >
                      <label for="segunda"> Segunda Pesagem </label>              
                   </div>
                   <div class="input-field col s4   ">
-                    <textarea id="observacao" type="text" class="materialize-textarea" ng-model=" pesagem.observacao" >
+                    <textarea id="observacao" type="text" class="materialize-textarea" ng-model=" esagem.observacao" >
                         
                      </textarea>
                      <label for="textarea1">Observação</label>
@@ -118,12 +118,12 @@
               <div class="col s1 ">
               </div>
                    <div class="col s3 input-field">
-                     <input id="liquido" type="text" ng-model="pesagem.descontos "  ng-change= "modulo(pesagem.descontos) " mask="999999" ng-Disabled="!pesagem.placa " ng-keyup="autorizar_envio()" >
+                     <input id="liquido" type="text" ng-model="pesagem.peso_descontos "  ng-change= "modulo(pesagem.peso_descontos) " mask="999999" ng-Disabled="!pesagem.placa " ng-keyup="autorizar_envio()" >
                      <label for="liquido"> Descontos </label>              
                   </div>
                     
                      <div class="col s3 input-field">
-                        <input  id="liquido" type="number" name="liquido" ng-model= "pesagem.liquido" disabled="disabled" >
+                        <input  id="liquido" type="number" name="liquido" ng-model= "pesagem.peso_liquido" disabled="disabled" >
                         <label for="liquido" id ="label_liquido" class="active" > Liquido </label>              
                      </div>
                      {{pesagem}}

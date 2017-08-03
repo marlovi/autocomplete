@@ -24,7 +24,7 @@
 
 				$stament = $con->prepare($sql);
 
-				$stament->bind_param('isssiiiiisiiii' ,$status, $placa ,$data, $motorista ,$fornecedor_id_fornecedor, $empresa_id_empresa ,$produto_id_produto, $cliente_id_cliente ,$veiculo_id_veiculo, $tipo_veiculo ,$peso_1, $peso_2 ,$peso_descontos, $peso_liquido);
+				$stament->bind_param('isssiiiissiiii' ,$status, $placa ,$data, $motorista ,$fornecedor_id_fornecedor, $empresa_id_empresa ,$produto_id_produto, $cliente_id_cliente ,$veiculo_id_veiculo, $tipo_veiculo ,$peso_1, $peso_2 ,$peso_descontos, $peso_liquido);
 				 
 
 				$status = $pesagem->status;

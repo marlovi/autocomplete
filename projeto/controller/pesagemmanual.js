@@ -1,5 +1,4 @@
 function pesagemManualController($scope, $http, $log ,$cookieStore, $mdDialog, $q, $timeout, meuServico) {
-
       $scope.openFromLeft = function() {
     $mdDialog.show(
       $mdDialog.alert()
@@ -14,7 +13,6 @@ function pesagemManualController($scope, $http, $log ,$cookieStore, $mdDialog, $
         .closeTo(angular.element(document.querySelector('#right')))
     );
   };
-
 
    $scope.openOffscreen = function() {
     $mdDialog.show(
@@ -39,8 +37,19 @@ function pesagemManualController($scope, $http, $log ,$cookieStore, $mdDialog, $
 /////// função em teste
 
 $scope.salvar = function() {
-
+ // percebi ser interessante converter em int os dados antes de salvar no 
+ // banco. por exemplo as chaves estrangeiras devem ser inteiro
+ // e a leitura de peso tambem.
+   $scope.pesagem.cliente_id_cliente = parseInt($scope.pesagem.cliente_id_cliente);
+   $scope.pesagem.fornecedor_id_fornecedor = parseInt($scope.pesagem.fornecedor_id_fornecedor);
+   $scope.pesagem.peso_1 = parseInt($scope.pesagem.peso_1);
+   $scope.pesagem.peso_2 = parseInt($scope.pesagem.peso_2);
+   $scope.pesagem.peso_descontos = parseInt($scope.pesagem.peso_descontos);
+   $scope.pesagem.peso_liquido = parseInt($scope.pesagem.peso_liquido);
    
+
+            
+   console.log($scope.pesagem);
 // duvidas nessa função com a informação do data
 
         var request = $http({
@@ -58,7 +67,7 @@ $scope.salvar = function() {
             // foi necessario atualizar o objeto cliente com os dados de id retornado do banco
             // isso faz a atualização do objeto que está na pagina.
 
-            $scope.pesagem = response.data;
+            //$scope.pesagem = response.data;
                  $scope.pesagem = null;
                   
 
@@ -101,7 +110,7 @@ $scope.salvar = function() {
         
         //console.log(teste_tamanho);  // FAÇO O TESTE DE APROVAÇÃO DE ENVIO
 
-if($scope.pesagem.liquido!=null && teste_tamanho==8 ){
+if($scope.pesagem.peso_liquido!=null && teste_tamanho==8 ){
    
 $scope.pesagem.status = 3;
 }else{
@@ -114,16 +123,16 @@ $scope.pesagem.status = 3;
 // maior que o peso liquido
 $scope.modulo = function() {
 
- $scope.pesagem.liquido = ($scope.pesagem.primeira - $scope.pesagem.segunda);   
+ $scope.pesagem.peso_liquido = ($scope.pesagem.peso_1 - $scope.pesagem.peso_2);   
 
-if($scope.pesagem.liquido<0){
-$scope.pesagem.liquido = ($scope.pesagem.liquido * -1); 
+if($scope.pesagem.peso_liquido<0){
+$scope.pesagem.peso_liquido = ($scope.pesagem.peso_liquido * -1); 
 }
 
-if($scope.pesagem.descontos>0){
- $scope.pesagem.liquido = ($scope.pesagem.liquido - $scope.pesagem.descontos);   
+if($scope.pesagem.peso_descontos>0){
+ $scope.pesagem.peso_liquido = ($scope.pesagem.peso_liquido - $scope.pesagem.peso_descontos);   
 }
-return $scope.pesagem.liquido;
+return $scope.pesagem.peso_liquido;
 }
 
     $scope.isEmpty = function(obj) {
@@ -255,7 +264,8 @@ function pesagemManualClienteController($scope, $http, $cookieStore, $mdDialog, 
 
         function selectedItemChange(item) {
            // $log.info('Item changed to stenio' + JSON.stringify(item));
-            $scope.pesagem.id_cliente = item.id_cliente;
+            $scope.pesagem.cliente_id_cliente = item.id_cliente;
+
         }
         /**
          * Build `components` list of key/value pairs
@@ -390,7 +400,7 @@ var request = $http({
         function selectedItemChange(item) {
             // AQUI MOSTRA O OBJETO SELECIONADO
            // $log.info('Item changed to stenio' + JSON.stringify(item));
-            $scope.pesagem.id_fornecedor = item.id_fornecedor;
+            $scope.pesagem.fornecedor_id_fornecedor = item.id_fornecedor;
         }
         /**
          * Build `components` list of key/value pairs
@@ -528,7 +538,7 @@ function pesagemManualProdutoController($scope, $http, $cookieStore, $mdDialog, 
 
         function selectedItemChange(item) {
             $log.info('Item changed to ' + JSON.stringify(item));
-            $scope.pesagem.id_produto = item.id_produto;
+            $scope.pesagem.produto_id_produto = item.id_produto;
         }
 
         /**
