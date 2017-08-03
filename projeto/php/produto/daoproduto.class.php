@@ -1,8 +1,7 @@
 <?php  
 	require_once 'produto.class.php';
 	require_once '../banco/banco.class.php';
-	class DaoProduto
-	{
+	class DaoProduto{
 		
 		//private $serverName="localhost";
 		//private $user="root";			// padrao do win tratar isso depois
