@@ -36,6 +36,47 @@ function pesagemManualController($scope, $http, $log ,$cookieStore, $mdDialog, $
     );
   };
 
+/////// função em teste
+
+$scope.salvar = function() {
+
+   
+// duvidas nessa função com a informação do data
+
+        var request = $http({
+            method: "post",
+            url: "php/pesagem/salvarpesagem.php",
+            data: $scope.pesagem,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+
+        request.then(function(response) {
+            console.log(response.data);
+            // $scope.Cliente = response.data;
+            // foi necessario atualizar o objeto cliente com os dados de id retornado do banco
+            // isso faz a atualização do objeto que está na pagina.
+
+            $scope.pesagem = response.data;
+                 $scope.pesagem = null;
+                  
+
+            //angular.forEach()
+        }, function(response) {
+            console.log("ERROR" + response);
+        });
+//TENTANDO LIMPAR A TELA DEPOIS DE SALVO OS DADOS
+
+    }
+
+    
+
+
+///////////// fim teste
+
+
+
     var exibir = false;
     //para mostrar a mensagem que não houve resultados
     $scope.exibe = function(nome) {
