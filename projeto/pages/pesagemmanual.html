@@ -40,7 +40,7 @@
         <div class="col s3 left-align  ">
             <label for="cliente" class="active "> Cliente </label>
             <div data-ng-controller="pesagemManualClienteController as Pcliente">
-                {{selected}}
+           
                 <md-autocomplete ng-Disabled="!pesagem.placa" id="auto" ngb-disabled="Pcliente.isDisabled " md-no-cache="Pcliente.noCache" md-selected-item="selected" md-search-text-change="Pcliente.searchTextChange(Pcliente.searchText)" md-search-text="Pcliente.searchText "
                     md-selected-item-change="Pcliente.selectedItemChange(item)" md-items="item in Pcliente.querySearch(Pcliente.searchText) " md-item-text="item.nome " md-min-length="0" placeholder="Pesquise um Cliente" md-menu-class="autocomplete-custom-template ">
                     <md-item-template>

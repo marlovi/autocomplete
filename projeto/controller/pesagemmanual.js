@@ -223,27 +223,13 @@ angular
 
 // inicio controller pesagemManualClienteController
 function pesagemManualClienteController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log) {
-
-
-    // onde era DemoCtrl vira pesagemManualCliente
     var self = this;
-
     self.simulateQuery = false;
     self.isDisabled = false;
-
-    self.repos = loadAll();
+    self.repos = loadAll('');
     self.querySearch = querySearch;
     self.selectedItemChange = selectedItemChange;
     self.searchTextChange = searchTextChange;
-
-    // ******************************
-    // Internal methods
-    // ******************************
-
-    /**
-     * Search for repos... use $timeout to simulate
-     * remote dataservice call.
-     */
     function querySearch(query) {
         var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
             deferred;
@@ -255,67 +241,49 @@ function pesagemManualClienteController($scope, $http, $cookieStore, $mdDialog, 
             return results;
         }
     }
-
     function searchTextChange(text) {
-
         $log.info('pesquisando por: ' + text);
-        loadAll();
+        loadAll(text);
     }
-
     function selectedItemChange(item) {
         // $log.info('Item changed to stenio' + JSON.stringify(item));
         $scope.pesagem.cliente_id_cliente = item.id_cliente;
         $scope.selected = item;
         console.log($scope.selected);
     }
-    /**
-     * Build `components` list of key/value pairs
-     */
-
-    function loadAll() {
-
+    function loadAll(text) {
         var repos = [{
             'nome': 'AngularJS',
             'url': 'https://github.com/angular/angular.js',
             'watchers': '3,623',
             'forks': '16,175'
         }];
-
-
+        console.log(text);
         var request = $http({
             method: "post",
-            url: "php/cliente/pesquisarcliente.php",
-            data: $scope.cliente,
+            url: "php/cliente/manualpesquisanomecliente.php",
+            data: text,
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
-        /* Successful HTTP post request or not */
         request.then(function(response) {
-
             repos = response.data;
-
+            console.log("retorno "+response.data.length);
+            console.log(response.data.status);
             if (angular.isUndefined(response.data.status)) {
-                // JSON retornado do banco
                 exibir = false;
-                $scope.dicas = response.data;
-                $scope.teste = response.data;
-                // console.log(response.data);
-
+                //$scope.dicas = response.data;
+                $scope.teste_de_resultado_de_busca = response.data;
             } else {
                 console.log("Nenhum cliente retornado");
-
-
                 exibir = true;
             }
         }, function(response) {
             console.log("ERROR" + response);
         });
-
-        // console.log($scope.teste);
-
-        if (!angular.isUndefined($scope.teste)) {
-            repos = $scope.teste;
+        if (!angular.isUndefined($scope.teste_de_resultado_de_busca)) {
+            repos = $scope.teste_de_resultado_de_busca;
             self.repos = repos;
             return repos.map(function(repo) {
                 repo.value = repo.nome.toLowerCase();
@@ -328,26 +296,17 @@ function pesagemManualClienteController($scope, $http, $cookieStore, $mdDialog, 
                 'watchers': '3,623',
                 'forks': '16,175'
             }];
-
-
-
             return repos.map(function(repo) {
                 repo.value = repo.nome.toLowerCase();
                 return repo;
             });
         }
     }
-
-    /**
-     * Create filter function for a query string
-     */
     function createFilterFor(query) {
         var lowercaseQuery = angular.lowercase(query);
-
         return function filterFn(item) {
             return (item.value.indexOf(lowercaseQuery) === 0);
         };
-
     }
 }
 angular

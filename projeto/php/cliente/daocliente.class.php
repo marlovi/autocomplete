@@ -1,6 +1,7 @@
  <?php  
    require_once 'cliente.class.php';
    require_once '../banco/banco.class.php';
+   require_once 'resposta.class.php';
    
    class DaoCliente 
    {
@@ -63,6 +64,7 @@
          /*
          https://www.w3schools.com/php/php_mysql_insert.asp
          */
+         $nome = strtoupper($nome);
          $conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
 
          if($conn->connect_error){
@@ -91,9 +93,12 @@
          array_push($resultado,$cliente);
    
       }
+      
    } else {
      $r = new Resposta();
-     $r->status="vazio";
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $r->status=0;
       $resultado = $r;
    }
    $conn->close();
@@ -388,4 +393,7 @@
 
    }
    
+
+
+    
    ?>

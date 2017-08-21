@@ -33,6 +33,7 @@
                 <p>Use <code>&lt;md-autocomplete&gt;</code> with custom templates to show styled autocomplete results.</p>
                 <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)"
                     md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.name" md-min-length="0" placeholder="Pick an Angular repository" md-menu-class="autocomplete-custom-template">
+                    
                     <md-item-template>
                         <span class="item-title">
           
@@ -54,7 +55,7 @@
             </form>
         </md-content>
     </div>
-
+{{ctrl.searchText}}
 </body>
 
 </html>
