@@ -102,7 +102,6 @@ function pesagemManualController($scope, $http, $log, $cookieStore, $mdDialog, $
             // se igual a 8 E se existe ALGUM PESO DIGITADO.
             // então ative botão enviar.
             // coloque 3 no pesagem.status
-
             // fazer o teste de liberação do botao.
 
             var teste = $scope.pesagem.placa; // RETIREI A STRING DA PLACA
@@ -411,6 +410,9 @@ var self = this;
 
 //FIM NOVA VERSÃO DA ROTINA DE PESQUISA
 /*
+
+// não apagar pode ser que outras paginas do programa utilize essa versão
+// apos testes apagar se possivel
     // onde era DemoCtrl vira pesagemManualCliente
     var self = this;
 
@@ -543,27 +545,14 @@ angular
 // inicio controler 
 // falta criar as rotinas para pesquisa de fornecedor
 function pesagemManualProdutoController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log) {
-
-
-    // onde era DemoCtrl vira pesagemManualCliente
-    var self = this;
-
+//VERSÃO NOVA
+ var self = this;
     self.simulateQuery = false;
     self.isDisabled = false;
-
-    self.repos = loadAll();
+    self.repos = loadAll('');
     self.querySearch = querySearch;
     self.selectedItemChange = selectedItemChange;
     self.searchTextChange = searchTextChange;
-
-    // ******************************
-    // Internal methods
-    // ******************************
-
-    /**
-     * Search for repos... use $timeout to simulate
-     * remote dataservice call.
-     */
     function querySearch(query) {
         var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
             deferred;
@@ -575,31 +564,112 @@ function pesagemManualProdutoController($scope, $http, $cookieStore, $mdDialog, 
             return results;
         }
     }
-
     function searchTextChange(text) {
-        $log.info('Text changed to ' + text);
-        loadAll();
+        $log.info('pesquisando por: ' + text);
+        loadAll(text);
     }
-
     function selectedItemChange(item) {
-        $log.info('Item changed to ' + JSON.stringify(item));
+        // $log.info('Item changed to stenio' + JSON.stringify(item));
         $scope.pesagem.produto_id_produto = item.id_produto;
+        $scope.selected = item;
+        console.log($scope.selected);
     }
-
-    /**
-     * Build `components` list of key/value pairs
-     */
-
-    function loadAll() {
-
+    function loadAll(text) {
         var repos = [{
             'nome': 'AngularJS',
             'url': 'https://github.com/angular/angular.js',
             'watchers': '3,623',
             'forks': '16,175'
         }];
+        console.log(text);
+        var request = $http({
+            method: "post",
+            url: "php/produto/manualpesquisanomeproduto.php",
+            data: text,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+        request.then(function(response) {
+            repos = response.data;
+            console.log("retorno "+response.data.length);
+            console.log(response.data.status);
+            if (angular.isUndefined(response.data.status)) {
+                exibir = false;
+                //$scope.dicas = response.data;
+                $scope.teste_de_resultado_de_busca = response.data;
+            } else {
+                console.log("Nenhum produto retornado");
+                exibir = true;
+            }
+        }, function(response) {
+            console.log("ERROR" + response);
+        });
+        if (!angular.isUndefined($scope.teste_de_resultado_de_busca)) {
+            repos = $scope.teste_de_resultado_de_busca;
+            self.repos = repos;
+            return repos.map(function(repo) {
+                repo.value = repo.nome.toLowerCase();
+                return repo;
+            });
+        } else {
+            repos = [{
+                'nome': 'AngularJS',
+                'url': 'https://github.com/angular/angular.js',
+                'watchers': '3,623',
+                'forks': '16,175'
+            }];
+            return repos.map(function(repo) {
+                repo.value = repo.nome.toLowerCase();
+                return repo;
+            });
+        }
+    }
+    function createFilterFor(query) {
+        var lowercaseQuery = angular.lowercase(query);
+        return function filterFn(item) {
+            return (item.value.indexOf(lowercaseQuery) === 0);
+        };
+    }
 
+// FIM VERSÃO NOVA
+/*
+    // onde era DemoCtrl vira pesagemManualCliente
+    var self = this;
+    self.simulateQuery = false;
+    self.isDisabled = false;
+    self.repos = loadAll();
+    self.querySearch = querySearch;
+    self.selectedItemChange = selectedItemChange;
+    self.searchTextChange = searchTextChange;
 
+    function querySearch(query) {
+        var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
+            deferred;
+        if (self.simulateQuery) {
+            deferred = $q.defer();
+            $timeout(function() { deferred.resolve(results); }, Math.random() * 1000, false);
+            return deferred.promise;
+        } else {
+            return results;
+        }
+    }
+    function searchTextChange(text) {
+        $log.info('Text changed to ' + text);
+        loadAll();
+    }
+    function selectedItemChange(item) {
+        $log.info('Item changed to ' + JSON.stringify(item));
+        $scope.pesagem.produto_id_produto = item.id_produto;
+    }
+
+    function loadAll() {
+        var repos = [{
+            'nome': 'AngularJS',
+            'url': 'https://github.com/angular/angular.js',
+            'watchers': '3,623',
+            'forks': '16,175'
+        }];
         var request = $http({
             method: "post",
             url: "php/produto/pesquisarproduto.php",
@@ -608,30 +678,23 @@ function pesagemManualProdutoController($scope, $http, $cookieStore, $mdDialog, 
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
-        /* Successful HTTP post request or not */
+        
         request.then(function(response) {
-
             repos = response.data;
-
             if (angular.isUndefined(response.data.status)) {
                 // JSON retornado do banco
                 exibir = false;
                 $scope.dicas = response.data;
                 $scope.teste = response.data;
                 // console.log(response.data);
-
             } else {
                 console.log("Nenhum cliente retornado");
-
-
                 exibir = true;
             }
         }, function(response) {
             console.log("ERROR" + response);
         });
-
         console.log($scope.teste);
-
         if (!angular.isUndefined($scope.teste)) {
             repos = $scope.teste;
             self.repos = repos;
@@ -646,9 +709,6 @@ function pesagemManualProdutoController($scope, $http, $cookieStore, $mdDialog, 
                 'watchers': '3,623',
                 'forks': '16,175'
             }];
-
-
-
             return repos.map(function(repo) {
                 repo.value = repo.nome.toLowerCase();
                 return repo;
@@ -656,9 +716,6 @@ function pesagemManualProdutoController($scope, $http, $cookieStore, $mdDialog, 
         }
     }
 
-    /**
-     * Create filter function for a query string
-     */
     function createFilterFor(query) {
         var lowercaseQuery = angular.lowercase(query);
 
@@ -667,6 +724,8 @@ function pesagemManualProdutoController($scope, $http, $cookieStore, $mdDialog, 
         };
 
     }
+
+    */
 }
 angular
     .module('home')
