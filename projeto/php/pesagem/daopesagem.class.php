@@ -13,13 +13,14 @@
 			//$con = new mysqli($this->serverName,$this->user,$this->password,$this->dataBase);
 			$con = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
 
-
-
+// SERÁ QUE ESSE DADO SENDO COMO STRING DA RUIM NA BUSCA POR DATA?
+			$pesagem->data = date("d/m/Y H:i:s ");
 			if($con->connect_error){
 				$verificador = false;
 				die("Problema na conexão ".$con->connect_error);
 			}
 			try{
+
 			$sql = "INSERT INTO `Pesagem` (`status`,`placa`,`data`,`motorista`,`fornecedor_id_fornecedor`,`empresa_id_empresa`,`produto_id_produto`,`cliente_id_cliente`,`veiculo_id_veiculo`,`tipo_veiculo`,`peso_1`,`peso_2`,`peso_descontos`,`peso_liquido` ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 				$stament = $con->prepare($sql);
