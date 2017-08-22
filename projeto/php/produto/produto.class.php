@@ -4,7 +4,7 @@
 	{
 		public $id_produto; // add nas outras class
 		public $nome;
-		public $codigo;
+	
 		
 		/*
 		
@@ -29,9 +29,7 @@ produto. associação de tabelas.
 			
 		}
 
-		if(isset($request->codigo)){
-			$this->codigo = $request->codigo;
-		}
+		 
 		
 		}
 		public function getId_Produto(){
@@ -46,12 +44,8 @@ produto. associação de tabelas.
 		public function setNome($nome){
 			$this->nome = $nome;
 		}
-		public function getCodigo(){
-			return $this->codigo;
-		}
-		public function setCodigo($codigo){
-			$this->codigo = $codigo;
-		}		
+		 
+		 
 		
 
 	}
