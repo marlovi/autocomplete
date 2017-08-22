@@ -1,6 +1,7 @@
 <?php  
 	require_once 'produto.class.php';
 	require_once '../banco/banco.class.php';
+  require_once 'resposta.class.php';
 	class DaoProduto{
 		
 		//private $serverName="localhost";
@@ -25,15 +26,15 @@
 				die("Problema na conexão ".$con->connect_error);
 			}
 			try{
-			$sql = "INSERT INTO `Produto` (`nome`,`codigo`) VALUES (?,?)";
+			$sql = "INSERT INTO `Produto` (`nome`) VALUES (?)";
 
 				$stament = $con->prepare($sql);
 
-				$stament->bind_param('ss' ,$nome, $codigo);
+				$stament->bind_param('s' ,$nome);
 				 
 
 				$nome = $produto->nome;
-				$codigo = $produto->codigo;
+			
 
 				 
 
@@ -68,7 +69,7 @@ public function buscar(){
         die("Problema na conexão ".$conn->connect_error);
       }
 
-$sql = "SELECT `id_produto`, `nome`,`codigo` FROM `produto` ";
+$sql = "SELECT `id_produto`, `nome` FROM `produto` ";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -80,7 +81,7 @@ if ($result->num_rows > 0) {
     	 $produto = new Produto();
        $produto->id_produto = $row['id_produto'];
        $produto->nome = $row['nome'];
-       $produto->codigo = $row['codigo'];
+      
        
         
 
@@ -120,7 +121,7 @@ public function buscarultimo(){
 				die("Problema na conexão ".$con->connect_error);
 			}
 
-$sql = "SELECT `id_produto`, `nome`,`codigo` FROM `produto` ";
+$sql = "SELECT `id_produto`, `nome` FROM `produto` ";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -130,7 +131,7 @@ if ($result->num_rows > 0) {
     	$produto = new Produto();
        $produto->id_produto = $row['id_produto'];
        $produto->nome = $row['nome'];
-       $produto->codigo = $row['codigo'];
+       
        
         
 
@@ -208,6 +209,7 @@ public function update($produto){
    		/*
    		https://www.w3schools.com/php/php_mysql_insert.asp
    		*/
+      $nome = strtoupper($nome);
    		$conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
    
    
@@ -220,7 +222,7 @@ public function update($produto){
    
    
    
-   $sql = "SELECT `nome`,`id_produto`,`codigo`  FROM `produto` WHERE `nome` LIKE '".$nome."%' LIMIT 30";
+   $sql = "SELECT `nome`,`id_produto`  FROM `produto` WHERE `nome` LIKE '".$nome."%' LIMIT 30";
    $result = $conn->query($sql);
    
    if ($result->num_rows > 0) {
@@ -235,7 +237,11 @@ public function update($produto){
    
       }
    } else {
-      echo "0 results";
+      $r = new Resposta();
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $r->status=0;
+      $resultado = $r;
    }
    $conn->close();
    
