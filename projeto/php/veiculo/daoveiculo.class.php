@@ -2,6 +2,7 @@
 
 	require_once 'veiculo.class.php';
 	require_once '../banco/banco.class.php';
+	require_once 'resposta.class.php';
 	class DaoVeiculo
 	{
 		//private $serverName="localhost";
@@ -289,6 +290,58 @@ return $resultado;
 	}
 
 
+ 
+ public function buscarplaca($placa){
+   $resultado = null;
+         $verificador = true;
+         $banco = new Banco();
+   $teste = $banco->serverName;
+         /*
+         https://www.w3schools.com/php/php_mysql_insert.asp
+         */
+        // $placa = strtoupper($placa);
+         $conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
+
+         if($conn->connect_error){
+            $verificador = false;
+            die("Problema na conexão ".$conn->connect_error);
+         }
+$sql = "SELECT `id_veiculo`, `placa`, `descricao`, `tipo`,  `fornecedor_id_fornecedor`, `cliente_id_cliente`, `empresa_id_empresa` FROM `veiculo` WHERE `placa` LIKE '".$placa."%' LIMIT 30";
+//WHERE `nome` LIKE '".$nome."%' LIMIT 30";
+$result = $conn->query($sql);
+ 
+
+if ($result->num_rows > 0) {
+    // output data of each row
+    $resultado = array();
+    while($row = $result->fetch_assoc()) {
+    	$veiculo = new Veiculo();
+       $veiculo->id_veiculo = $row['id_veiculo'];
+       $veiculo->placa = $row['placa'];
+       $veiculo->descricao = $row['descricao'];
+       $veiculo->tipo = $row['tipo'];
+     
+       // quando coloca endereco da treta
+       $veiculo->fornecedor_id_fornecedor = $row['fornecedor_id_fornecedor'];
+       $veiculo->cliente_id_cliente = $row['cliente_id_cliente'];
+	    $veiculo->empresa_id_empresa = $row['empresa_id_empresa'];
+
+       array_push($resultado,$veiculo);
+
+    }
+} else {
+     $r = new Resposta();
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $r->status=0;
+      $resultado = $r;
+   }
+   $conn->close();
+   
+   
+   return $resultado;
+   
+   }
 
 
 

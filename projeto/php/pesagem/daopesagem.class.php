@@ -14,7 +14,9 @@
 			$con = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
 
 // SERÁ QUE ESSE DADO SENDO COMO STRING DA RUIM NA BUSCA POR DATA?
-			$pesagem->data = date("d/m/Y H:i:s ");
+				// ESSA FUNÇÃO SETA O BANCO DE DADOS PARA SAO PAULO
+			date_default_timezone_set('America/Sao_Paulo');
+			$pesagem->data = date('d/m/Y H:i:s', time());
 			if($con->connect_error){
 				$verificador = false;
 				die("Problema na conexão ".$con->connect_error);
@@ -62,13 +64,8 @@
 
 
 
-
-
-
-
-
-
-
+   
+ 
 }
 
  
