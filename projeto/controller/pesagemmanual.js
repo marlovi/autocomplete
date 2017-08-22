@@ -318,8 +318,99 @@ angular
 // inicio controler 
 // falta criar as rotinas para pesquisa de fornecedor
 function pesagemManualFornecedorController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log) {
+// NOVA VERSÃO DA ROTINA DE PESQUISA
+var self = this;
+    self.simulateQuery = false;
+    self.isDisabled = false;
+    self.repos = loadAll('');
+    self.querySearch = querySearch;
+    self.selectedItemChange = selectedItemChange;
+    self.searchTextChange = searchTextChange;
+    function querySearch(query) {
+        var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
+            deferred;
+        if (self.simulateQuery) {
+            deferred = $q.defer();
+            $timeout(function() { deferred.resolve(results); }, Math.random() * 1000, false);
+            return deferred.promise;
+        } else {
+            return results;
+        }
+    }
+    function searchTextChange(text) {
+        $log.info('pesquisando por: ' + text);
+        loadAll(text);
+    }
+    function selectedItemChange(item) {
+        // $log.info('Item changed to stenio' + JSON.stringify(item));
+        $scope.pesagem.fornecedor_id_fornecedor = item.id_fornecedor;
+        $scope.selected = item;
+        console.log($scope.selected);
+    }
+    function loadAll(text) {
+        var repos = [{
+            'nome': 'AngularJS',
+            'url': 'https://github.com/angular/angular.js',
+            'watchers': '3,623',
+            'forks': '16,175'
+        }];
+        
 
+        var request = $http({
+            method: "post",
+            url: "php/fornecedor/manualpesquisanomefornecedor.php", // criar esse arquivo
+            data: text,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
 
+        console.log(text);
+ 
+        request.then(function(response) {
+            repos = response.data;
+            console.log("retorno " + response.data.length);
+            console.log(response.data.status);
+            if (angular.isUndefined(response.data.status)) {
+                exibir = false;
+                //$scope.dicas = response.data;
+                $scope.teste_de_resultado_de_busca = response.data;
+            } else {
+                console.log("Nenhum fornecedor retornado");
+                exibir = true;
+            }
+        }, function(response) {
+            console.log("ERROR" + response);
+        });
+        if (!angular.isUndefined($scope.teste_de_resultado_de_busca)) {
+            repos = $scope.teste_de_resultado_de_busca;
+            self.repos = repos;
+            return repos.map(function(repo) {
+                repo.value = repo.nome.toLowerCase();
+                return repo;
+            });
+        } else {
+            repos = [{
+                'nome': 'AngularJS',
+                'url': 'https://github.com/angular/angular.js',
+                'watchers': '3,623',
+                'forks': '16,175'
+            }];
+            return repos.map(function(repo) {
+                repo.value = repo.nome.toLowerCase();
+                return repo;
+            });
+        }
+    }
+    function createFilterFor(query) {
+        var lowercaseQuery = angular.lowercase(query);
+        return function filterFn(item) {
+            return (item.value.indexOf(lowercaseQuery) === 0);
+        };
+    }
+
+//FIM NOVA VERSÃO DA ROTINA DE PESQUISA
+/*
     // onde era DemoCtrl vira pesagemManualCliente
     var self = this;
 
@@ -335,10 +426,7 @@ function pesagemManualFornecedorController($scope, $http, $cookieStore, $mdDialo
     // Internal methods
     // ******************************
 
-    /**
-     * Search for repos... use $timeout to simulate
-     * remote dataservice call.
-     */
+     
     function querySearch(query) {
         var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
             deferred;
@@ -362,9 +450,7 @@ function pesagemManualFornecedorController($scope, $http, $cookieStore, $mdDialo
         // $log.info('Item changed to stenio' + JSON.stringify(item));
         $scope.pesagem.fornecedor_id_fornecedor = item.id_fornecedor;
     }
-    /**
-     * Build `components` list of key/value pairs
-     */
+    
 
     function loadAll() {
 
@@ -385,7 +471,7 @@ function pesagemManualFornecedorController($scope, $http, $cookieStore, $mdDialo
             }
         });
         console.log($scope.fornecedor);
-        /* Successful HTTP post request or not */
+         
         request.then(function(response) {
 
             repos = response.data;
@@ -433,9 +519,7 @@ function pesagemManualFornecedorController($scope, $http, $cookieStore, $mdDialo
         }
     }
 
-    /**
-     * Create filter function for a query string
-     */
+     
     function createFilterFor(query) {
         var lowercaseQuery = angular.lowercase(query);
 
@@ -444,6 +528,7 @@ function pesagemManualFornecedorController($scope, $http, $cookieStore, $mdDialo
         };
 
     }
+    */
 }
 angular
     .module('home')

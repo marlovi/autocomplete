@@ -19,7 +19,7 @@
    		/*
    		https://www.w3schools.com/php/php_mysql_insert.asp
    		*/
-   		$con = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
+   $con = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
    
    
    		if($con->connect_error){
@@ -93,7 +93,7 @@
          array_push($resultado,$cliente);
    
       }
-      
+
    } else {
      $r = new Resposta();
      // padronizado retorno vazio

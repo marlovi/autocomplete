@@ -1,6 +1,7 @@
 <?php  
 	require_once 'fornecedor.class.php';
 	require_once '../banco/banco.class.php';
+  require_once 'resposta.class.php';
 	class DaoFornecedor 
 	{
 
@@ -18,7 +19,7 @@
 			https://www.w3schools.com/php/php_mysql_insert.asp
 			*/
 			//$con = new mysqli($this->serverName,$this->user,$this->password,$this->dataBase);
-			$con = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
+		$con = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
 
 
 
@@ -158,32 +159,26 @@ public function update($fornecedor){
    		return $verificador;
    	}
 
-
+    // função busca nome ajustada para a tela pesagem manual
+    // existia um bug na busca se estivesse com a busca em minusculo
+    // e no banco estiver salvo em maiusculo.
+    // resolvido com a função strtoupper ela converte para maiusculo
+    // o que foi buscado.
 public function buscarnome($nome){
    $resultado = null;
    		$verificador = true;
    		$banco = new Banco();
    $teste = $banco->serverName;
-   		/*
-   		https://www.w3schools.com/php/php_mysql_insert.asp
-   		*/
-   		$conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
-   
-   
+       $nome = strtoupper($nome);
+$conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
    		if($conn->connect_error){
    			$verificador = false;
    			die("Problema na conexão ".$conn->connect_error);
    		}
-   
-   
-   
-   
-   
+
    $sql = "SELECT `nome`,`id_fornecedor`, `cpf`, `cnpj`, `endereco`,`cidade`, `estado`, `telefone`, `email` FROM `fornecedor` WHERE `nome` LIKE '".$nome."%' LIMIT 30";
    $result = $conn->query($sql);
-   
    if ($result->num_rows > 0) {
-      // output data of each row
       $resultado = array();
       while($row = $result->fetch_assoc()) {
       	$fornecedor = new Fornecedor();
@@ -196,20 +191,18 @@ public function buscarnome($nome){
          $fornecedor->estado = $row['estado'];
          $fornecedor->telefone = $row['telefone'];
          $fornecedor->email = $row['email'];
-          
-          
-   
+
          array_push($resultado,$fornecedor);
-   
       }
    } else {
-      echo "0 results";
+     $r = new Resposta();
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $r->status=0;
+      $resultado = $r;
    }
-   $conn->close();
-   
-   
-   return $resultado;
-   
+   $conn->close(); 
+   return $resultado; 
    }
 
 
