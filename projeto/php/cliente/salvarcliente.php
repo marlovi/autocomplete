@@ -3,7 +3,7 @@
 	require_once "cliente.class.php";
 	require_once 'daocliente.class.php';
 	require_once '../veiculo/daoveiculo.class.php';
-	require_once '../veiculo/resposta.class.php';  
+	  
 	 
 		$dao = new DaoCliente();
 		$cliente = new Cliente();

@@ -1,6 +1,8 @@
 <?php  
 	require_once 'empresa.class.php';
 	require_once '../banco/banco.class.php';
+  //require_once 'resposta.class.php';
+
 	class DaoEmpresa 
 	{
 		

@@ -47,12 +47,15 @@
    			die("".$e->getMessage());
    		}	
    		// aqui estou buscando o ultimo id cadastrado para add 
-   		// o veiculo nesse cadastro.
+   		// o veiculo nesse cadastro. Cannot redeclare class Resposta
    			$last_id = 0;
    		$last_id = $con->insert_id;
    		$stament->close();
    		$con->close();
    		//return $verificador;
+// TESTE DO BUG DO 
+
+
    		return $last_id;
    	}
    

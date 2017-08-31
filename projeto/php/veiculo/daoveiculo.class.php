@@ -2,7 +2,18 @@
 
 	require_once 'veiculo.class.php';
 	require_once '../banco/banco.class.php';
-	require_once 'resposta.class.php';
+	//RETIREI ESSA SOLICITAÇÃO PORQUE QUANDO 
+	//SOLICITAVA CADASTRO DE NOVOS CLIENTES / FORNECCEDORES OU
+	// PRODUTOS RETORNAVA O ERRO
+	/*  
+	
+	<br />
+<b>Fatal error</b>:  Cannot redeclare class Resposta in <b>C:\xampp\htdocs\autocomplete\projeto\php\veiculo\resposta.class.php</b> on line <b>3</b><br />
+
+
+
+	 */
+	//require_once 'resposta.class.php';
 	class DaoVeiculo
 	{
 		//private $serverName="localhost";
