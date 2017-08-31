@@ -2,6 +2,8 @@
    
 	require_once "veiculo.class.php";
 	require_once 'daoveiculo.class.php';
+	require_once 'resposta.class.php';
+
 
 		$dao = new DaoVeiculo();
 		$veiculo = new Veiculo();

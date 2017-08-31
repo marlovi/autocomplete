@@ -154,7 +154,7 @@
       }
    }else {
      $r = new Resposta();
-     $r->status="vazio";
+     $r->status=0;
       $resultado = $r;
    } 
 

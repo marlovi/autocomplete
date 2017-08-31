@@ -289,6 +289,14 @@ $scope.pesquisarcpf = function() {
                   var filhoScope = $scope.$new();
                   $scope.Cliente = response.data;
                   console.log($scope.Cliente.status);
+                  // depois da mudança do tipo de resposta
+                  // que será retornado no banco quando 
+                  // solicitar uma busca e nao tiver resposta
+                  // retorna status = 0 caso contrario retorna o
+                  // objeto pesquisado.
+                  // sendo assim foi necessario alterar
+                  // o teste para renderizar o cartão
+                  // de resposta da pesquisa. 
                   if ($scope.Cliente.status == 0) {
                     
                     console.log( " if sem resposta");
