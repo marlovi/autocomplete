@@ -163,6 +163,7 @@ return $resultado;
    		/*
    		https://www.w3schools.com/php/php_mysql_insert.asp
    		*/
+      $nome = strtoupper($nome);
    		$conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
    
    
