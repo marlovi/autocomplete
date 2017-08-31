@@ -15,24 +15,24 @@
 
 // SERÁ QUE ESSE DADO SENDO COMO STRING DA RUIM NA BUSCA POR DATA?
 				// ESSA FUNÇÃO SETA O BANCO DE DADOS PARA SAO PAULO
-			date_default_timezone_set('America/Sao_Paulo');
-			$pesagem->data = date('d/m/Y H:i:s', time());
+			//date_default_timezone_set('America/Sao_Paulo');
+			//$pesagem->data = date('d/m/Y H:i:s', time());
 			if($con->connect_error){
 				$verificador = false;
 				die("Problema na conexão ".$con->connect_error);
 			}
 			try{
 
-			$sql = "INSERT INTO `Pesagem` (`status`,`placa`,`data`,`motorista`,`fornecedor_id_fornecedor`,`empresa_id_empresa`,`produto_id_produto`,`cliente_id_cliente`,`veiculo_id_veiculo`,`tipo_veiculo`,`peso_1`,`peso_2`,`peso_descontos`,`peso_liquido` ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$sql = "INSERT INTO `Pesagem` (`status`,`data`,`motorista`,`fornecedor_id_fornecedor`,`empresa_id_empresa`,`produto_id_produto`,`cliente_id_cliente`,`veiculo_id_veiculo`,`tipo_veiculo`,`peso_1`,`peso_2`,`peso_descontos`,`peso_liquido` ) VALUES (?,now(),?,?,?,?,?,?,?,?,?,?,?)";
 
 				$stament = $con->prepare($sql);
 
-				$stament->bind_param('isssiiiissiiii' ,$status, $placa ,$data, $motorista ,$fornecedor_id_fornecedor, $empresa_id_empresa ,$produto_id_produto, $cliente_id_cliente ,$veiculo_id_veiculo, $tipo_veiculo ,$peso_1, $peso_2 ,$peso_descontos, $peso_liquido);
+				$stament->bind_param('isiiiissiiii' ,$status, $motorista ,$fornecedor_id_fornecedor, $empresa_id_empresa ,$produto_id_produto, $cliente_id_cliente ,$veiculo_id_veiculo, $tipo_veiculo ,$peso_1, $peso_2 ,$peso_descontos, $peso_liquido);
 				 
 
 				$status = $pesagem->status;
-				$placa = $pesagem->placa;
-				$data = $pesagem->data;
+				 
+				//$data = $pesagem->data;
 				$motorista = $pesagem->motorista;
 				$fornecedor_id_fornecedor = $pesagem->fornecedor_id_fornecedor;
 				$empresa_id_empresa = $pesagem->empresa_id_empresa;
