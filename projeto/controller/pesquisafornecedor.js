@@ -269,7 +269,7 @@ $scope.pesquisarcpf = function() {
                   var filhoScope = $scope.$new();
                   $scope.Fornecedor = response.data;
                   console.log($scope.Fornecedor[0]);
-                  if ($scope.Fornecedor[0] == 0) {
+                  if ($scope.Fornecedor.status == 0) {
                     
                     console.log( " if sem resposta");
                     var $newDiv = $("<div class='row'>" +

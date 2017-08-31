@@ -288,8 +288,8 @@ $scope.pesquisarcpf = function() {
                   $scope.myText = "";
                   var filhoScope = $scope.$new();
                   $scope.Cliente = response.data;
-                  console.log($scope.Cliente[0]);
-                  if ($scope.Cliente[0] == 0) {
+                  console.log($scope.Cliente.status);
+                  if ($scope.Cliente.status == 0) {
                     
                     console.log( " if sem resposta");
                     var $newDiv = $("<div class='row'>" +
@@ -330,7 +330,7 @@ $scope.pesquisarcpf = function() {
                       angular.forEach(response.data, function(value, key) {
                         // aqui tenho que chamar o cartão nome mas adaptei pra ser 
                         // a mesma função que gera o cartão cpf.
-                          $scope.myText = $scope.myText + $scope.gerarcartaonome(value);
+               $scope.myText = $scope.myText + $scope.gerarcartaonome(value);
                       });
 
 

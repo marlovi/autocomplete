@@ -101,7 +101,7 @@
                   var filhoScope = $scope.$new();
                   $scope.Produto = response.data;
                   console.log($scope.Produto[0]);
-                  if ($scope.Produto[0] == 0) {
+                  if ($scope.Produto.status == 0) {
                     
                     console.log( " if sem resposta");
                     var $newDiv = $("<div class='row'>" +
