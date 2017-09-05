@@ -59,7 +59,59 @@
 
     }
 
+$scope.consulta_placa = function() {
+ 
+var teste_tamanho_string = "";
+teste_tamanho_string = $scope.veiculo.placa; // RETIREI A STRING DA PLACA
+            var teste_tamanho_digitado = teste_tamanho_string.length; // DESCOBRI O TAMANHO
+            //console.log($scope.veiculo);
+            console.log(teste_tamanho_digitado);  // FAÇO O TESTE DE APROVAÇÃO DE ENVIO
+            console.log($scope.veiculo.placa); 
+            if (teste_tamanho_digitado == 8) {
+ 
+              var request = $http({
+                  method: "post",
+                  url: "php/veiculo/pesquisarveiculoplaca.php", 
+                  data: $scope.veiculo,
+                  // data: $scope.veiculo.placa,
+                  headers: {
+                      'Content-Type': 'application/x-www-form-urlencoded'
+                  }
+              });
+  request.then(function(response) {
+            
+            //console.log("retorno " + response.data.length);
+            console.log(response.data.status);
+            var mostar = response.data.status;
+       if(mostar == 0){
+console.log("CADASTRO PERMITIDO");
+  }    
+   if(mostar == 1){
+console.log("PLACA JA CADASTRADA");
+ 
+Materialize.toast('PLACA JÁ CADASTRADA', 3000,'rounded', 'center');
+ $scope.veiculo.placa = null;
 
+Materialize.toast();
+  }     
+        }, function(response) {
+            console.log("ERROR" + response);
+        });
+ 
+      
+        
+} 
+// O QUE EU QUERO FAZER?
+/* 
+COLOCAR A PLACA PARA SER PESQUISADA
+
+
+
+*/
+ 
+
+    }
+ 
 
 
     /////////////////////////////////////////////////////////////
