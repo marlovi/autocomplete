@@ -74,6 +74,10 @@
 // tentando organizar
 $banco = new Banco();
 $teste = $banco->serverName;
+// tratamento para padronizar tudo em maiusculo no banco.
+ $veiculo->placa = strtoupper($veiculo->placa );
+ $veiculo->descricao = strtoupper($veiculo->descricao );
+  $veiculo->tipo = strtoupper($veiculo->tipo );
 
 			//$con = new mysqli($banco->serverName,$this->user,$this->password,$this->dataBase);
 			$con = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);

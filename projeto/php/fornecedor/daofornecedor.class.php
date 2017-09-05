@@ -15,6 +15,8 @@
 			$verificador = true;
 			$banco = new Banco();
 			$teste = $banco->serverName;
+
+      $fornecedor->nome = strtoupper($fornecedor->nome );
 			/*
 			https://www.w3schools.com/php/php_mysql_insert.asp
 			*/
