@@ -2,7 +2,7 @@
 
 	require_once 'veiculo.class.php';
 	require_once '../banco/banco.class.php';
-	require_once 'resposta.class.php';
+	require_once 'resposta_veiculo.class.php';
 	//RETIREI ESSA SOLICITAÇÃO PORQUE QUANDO 
 	//SOLICITAVA CADASTRO DE NOVOS CLIENTES / FORNECCEDORES OU
 	// PRODUTOS RETORNAVA O ERRO
@@ -150,7 +150,11 @@ if ($result->num_rows > 0) {
 
     }
 } else {
-    echo "0 results";
+    $s = new Resposta_veiculo();
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $s->status_veiculo=0;
+      $resultado = $s;
 }
 $conn->close();
 return $resultado;
@@ -198,7 +202,11 @@ if ($result->num_rows > 0) {
 
     }
 } else {
-    echo null;
+   $s = new Resposta_veiculo();
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $s->status_veiculo=0;
+      $resultado = $s;
 }
 $conn->close();
 
@@ -247,7 +255,11 @@ if ($result->num_rows > 0) {
 
     }
 } else {
-    echo null;
+   $s = new Resposta_veiculo();
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $s->status_veiculo=0;
+      $resultado = $s;
 }
 $conn->close();
 
@@ -296,7 +308,11 @@ if ($result->num_rows > 0) {
 
     }
 } else {
-    echo null;
+   $s = new Resposta_veiculo();
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $s->status_veiculo=0;
+      $resultado = $s;
 }
 $conn->close();
 
@@ -354,17 +370,17 @@ if ($result->num_rows > 0) {
 
     }
     */
-    $r = new Resposta();
+    $s = new Resposta_veiculo();
      // padronizado retorno vazio
      // se 0 não encontrado o registro
-     $r->status=1;
-      $resultado = $r;
+     $s->status_veiculo=1;
+      $resultado = $s;
 } else {
-     $r = new Resposta();
+     $s = new Resposta_veiculo();
      // padronizado retorno vazio
      // se 0 não encontrado o registro
-     $r->status=0;
-      $resultado = $r;
+     $s->status_veiculo=0;
+      $resultado = $s;
    }
    $conn->close();
    
