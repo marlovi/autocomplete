@@ -1,7 +1,7 @@
 <?php  
 	require_once 'empresa.class.php';
 	require_once '../banco/banco.class.php';
-  //require_once 'resposta.class.php';
+  require_once 'resposta.class.php';
 
 	class DaoEmpresa 
 	{
@@ -99,7 +99,11 @@ if ($result->num_rows > 0) {
 
     }
 } else {
-    echo "0 results";
+    $r = new Resposta();
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $r->status=0;
+      $resultado = $r;
 }
 $conn->close();
 
@@ -201,7 +205,11 @@ return $resultado;
    
       }
    } else {
-      echo "0 results";
+      $r = new Resposta();
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $r->status=0;
+      $resultado = $r;
    }
    $conn->close();
    
@@ -251,7 +259,11 @@ return $resultado;
    
       }
    } else {
-      echo "0 results";
+      $r = new Resposta();
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $r->status=0;
+      $resultado = $r;
    }
    $conn->close();
    
@@ -301,7 +313,11 @@ return $resultado;
    
       }
    } else {
-      echo "0 results";
+      $r = new Resposta();
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $r->status=0;
+      $resultado = $r;
    }
    $conn->close();
    
@@ -351,7 +367,11 @@ return $resultado;
    
       }
    } else {
-      echo "0 results";
+      $r = new Resposta();
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $r->status=0;
+      $resultado = $r;
    }
    $conn->close();
    
