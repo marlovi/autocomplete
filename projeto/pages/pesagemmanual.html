@@ -41,7 +41,7 @@
          <!-- aqui começa a pesquisa placa em teste -->
          <div class="col s3 left-align  ">
             <label for="veiculo" class="active "> Pesquisar placa </label>
-            <div data-ng-controller="pesagemManualVeiculoController as PVeiculo">
+            <div data-ng-controller="pesagemManualVeiculoController as PVeiculo"  >
                <md-autocomplete  ng-Disabled="!pesagem.motorista" id="placa" ngb-disabled="PVeiculo.isDisabled " md-no-cache="PVeiculo.noCache" md-selected-item="selected" md-search-text-change="PVeiculo.searchTextChange(PVeiculo.searchText)" md-search-text="PVeiculo.searchText "
                   md-selected-item-change="PVeiculo.selectedItemChange(item)" md-items="item in PVeiculo.querySearch(PVeiculo.searchText) " md-item-text="item.placa " md-min-length="3" placeholder="Pesquise um Veiculo" md-menu-class="autocomplete-custom-template ">
                   <md-item-template>

@@ -323,7 +323,7 @@ return $resultado;
 
 
  
- public function buscarplaca($placa){
+ public function buscarplaca_cadastro($placa){
  	$caralho = "null";
    $resultado = null;
          $verificador = true;
@@ -352,7 +352,7 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
      // output data of each row
-    /*
+    
     $resultado = array();
     while($row = $result->fetch_assoc()) {
     	$veiculo = new Veiculo();
@@ -369,12 +369,8 @@ if ($result->num_rows > 0) {
 
 
     }
-    */
-    $s = new Resposta_veiculo();
-     // padronizado retorno vazio
-     // se 0 não encontrado o registro
-     $s->status_veiculo=1;
-      $resultado = $s;
+    
+     
 } else {
      $s = new Resposta_veiculo();
      // padronizado retorno vazio
@@ -388,6 +384,71 @@ if ($result->num_rows > 0) {
    return $resultado;
    
    }
+
+
+ public function buscar_placa_pesagem_manual($placa){
+ 	$caralho = "null";
+   $resultado = null;
+         $verificador = true;
+         $banco = new Banco();
+   $teste = $banco->serverName;
+         /*
+         https://www.w3schools.com/php/php_mysql_insert.asp
+         */
+        $placa = strtoupper($placa);
+         $conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
+
+         if($conn->connect_error){
+            $verificador = false;
+            die("Problema na conexão ".$conn->connect_error);
+         }
+
+         /* 
+`Veiculo` (`placa`,`descricao`,`tipo`,`fornecedor_id_fornecedor`,`cliente_id_cliente`,`empresa_id_empresa` ) VALUES (?,?,?,?,?,?)"
+
+
+         */
+$sql = "SELECT `id_veiculo`, `placa`, `descricao`, `tipo`,  `fornecedor_id_fornecedor`, `cliente_id_cliente`, `empresa_id_empresa` FROM `veiculo` WHERE `placa` LIKE '".$placa."%' LIMIT 30";
+//WHERE `nome` LIKE '".$nome."%' LIMIT 30";
+$result = $conn->query($sql);
+ 
+
+if ($result->num_rows > 0) {
+     // output data of each row
+    
+    $resultado = array();
+    while($row = $result->fetch_assoc()) {
+    	$veiculo = new Veiculo();
+       $veiculo->id_veiculo = $row['id_veiculo'];
+       $veiculo->placa = $row['placa'];
+
+	   $veiculo->descricao = $row['descricao'];
+ 	   $veiculo->tipo = $row['tipo'];
+$veiculo->fornecedor_id_fornecedor = $row['fornecedor_id_fornecedor'];
+	   $veiculo->cliente_id_cliente = $row['cliente_id_cliente'];
+	   $veiculo->empresa_id_empresa = $row['empresa_id_empresa'];
+
+       array_push($resultado,$veiculo);
+ 
+
+
+    }
+    
+     
+} else {
+     $s = new Resposta_veiculo();
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $s->status_veiculo=0;
+      $resultado = $s;
+   }
+   $conn->close();
+   
+   
+   return $resultado;
+   
+   }
+
 
 
 

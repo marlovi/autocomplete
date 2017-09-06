@@ -88,7 +88,7 @@ teste_tamanho_string = $scope.veiculo.placa; // RETIREI A STRING DA PLACA
  
               var request = $http({
                   method: "post",
-                  url: "php/veiculo/pesquisarveiculoplaca.php", 
+                  url: "php/veiculo/pesquisarveiculoplaca_cadastro.php", 
                   data: $scope.veiculo,
                   // data: $scope.veiculo.placa,
                   headers: {
@@ -97,19 +97,17 @@ teste_tamanho_string = $scope.veiculo.placa; // RETIREI A STRING DA PLACA
               });
   request.then(function(response) {
             
-            //console.log("retorno " + response.data.length);
-            console.log(response.data.status_veiculo);
-            var mostar = response.data.status_veiculo;
-       if(mostar == 0){
-console.log("CADASTRO PERMITIDO");
-  }    
-   if(mostar == 1){
-console.log("PLACA JA CADASTRADA");
- 
-Materialize.toast('PLACA JÁ CADASTRADA', 3000,'rounded', 'center');
- $scope.veiculo.placa = null;
 
+            console.log(response.data);
+// SE RETORNAR ALGUM REGISTRO DO BANCO O ELSE RODA
+// SE NAO RETORNAR NENHUM REGISTRO DO BANCO O IF RODA
+   if(!angular.isUndefined(response.data.status_veiculo)){
+console.log("CADASTRO PERMITIDO");
+ }else{
+  Materialize.toast('PLACA JÁ CADASTRADA', 3000,'rounded', 'center');
+ $scope.veiculo.placa = null;
 Materialize.toast();
+
   }     
         }, function(response) {
             console.log("ERROR" + response);

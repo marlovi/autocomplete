@@ -151,15 +151,11 @@ function pesagemManualController($scope, $http, $log, $cookieStore, $mdDialog, $
 
     /*
         $scope.pesquisar = function(pesquisa) {
-
             // Se a pesquisa for vazia
             if (pesquisa == "") {
-
                 // Retira o autocomplete
                 $scope.completing = false;
-
             } else {
-
                 var request = $http({
                     method: "post",
                     url: "php/cliente/pesquisarclientenome.php",
@@ -170,9 +166,6 @@ function pesagemManualController($scope, $http, $log, $cookieStore, $mdDialog, $
                 });
                
                 request.then(function(response) {
-
-
-
                     if (angular.isUndefined(response.data.status)) {
                         // JSON retornado do banco
                         exibir = false;
@@ -199,11 +192,7 @@ function pesagemManualController($scope, $http, $log, $cookieStore, $mdDialog, $
                 }, function(response) {
                     console.log("ERROR" + response);
                 });
-
-
                 //////////////
-
-
             }
         };
     */
@@ -411,24 +400,19 @@ var self = this;
 
 //FIM NOVA VERSÃO DA ROTINA DE PESQUISA
 /*
-
 // não apagar pode ser que outras paginas do programa utilize essa versão
 // apos testes apagar se possivel
     // onde era DemoCtrl vira pesagemManualCliente
     var self = this;
-
     self.simulateQuery = false;
     self.isDisabled = false;
-
     self.repos = loadAll();
     self.querySearch = querySearch;
     self.selectedItemChange = selectedItemChange;
     self.searchTextChange = searchTextChange;
-
     // ******************************
     // Internal methods
     // ******************************
-
      
     function querySearch(query) {
         var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
@@ -441,30 +425,23 @@ var self = this;
             return results;
         }
     }
-
     function searchTextChange(text) {
-
         $log.info('Text changed to ' + text);
         loadAll();
     }
-
     function selectedItemChange(item) {
         // AQUI MOSTRA O OBJETO SELECIONADO
         // $log.info('Item changed to stenio' + JSON.stringify(item));
         $scope.pesagem.fornecedor_id_fornecedor = item.id_fornecedor;
     }
     
-
     function loadAll() {
-
         var repos = [{
             'nome': 'AngularJS',
             'url': 'https://github.com/angular/angular.js',
             'watchers': '3,623',
             'forks': '16,175'
         }];
-
-
         var request = $http({
             method: "post",
             url: "php/fornecedor/pesquisarfornecedor.php",
@@ -476,28 +453,21 @@ var self = this;
         console.log($scope.fornecedor);
          
         request.then(function(response) {
-
             repos = response.data;
-
             if (angular.isUndefined(response.data.status)) {
                 // JSON retornado do banco
                 exibir = false;
                 $scope.dicas = response.data;
                 $scope.teste = response.data;
                 // console.log(response.data);
-
             } else {
                 console.log("Nenhum fornecedor retornado");
-
-
                 exibir = true;
             }
         }, function(response) {
             console.log("ERROR" + response);
         });
-
         // console.log($scope.teste);
-
         if (!angular.isUndefined($scope.teste)) {
             repos = $scope.teste;
             self.repos = repos;
@@ -512,24 +482,18 @@ var self = this;
                 'watchers': '3,623',
                 'forks': '16,175'
             }];
-
-
-
             return repos.map(function(repo) {
                 repo.value = repo.nome.toLowerCase();
                 return repo;
             });
         }
     }
-
      
     function createFilterFor(query) {
         var lowercaseQuery = angular.lowercase(query);
-
         return function filterFn(item) {
             return (item.value.indexOf(lowercaseQuery) === 0);
         };
-
     }
     */
 }
@@ -643,7 +607,6 @@ function pesagemManualProdutoController($scope, $http, $cookieStore, $mdDialog, 
     self.querySearch = querySearch;
     self.selectedItemChange = selectedItemChange;
     self.searchTextChange = searchTextChange;
-
     function querySearch(query) {
         var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
             deferred;
@@ -663,7 +626,6 @@ function pesagemManualProdutoController($scope, $http, $cookieStore, $mdDialog, 
         $log.info('Item changed to ' + JSON.stringify(item));
         $scope.pesagem.produto_id_produto = item.id_produto;
     }
-
     function loadAll() {
         var repos = [{
             'nome': 'AngularJS',
@@ -716,16 +678,12 @@ function pesagemManualProdutoController($scope, $http, $cookieStore, $mdDialog, 
             });
         }
     }
-
     function createFilterFor(query) {
         var lowercaseQuery = angular.lowercase(query);
-
         return function filterFn(item) {
             return (item.value.indexOf(lowercaseQuery) === 0);
         };
-
     }
-
     */
 }
 angular
@@ -790,14 +748,17 @@ var self = this;
         request.then(function(response) {
             repos = response.data;
             console.log("retorno "+response.data.length);
-            console.log(response.data.status);
-            if (angular.isUndefined(response.data.status)) {
+            console.log(response.data.status_veiculo);
+            if (angular.isUndefined(response.data.status_veiculo)) {
                 exibir = false;
                 //$scope.dicas = response.data;
                 $scope.teste_de_resultado_de_busca = response.data;
             } else {
-                console.log("Nenhum cliente retornado");
-                exibir = true;
+                console.log("era pra rodar aqui");
+                // colocar placa nao cadastrada.
+Materialize.toast('PLACA NÃO CADASTRADA', 3000,'rounded', 'center');
+  
+Materialize.toast();
             }
         }, function(response) {
             console.log("ERROR" + response);
