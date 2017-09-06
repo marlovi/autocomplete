@@ -1,5 +1,22 @@
- function cadastroEmpresaController($scope, $http) {
-
+ function cadastroEmpresaController($scope, $http, $mdDialog) {
+// inicio teste alerta de confirmação de cadastro
+  $scope.openOffscreen = function() { 
+    $mdDialog.show(
+      $mdDialog.alert()
+        .clickOutsideToClose(true)
+        .title('Cadastro salvo')
+        .ok('OK')
+        .openFrom({
+          top: -50,
+          width: 30,
+          height: 80
+        })
+        .closeTo({
+          left: 1500
+        })
+    );
+  };
+// fim de alerta confirmação cadastro
 
     $scope.salvar = function() {
 
@@ -29,13 +46,13 @@
             $scope.empresa = response.data;
                  $scope.empresa = null;
                  $scope.lines = [];
-
+                $scope.openOffscreen();
 
             //angular.forEach()
         }, function(response) {
             console.log("ERROR" + response);
         });
-//TENTANDO LIMPAR A TELA DEPOIS DE SALVO OS DADOS
+
 
     }
 
@@ -81,8 +98,8 @@ teste_tamanho_string = $scope.veiculo.placa; // RETIREI A STRING DA PLACA
   request.then(function(response) {
             
             //console.log("retorno " + response.data.length);
-            console.log(response.data.status);
-            var mostar = response.data.status;
+            console.log(response.data.status_veiculo);
+            var mostar = response.data.status_veiculo;
        if(mostar == 0){
 console.log("CADASTRO PERMITIDO");
   }    
