@@ -14,26 +14,22 @@ function pesagemManualController($scope, $http, $log, $cookieStore, $mdDialog, $
         );
     };
 
-    $scope.openOffscreen = function() {
-        $mdDialog.show(
-            $mdDialog.alert()
-            .clickOutsideToClose(true)
-            .title('Opening from offscreen')
-            .textContent('Closing to offscreen')
-            .ariaLabel('Offscreen Demo')
-            .ok('Amazing!')
-            // Or you can specify the rect to do the transition from
-            .openFrom({
-                top: -50,
-                width: 30,
-                height: 80
-            })
-            .closeTo({
-                left: 1500
-            })
-        );
-    };
-
+    $scope.openOffscreen = function() { 
+    $mdDialog.show(
+      $mdDialog.alert()
+        .clickOutsideToClose(true)
+        .title('Pesagem concluída')
+        .ok('OK')
+        .openFrom({
+          top: -50,
+          width: 30,
+          height: 80
+        })
+        .closeTo({
+          left: 1500
+        })
+    );
+  };
     /////// função em teste
 
     $scope.salvar = function() {
@@ -69,7 +65,7 @@ function pesagemManualController($scope, $http, $log, $cookieStore, $mdDialog, $
 
             //$scope.pesagem = response.data;
             $scope.pesagem = null;
-
+            $scope.openOffscreen();
 
             //angular.forEach()
         }, function(response) {

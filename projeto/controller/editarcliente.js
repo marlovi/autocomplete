@@ -1,6 +1,21 @@
 function editarClienteController($scope, $http, $cookieStore, focus, $timeout, $mdDialog, meuServico) {
 
-   
+   $scope.openOffscreen = function() { 
+    $mdDialog.show(
+      $mdDialog.alert()
+        .clickOutsideToClose(true)
+        .title('Cadastro salvo')
+        .ok('OK')
+        .openFrom({
+          top: -50,
+          width: 30,
+          height: 80
+        })
+        .closeTo({
+          left: 1500
+        })
+    );
+  };
 
     $scope.editar = function() {
 
