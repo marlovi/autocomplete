@@ -14,10 +14,10 @@ include_once("dompdf/dompdf_config.inc.php");
  */
 // ISSO FOI FEITO PARA EU VISUALIZAR O ARQUIVO NA PAGINA DE NAVEGAÇÃO
 // MAS NAO ESTOU VISUALIZANDO O ARQUIVO CRIADO.
-/* Cria a instância */
-$dompdf = new DOMPDF();
+
+
 // Html de teste
-$html = '  
+$html = '
      <!doctype html>
 <html>
    <head>
@@ -65,7 +65,7 @@ $html = '
         // text-align:center;
          font-size: 80%;
          //word-spacing:0.1em; //espaçamento do texto
-         border: 1px solid red;
+         //border: 1px solid red;
          width: 40%;
          }
 
@@ -239,18 +239,34 @@ $html = '
 </body>
 </html>
 ';
+/* Cria a instância */
+$dompdf1 = new DOMPDF();
+/* Carrega seu HTML */
+$dompdf1->load_html($html); 
 
+/* Renderiza */
+$dompdf1->render();
  
-// FIM DA GAMBIARRA.
-// Tenta criar o arquivo PDF
+/* Exibe */
+$dompdf1->stream(
+    "arquivo2.pdf", /* Nome do arquivo de saída */
+    array(
+        "Attachment" => false /* Para download, altere para true */
+    )
+);
+// SE NAO MOSTRAR NA TELA SALVA O ARQUIVO
+// SE MOSTRAR NA TELA NAO SALVA.
+// EXISTE UM DESLOCAMENTO DA DIV DADOS PARA A ESQUERDA.
 
-toPDF("arquivo.pdf", $html);
+$NUMERO_TICKET = 1221;
+$titulo = "TICKET_NUMERO $NUMERO_TICKET .PDF";
+toPDF($titulo, $html);
 
-function toPDF($titulo, $html, $tipo = "P") {
+function toPDF($titulo, $html, $tipo = "L") {
     $dompdf = new DOMPDF();
 
     // Define internamente o tipo do documento
-    if ($tipo == "P") {
+    if ($tipo == "L") {
         $dompdf->set_paper("A4", "landscape");
     }
 
@@ -275,6 +291,5 @@ $dompdf->stream(
     $arquivo = "" . $titulo; 
     return ( file_put_contents($arquivo,$pdf) );
 }
-
 
 ?>
