@@ -110,7 +110,7 @@ $scope.printDiv = function() {
 
            $scope.pesagem = response.data;
            
-            console.log( response.data[0].cliente);
+            //console.log( response.data[0].cliente);
             $cookies.putObject('impressao', response.data[0]);
            // $cookies.impressao = response.data[0];
  
@@ -266,7 +266,7 @@ $scope.printDiv = function() {
 }
 
 
-////////
+///////
 angular
     .module('home')
     .controller('pesagemManualController', pesagemManualController);
