@@ -1,7 +1,4 @@
-function pesagemManualController($scope, $http, $log, $cookieStore, $mdDialog, $q, $timeout, meuServico,$cookies) {
-    
-    $scope.imprimir = false;
-
+function pesagemManualController($scope, $http, $log, $cookieStore, $mdDialog, $q, $timeout, meuServico,$cookies) { 
     $scope.openFromLeft = function() {
         $mdDialog.show(
             $mdDialog.alert()
@@ -31,25 +28,9 @@ function pesagemManualController($scope, $http, $log, $cookieStore, $mdDialog, $
         .closeTo({
           left: 1500
         })
-
     );
-    
-     
+
   };
-
-// inicio
-$scope.printDiv = function() {
-     var divName = "printable";
-  var printContents = document.getElementById(divName).innerHTML;
-  var popupWin = window.open('', '_blank', "width="+screen.availWidth+",height="+screen.availHeight);
-  popupWin.document.open();
-  // popupWin.document.write('<html><head>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1.0"/> </head> <style type="text/css" media="print"> body { **zoom:75%;}  </style><body onload="window.print()">' + printContents + '</body></html>');
-  popupWin.document.write('<html><head>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1.0"/> </head> <style type="text/css" media="print"> body { **zoom:75%;}  </style><body onload="window.print()"> heheheheh</body></html>');
-  popupWin.document.close();
-} 
-/// fim
-
-
 
     /////// função em teste
     $scope.abrirPDFManual = function(pesagem){
@@ -64,17 +45,12 @@ $scope.printDiv = function() {
          console.log(pesagem);
         request.then(function(response) {
              console.log(response.data);
-        
-
-
         }, function(response) {
             console.log("ERROR" + response);
         });
-
     }
 
-
-    $scope.salvar = function(nome_div) {
+    $scope.salvar = function() {
         // percebi ser interessante converter em int os dados antes de salvar no 
         // banco. por exemplo as chaves estrangeiras devem ser inteiro
         // e a leitura de peso tambem.
@@ -85,12 +61,8 @@ $scope.printDiv = function() {
         $scope.pesagem.peso_2 = parseInt($scope.pesagem.peso_2);
         $scope.pesagem.peso_descontos = parseInt($scope.pesagem.peso_descontos);
         $scope.pesagem.peso_liquido = parseInt($scope.pesagem.peso_liquido);
-
-
-
         //console.log($scope.pesagem);
         // duvidas nessa função com a informação do data
-
         var request = $http({
             method: "post",
             url: "php/pesagem/salvarpesagem.php",
@@ -100,55 +72,19 @@ $scope.printDiv = function() {
             }
         });
        //    console.log($scope.pesagem );
-
-        request.then(function(response) {
-            
+        request.then(function(response) {  
             // console.log(response.data);
             // $scope.Cliente = response.data;
             // foi necessario atualizar o objeto cliente com os dados de id retornado do banco
             // isso faz a atualização do objeto que está na pagina.
-
            $scope.pesagem = response.data;
-           
             //console.log( response.data[0].cliente);
             $cookies.putObject('impressao', response.data[0]);
            // $cookies.impressao = response.data[0];
- 
-/*
-  $cookies.userName = 'Sandeep';
-  $scope.platformCookie = $cookies.userName;
-  $cookieStore.put('fruit','Apple');
-  $cookieStore.put('flower','Rose');
-  $scope.myFruit= $cookieStore.get('fruit'); 
-     */    
-          
-           
-            // aqui depois de salvar a pesagem
-            // transfiro o id para a função abrir pdf
-            // nessa funçãoo converto os id dos cliente em nomes
-            // e coloco isso no objeto para renderizar a impressão.
-
-         // aqui chamo o modal para imprimir
-         // $scope.openOffscreen(nome_div);
-        
-
-    
-
-
-         
         }, function(response) {
             console.log("ERROR" + response);
         });
-        //TENTANDO LIMPAR A TELA DEPOIS DE SALVO OS DADOS
-
     }
-
-
-
-
-    ///////////// fim teste
-
-
 
     var exibir = false;
     //para mostrar a mensagem que não houve resultados
