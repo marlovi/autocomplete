@@ -1,6 +1,8 @@
 <?php  
 	require_once 'pesagem.class.php';
 	require_once '../banco/banco.class.php';
+    require_once 'resposta.class.php';
+ 
 	class DaoPesagem{
 
 	public function save($pesagem){
@@ -63,7 +65,74 @@
 		}
 
 
+public function getPesagem($id_pesagem){
 
+$banco = new Banco();
+   $teste = $banco->serverName;
+         
+         
+         $conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
+
+         if($conn->connect_error){
+            $verificador = false;
+            die("Problema na conexão ".$conn->connect_error);
+         }
+// preciso de buscar as informações da propria tabela pesagem
+   $sql = "SELECT p.`data`, p.`status`, p.`id_pesagem`, p.`peso_1`, p.`peso_2`, p.`peso_descontos`, p.`peso_liquido`, c.`nome`AS `cliente` , c.`cpf`AS `cpf_cliente` , c.`cnpj`AS `cnpj_cliente`, f.`nome` AS `fornecedor` , f.`cpf` AS `cpf_fornecedor` , f.`cnpj` AS `cnpj_fornecedor`, v.`placa`, pro.`nome` AS `produto` , pro.`id_produto` AS `cod_prod`  FROM `pesagem` as `p`, `cliente` as `c`, `fornecedor` as `f`, `veiculo` as `v`, `produto` as `pro` WHERE p.`id_pesagem` = ".$id_pesagem." AND p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornecedor_id_fornecedor` AND v.`id_veiculo` = p.`veiculo_id_veiculo` AND pro.`id_produto` = p.`produto_id_produto`";
+ 
+   $result = $conn->query($sql);
+   if ($result->num_rows > 0) {
+      // output data of each row
+      $resultado = array();
+      while($row = $result->fetch_assoc()) {
+         $consultaPesagem = new ConsultaPesagem();  // tem que criar essa class ainda.
+
+         $consultaPesagem->data = $row['data'];
+         if($row['status'] = 3){
+         	$consultaPesagem->status = "PESAGEM MANUAL";
+         }
+
+         $consultaPesagem->id_pesagem = $row['id_pesagem'];
+         $consultaPesagem->peso_1 = $row['peso_1'];
+         $consultaPesagem->peso_2 = $row['peso_2'];
+         $consultaPesagem->peso_descontos = $row['peso_descontos'];
+         $consultaPesagem->peso_liquido = $row['peso_liquido'];
+         $consultaPesagem->cliente = $row['cliente'];
+         if($row['cpf_cliente'] != null){
+         	$consultaPesagem->cpf_cnpj_cliente = $row['cpf_cliente'];
+         }
+         if($row['cnpj_cliente'] != null){
+         	$consultaPesagem->cpf_cnpj_cliente = $row['cnpj_cliente'];
+         }
+         $consultaPesagem->fornecedor = $row['fornecedor'];
+
+         if($row['cpf_fornecedor'] != null){
+         	$consultaPesagem->cpf_cnpj_fornecedor = $row['cpf_fornecedor'];
+         }
+         if($row['cnpj_fornecedor'] != null){
+         	$consultaPesagem->cpf_cnpj_fornecedor = $row['cnpj_fornecedor'];
+         }
+ 
+         $consultaPesagem->placa = $row['placa'];
+         $consultaPesagem->produto = $row['produto'];
+         $consultaPesagem->cod_prod = $row['cod_prod'];
+  
+         array_push($resultado,$consultaPesagem);
+      }
+
+   } else {
+     $r = new Resposta();
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $r->status=0;
+      $resultado = $r;
+   }
+   $conn->close();
+   
+   
+   return $resultado;
+
+}
    
  
 }

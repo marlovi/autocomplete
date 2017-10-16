@@ -130,6 +130,16 @@ var pesagemmanual = {
          controller: "pesagemManualController"
          
      }
+
+ 
+
+     var layoutMeiaPag = {
+         name: 'layoutMeiaPag',
+         url: '/impressao', // endereço visivel ao usuario
+         templateUrl: "pages/layoutMeiaPag.html",
+         controller: "impressaoController"
+         
+     }
 /////////////////////////////////////////////////////////////////////////
 
 
@@ -155,8 +165,9 @@ var pesagemmanual = {
          .state(editarcliente)
          .state(deletecliente)
           
+         .state(pesagemmanual)
 
-         .state(pesagemmanual);
+         .state(layoutMeiaPag);
 
 
  });
