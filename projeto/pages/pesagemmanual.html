@@ -112,6 +112,7 @@
             </div>
          </div>
       </div>
+      
       <div class="row">
          <div class="col s1 ">
          </div>
@@ -123,9 +124,11 @@
       </div>
       <div class="row">
          <div class="row s12 center">
-            <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="pesagem.status != 3 " ng-click="salvar()" ui-sref="home" >Enviar</button>
+            <!-- isso aqui é usado para sair da pagina atual ui-sref="home" -->
+            <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="pesagem.status != 3 " ng-click="salvar()" ui-sref="layoutMeiaPag" >Enviar</button>
          </div>
       </div>
    </div>
 </div>
-{{pesagem}}
+  
+
