@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <!--SUBSTITUIR PELO OFF LINE-->
-    <!-- <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
     <link type="text/css" rel="stylesheet" href="css/autocomplete.css" />
-
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SPA 4 TENTATIVA</title>
@@ -23,21 +18,15 @@
     <script src="js/angular-sanitize.js"></script>
     <script src="off_js/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
-
-
     <!-- Angular Material Library -->
-
     <script type="text/javascript" src="js/autocomplete.min.js"></script>
-
     <meta charset="utf-8" />
 </head>
-
 <body ng-app="home">
     <script>
     </script>
-    <!-- para travar o tamanho <div class="row center" style= "width: 1200px; height: 800px;" >-->
+<!-- para travar o tamanho <div class="row center" style= "width: 1200px; height: 800px;" >-->
     <div class=" row container ">
         <div class="col s12 ">
             <!-- Menu Cadastro -->
@@ -53,7 +42,6 @@
                 <li class="divider"></li>
                 <li><a ui-sref="cadastrodesconto">NÃO FEITO Cadastro de Descontos</a></li>
                 <li class="divider"></li>
-
             </ul>
             <!-- Menu pesquisa -->
             <ul id="dropdown2" class="dropdown-content ">
@@ -96,44 +84,25 @@
                 <li><a ui-sref="pesquisaproduto">Pesagem Avulsa NAO</a></li>
                 <li class="divider"></li>
             </ul>
-
-
-
-
             <nav>
                 <div class="nav-wrapper ">
                     <ul class="center hide-on-med-and-down">
-                        <!-- Aqui tenho que colocar aquela tela de automação das cancelas e semaforos-->
+ <!-- Aqui tenho que colocar aquela tela de automação das cancelas e semaforos-->
                         <li><a ui-sref="home">Controle Balança</a></li>
-
                         <li><a class="dropdown-button " href="#!" data-activates="dropdown4">Pesagem<i class="material-icons right">arrow_drop_down</i></a></li>
-
                         <li><a class="dropdown-button " href="#!" data-activates="dropdown1">Cadastro<i class="material-icons right">arrow_drop_down</i></a></li>
-
                         <li><a class="dropdown-button " href="#!" data-activates="dropdown2">Pesquisa<i class="material-icons right">arrow_drop_down</i></a></li>
-
                         <li><a class="dropdown-button " href="#!" data-activates="dropdown3">Relatórios<i class="material-icons right">arrow_drop_down</i></a></li>
-
-
                     </ul>
                 </div>
             </nav>
             <div class="row  ">
                 <ui-view></ui-view>
-
-
             </div>
             <script type="text/javascript" src="app.js"></script>
-
             <script type="text/javascript" src="router/route.js"></script>
             <script type="text/javascript" src="controller/home.js"></script>
-            <script type="text/javascript" src="controller/cadastroproduto.js"></script>
-
-            <!--
-            <script type="text/javascript" src="controller/pesquisaproduto.js"></script>
-            <script type="text/javascript" src="controller/editarproduto.js"></script>
-            <script type="text/javascript" src="controller/deleteproduto.js"></script>
-            -->
+           
             <script type="text/javascript" src="controller/cadastrocliente.js"></script>
             <script type="text/javascript" src="controller/pesquisacliente.js"></script>
             <script type="text/javascript" src="controller/editarcliente.js"></script>
@@ -155,13 +124,9 @@
             <script type="text/javascript" src="controller/deletefornecedor.js"></script>
 
             <script type="text/javascript" src="controller/pesagemmanual.js"></script>
+
             <script type="text/javascript" src="controller/impressao.js"></script>
-
-
-
-
         </div>
     </div>
 </body>
-
 </html>
