@@ -18,7 +18,7 @@
 // SERÁ QUE ESSE DADO SENDO COMO STRING DA RUIM NA BUSCA POR DATA?
 				// ESSA FUNÇÃO SETA O BANCO DE DADOS PARA SAO PAULO
 			//date_default_timezone_set('America/Sao_Paulo');
-			//$pesagem->data = date('d/m/Y H:i:s', time());
+			 
 			if($con->connect_error){
 				$verificador = false;
 				die("Problema na conexão ".$con->connect_error);
@@ -79,7 +79,7 @@ $banco = new Banco();
             die("Problema na conexão ".$conn->connect_error);
          }
 // preciso de buscar as informações da propria tabela pesagem
-   $sql = "SELECT p.`data`, p.`status` , p.`motorista` , p.`observacao`, p.`id_pesagem`, p.`peso_1`, p.`peso_2`, p.`peso_descontos`, p.`peso_liquido`, c.`nome`AS `cliente` , c.`cpf`AS `cpf_cliente` , c.`cnpj`AS `cnpj_cliente`, f.`nome` AS `fornecedor` , f.`cpf` AS `cpf_fornecedor` , f.`cnpj` AS `cnpj_fornecedor`, v.`placa`, pro.`nome` AS `produto` , pro.`id_produto` AS `cod_prod`  FROM `pesagem` as `p`, `cliente` as `c`, `fornecedor` as `f`, `veiculo` as `v`, `produto` as `pro` WHERE p.`id_pesagem` = ".$id_pesagem." AND p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornecedor_id_fornecedor` AND v.`id_veiculo` = p.`veiculo_id_veiculo` AND pro.`id_produto` = p.`produto_id_produto`";
+   $sql = "SELECT DATE_FORMAT(p.`data`, '%d-%m-%Y %h:%i:%s') AS data , p.`status` , p.`motorista` , p.`observacao`, p.`id_pesagem`, p.`peso_1`, p.`peso_2`, p.`peso_descontos`, p.`peso_liquido`, c.`nome`AS `cliente` , c.`cpf`AS `cpf_cliente` , c.`cnpj`AS `cnpj_cliente`, f.`nome` AS `fornecedor` , f.`cpf` AS `cpf_fornecedor` , f.`cnpj` AS `cnpj_fornecedor`, v.`placa`, pro.`nome` AS `produto` , pro.`id_produto` AS `cod_prod`  FROM `pesagem` as `p`, `cliente` as `c`, `fornecedor` as `f`, `veiculo` as `v`, `produto` as `pro` WHERE p.`id_pesagem` = ".$id_pesagem." AND p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornecedor_id_fornecedor` AND v.`id_veiculo` = p.`veiculo_id_veiculo` AND pro.`id_produto` = p.`produto_id_produto`";
  
    $result = $conn->query($sql);
    if ($result->num_rows > 0) {
@@ -88,7 +88,10 @@ $banco = new Banco();
       while($row = $result->fetch_assoc()) {
          $consultaPesagem = new ConsultaPesagem();  // tem que criar essa class ainda.
 
+
          $consultaPesagem->data = $row['data'];
+         //$consultaPesagem->data = date_format(p.`data`, 'd/m/Y H:i:s'); 
+          
          if($row['status'] = 3){
          	$consultaPesagem->status = "PESAGEM MANUAL";
          }
