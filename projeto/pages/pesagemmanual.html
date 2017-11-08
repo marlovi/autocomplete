@@ -16,30 +16,12 @@
    </div>
    <div class="col s12 center">
       <div class="row  ">
-         <div class="col s3 input-field">
+         <div class="col s4 input-field">
             <input id="motorista" type="text" ng-model="pesagem.motorista">
             <label for="motorista"> Motorista </label>
          </div>
-         <div class="col s2 input-field">
-            <input id="primeira" type="text" ng-model="pesagem.peso_1" ng-change="modulo(pesagem.peso_1)" mask="999999" ng-keyup="autorizar_envio()" ng-Disabled="!pesagem.placa ">
-            <label for="primeira" class="active"> Primeira Pesagem </label>
-         </div>
-         <div class="col s2 input-field">
-            <input id="segunda" type="text" ng-model="pesagem.peso_2" ng-change="modulo(pesagem.peso_2)" mask="999999" ng-Disabled="!pesagem.placa " ng-keyup="autorizar_envio()">
-            <label for="segunda" class="active"> Segunda Pesagem </label>
-         </div>
-         <div class="col s2 input-field">
-            <input id="liquido" type="text" ng-model="pesagem.peso_descontos " ng-change="modulo(pesagem.peso_descontos) " mask="999999" ng-Disabled="!pesagem.placa " ng-keyup="autorizar_envio()">
-            <label for="liquido" class="active"> Descontos </label>
-         </div>
-         <div class="col s3 input-field">
-            <input id="liquido" type="number" name="liquido" ng-model="pesagem.peso_liquido" disabled="disabled">
-            <label for="liquido" id="label_liquido" class="active"> Liquido </label>
-         </div>
-      </div>
-      <div class="row">
-         <!-- aqui começa a pesquisa placa em teste -->
-         <div class="col s3 left-align  ">
+
+         <div class="col s4 left-align ">
             <label for="veiculo" class="active "> Pesquisar placa </label>
             <div data-ng-controller="pesagemManualVeiculoController as PVeiculo"  >
                <md-autocomplete  ng-Disabled="!pesagem.motorista" id="placa" ngb-disabled="PVeiculo.isDisabled " md-no-cache="PVeiculo.noCache" md-selected-item="selected" md-search-text-change="PVeiculo.searchTextChange(PVeiculo.searchText)" md-search-text="PVeiculo.searchText "
@@ -53,7 +35,8 @@
                </md-autocomplete>
             </div>
          </div>
-         <div class="col s3 left-align  ">
+
+         <div class="col s4 left-align ">
             <label for="cliente" class="active "> Cliente </label>
             <div data-ng-controller="pesagemManualClienteController as Pcliente">
                <md-autocomplete ng-Disabled="!pesagem.placa" id="auto" ngb-disabled="Pcliente.isDisabled " md-no-cache="Pcliente.noCache" md-selected-item="selected" md-search-text-change="Pcliente.searchTextChange(Pcliente.searchText)" md-search-text="Pcliente.searchText "
@@ -75,7 +58,10 @@
                </md-autocomplete>
             </div>
          </div>
-         <div class="col s3 left-align ">
+
+      </div>
+      <div class="row">
+         <div class="col s4 left-align ">
             <label for="fornecedor" class="active "> Fornecedor </label>
             <div data-ng-controller="pesagemManualFornecedorController as Pfornecedor">
                <md-autocomplete ng-Disabled="!pesagem.placa" id="auto" ngb-disabled="Pfornecedor.isDisabled " md-no-cache="Pfornecedor.noCache" md-selected-item="Pfornecedor.selectedItem" md-search-text-change="Pfornecedor.searchTextChange(Pfornecedor.searchText)" md-search-text="Pfornecedor.searchText "
@@ -97,7 +83,8 @@
                </md-autocomplete>
             </div>
          </div>
-         <div class="col s3 left-align ">
+
+         <div class="col s4 left-align ">
             <label for="produto" class="active "> Produto </label>
             <div data-ng-controller="pesagemManualProdutoController as Pproduto">
                <md-autocomplete ng-Disabled="!pesagem.placa" id="auto" ngb-disabled="Pproduto.isDisabled " md-no-cache="Pproduto.noCache" md-selected-item="Pproduto.selectedItem" md-search-text-change="Pproduto.searchTextChange(Pproduto.searchText)" md-search-text="Pproduto.searchText "
@@ -111,10 +98,32 @@
                </md-autocomplete>
             </div>
          </div>
+
+         <div class="col s3 input-field">
+            <input id="liquido" type="number" name="liquido" ng-model="pesagem.peso_liquido" disabled="disabled">
+            <label for="liquido" id="label_liquido" class="active"> Liquido </label>
+         </div>
+
       </div>
       <div class="row">
-         <div class="col s1 ">
+       
+
+         <div class="col s3 input-field">
+            <input id="primeira" type="text" ng-model="pesagem.peso_1" ng-change="modulo(pesagem.peso_1)" mask="999999" ng-keyup="autorizar_envio()" ng-Disabled="!pesagem.placa ">
+            <label for="primeira" class="active"> Primeira Pesagem </label>
          </div>
+         <div class="col s3 input-field">
+            <input id="segunda" type="text" ng-model="pesagem.peso_2" ng-change="modulo(pesagem.peso_2)" mask="999999" ng-Disabled="!pesagem.placa " ng-keyup="autorizar_envio()">
+            <label for="segunda" class="active"> Segunda Pesagem </label>
+         </div>
+         <div class="col s3 input-field">
+            <input id="liquido" type="text" ng-model="pesagem.peso_descontos " ng-change="modulo(pesagem.peso_descontos) " mask="999999" ng-Disabled="!pesagem.placa " ng-keyup="autorizar_envio()">
+            <label for="liquido" class="active"> Descontos </label>
+         </div>
+         
+
+
+
          <div class="input-field col s12   ">
             <textarea id="observacao" type="text" class="materialize-textarea" ng-model=" esagem.observacao">
             </textarea>
