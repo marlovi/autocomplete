@@ -51,6 +51,9 @@ function pesagemManualController($scope, $http, $log, $cookieStore, $mdDialog, $
     }
 
     $scope.salvar = function() {
+        //console.log($scope.pesagem);
+        //console.log("aqui vai para o banco");
+
         // percebi ser interessante converter em int os dados antes de salvar no 
         // banco. por exemplo as chaves estrangeiras devem ser inteiro
         // e a leitura de peso tambem.
@@ -73,7 +76,8 @@ function pesagemManualController($scope, $http, $log, $cookieStore, $mdDialog, $
         });
        //    console.log($scope.pesagem );
         request.then(function(response) {  
-            // console.log(response.data);
+             console.log(response.data);
+             console.log("aqui volta do banco");
             // $scope.Cliente = response.data;
             // foi necessario atualizar o objeto cliente com os dados de id retornado do banco
             // isso faz a atualização do objeto que está na pagina.

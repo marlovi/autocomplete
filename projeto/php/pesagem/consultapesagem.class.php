@@ -3,6 +3,7 @@
 		public $data;  
 		public $status;
 		public $id_pesagem;
+		public $motorista;
 		public $peso_1;
 		public $peso_2;
 		public $peso_descontos;
@@ -11,6 +12,7 @@
 		public $fornecedor;
 		public $placa;  
 		public $produto;
+		public $observacao;
 
 		function __construct(){}
 		public function  preencher($request){
@@ -19,6 +21,9 @@
 		}
 		if(isset($request->status)){
 			$this->status = $request->status;
+		}
+		if(isset($request->motorista )){
+			$this->motorista = $request->motorista;
 		}
 		if(isset($request->id_pesagem)){
 			$this->id_pesagem = $request->id_pesagem;
@@ -48,6 +53,10 @@
 		if(isset($request->produto)){
 			$this->produto = $request->produto;
 		}
+		
+		if(isset($request->observacao )){
+			$this->observacao = $request->observacao;
+		}
 
 		}
  
@@ -62,6 +71,12 @@
 		}
 		public function setStatus($status){
 			$this->status = $status;
+		}
+		public function getMotorista(){
+			return $this->motorista;
+		}
+		public function setMotorista($motorista){
+			$this->motorista = $motorista;
 		}
 		public function getId_pesagem(){
 			return $this->id_pesagem;
@@ -116,6 +131,14 @@
 		}
 		public function setProduto($produto){
 			$this->produto = $produto;
+		}
+
+	
+		public function getObservacao(){
+			return $this->observacao;
+		}
+		public function setObservacao($observacao){
+			$this->observacao = $observacao;
 		}
 
 	}

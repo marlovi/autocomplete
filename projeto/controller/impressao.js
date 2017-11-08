@@ -18,9 +18,11 @@ function impressaoController($scope, $http, $log, $cookieStore, $mdDialog, $q, $
       $scope.pesagem.peso_descontos = obj_impressao.peso_descontos;
       $scope.pesagem.peso_2 = obj_impressao.peso_2;
       $scope.pesagem.peso_liquido = obj_impressao.peso_liquido;
+      $scope.pesagem.observacao = obj_impressao.observacao;
     }
 
 $scope.printDiv = function() {
+  //console.log($scope.pesagem);
 // função que abre pop up para impressão.
     var divName = "printable";
     var printContents = document.getElementById(divName).innerHTML;

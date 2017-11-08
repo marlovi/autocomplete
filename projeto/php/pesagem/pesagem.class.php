@@ -17,6 +17,7 @@
 		public $peso_2;
 		public $peso_descontos;
 		public $peso_liquido;
+		public $observacao;
 
 
 
@@ -69,6 +70,9 @@
 		}
 		if(isset($request->peso_liquido )){
 			$this->peso_liquido = $request->peso_liquido;
+		}
+		if(isset($request->observacao )){
+			$this->observacao = $request->observacao;
 		}
 
 		}
@@ -176,6 +180,12 @@
 		}
 		public function setPeso_liquido($peso_liquido){
 			$this->peso_liquido = $peso_liquido;
+		}
+		public function getObservacao(){
+			return $this->observacao;
+		}
+		public function setObservacao($observacao){
+			$this->observacao = $observacao;
 		}
 
 	}
