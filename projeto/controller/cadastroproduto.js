@@ -38,6 +38,7 @@ $scope.verificarNomeProduto = function(nome) {
                         Materialize.toast('PRODUTO JÁ CADASTRADO', 3000,'rounded', 'center');
                         Materialize.toast();
                         $scope.produto.status = 1;
+                        $scope.produto.nome =null;
                       } else{
                         $scope.produto.status = 0;
                       }

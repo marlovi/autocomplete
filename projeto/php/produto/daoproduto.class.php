@@ -3,21 +3,13 @@
 	require_once '../banco/banco.class.php';
   require_once 'resposta.class.php';
 	class DaoProduto{
-		
-		//private $serverName="localhost";
-		//private $user="root";			// padrao do win tratar isso depois
-		//private $password="";
-		//private $dataBase="stenio";		// mudar esse nome depois
-		
+ 
 		public function save($produto){
 			$verificador = true;
 			$banco = new Banco();
 			$teste = $banco->serverName;
       $produto->nome = strtoupper($produto->nome );
-			/*
-			https://www.w3schools.com/php/php_mysql_insert.asp
-			*/
-			//$con = new mysqli($this->serverName,$this->user,$this->password,$this->dataBase);
+	 
 			$con = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
 
 
@@ -32,13 +24,9 @@
 				$stament = $con->prepare($sql);
 
 				$stament->bind_param('s' ,$nome);
-				 
-
+ 
 				$nome = $produto->nome;
-			
-
-				 
-
+ 
 				$stament->execute();
 			}catch(Exception $e){
 				$verificador = false;
@@ -59,12 +47,9 @@ public function buscar(){
       $verificador = true;
       $banco = new Banco();
    $teste = $banco->serverName;
-      /*
-      https://www.w3schools.com/php/php_mysql_insert.asp
-      */
+ 
       $conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
-   
-   
+ 
       if($conn->connect_error){
         $verificador = false;
         die("Problema na conexão ".$conn->connect_error);
@@ -74,20 +59,16 @@ $sql = "SELECT `id_produto`, `nome` FROM `produto` ";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-
-
+ 
     // output data of each row
     $resultado = array();
     while($row = $result->fetch_assoc()) {
     	 $produto = new Produto();
        $produto->id_produto = $row['id_produto'];
        $produto->nome = $row['nome'];
-      
-       
-        
-
+ 
        array_push($resultado,$produto);
-
+ 
     }
 } else {
     echo "0 results";
@@ -98,24 +79,13 @@ $conn->close();
 return $resultado;
 	}
 
-
-
-
 public function buscarultimo(){
 	$resultado = null;
 			$verificador = true;
 			$banco = new Banco();
 			$teste = $banco->serverName;
-			/*
-			https://www.w3schools.com/php/php_mysql_insert.asp
-			*/
-			//$con = new mysqli($this->serverName,$this->user,$this->password,$this->dataBase);
-			$conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
-			/*
-			https://www.w3schools.com/php/php_mysql_insert.asp
-			*/
-			//$conn = new mysqli($this->serverName,$this->user,$this->password,$this->dataBase);
 
+			$conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
 
 			if($conn->connect_error){
 				$verificador = false;
@@ -132,9 +102,6 @@ if ($result->num_rows > 0) {
     	$produto = new Produto();
        $produto->id_produto = $row['id_produto'];
        $produto->nome = $row['nome'];
-       
-       
-        
 
        array_push($resultado,$produto);
 
@@ -146,7 +113,6 @@ if ($result->num_rows > 0) {
 }
 $conn->close();
 
-
 return $last_id;
 
 	}
@@ -155,7 +121,6 @@ return $last_id;
    		$verificador = false;
    			$banco = new Banco();
    		$teste = $banco->serverName;
-   		
    		$con = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
    		if ($con->connect_error) {
    			echo false;
@@ -178,13 +143,12 @@ return $last_id;
 
 public function update($produto){
    		$verificador = false;
-   		//UPDATE `cliente` SET `id_cliente`=[value-1],`nome`=[value-2],`cpf`=[value-3],`cnpj`=[value-4],`endereco`=[value-5],`cidade`=[value-6],`estado`=[value-7],`telefone`=[value-8],`email`=[value-9] WHERE 1
+
    		$banco = new Banco();
    		$teste = $banco->serverName;
    		
    		$con = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
-   
-   
+
    		if($con->connect_error){
    			$verificador = false;
    			die("Problema na conexão ".$con->connect_error);
@@ -207,21 +171,14 @@ public function update($produto){
    		$verificador = true;
    		$banco = new Banco();
    $teste = $banco->serverName;
-   		/*
-   		https://www.w3schools.com/php/php_mysql_insert.asp
-   		*/
+
       $nome = strtoupper($nome);
    		$conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
-   
-   
+ 
    		if($conn->connect_error){
    			$verificador = false;
    			die("Problema na conexão ".$conn->connect_error);
    		}
-   
-   
-   
-   
    
    $sql = "SELECT `nome`,`id_produto`  FROM `produto` WHERE `nome` LIKE '".$nome."%' LIMIT 30";
    $result = $conn->query($sql);
@@ -246,7 +203,6 @@ public function update($produto){
    }
    $conn->close();
    
-   
    return $resultado;
    
    }
@@ -256,11 +212,9 @@ public function update($produto){
    $resultado = null;
    		$verificador = true;
    		$banco = new Banco();
-   $teste = $banco->serverName;
-   
+      $teste = $banco->serverName;
    		$conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
-   
-   
+
    		if($conn->connect_error){
    			$verificador = false;
    			die("Problema na conexão ".$conn->connect_error);
@@ -268,7 +222,6 @@ public function update($produto){
    
    $sql = "SELECT `nome`,`id_produto`   FROM `produto` WHERE `id_produto` = ".$id;
    $result = $conn->query($sql);
-   
    if ($result->num_rows > 0) {
       // output data of each row
       $resultado = array();
@@ -276,35 +229,16 @@ public function update($produto){
       	$produto = new Produto();
          $produto->id_produto = $row['id_produto'];
          $produto->nome = $row['nome'];
-          
-          
+ 
          array_push($resultado,$produto); 
-   
-       
-   
       }
    } else {
       echo "0 results";
    }
    $conn->close();
-   
    return $resultado;
    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	}
 
- 
 ?>

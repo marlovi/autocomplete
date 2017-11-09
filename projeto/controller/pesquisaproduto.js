@@ -11,10 +11,8 @@
           $cookieStore.put('editarproduto', id);
       }
 
- 
       $scope.gerarcartaonome = function(produto) {
-        // SE TEM REGISTRO NA BUSCA
-    
+
           var $newDiv = $("<div class='row'>" +
               "<div class='col s6 '>" +
               "<div class='card blue-grey darken-1'>" +
@@ -73,8 +71,6 @@
       // quando começa a digitar no formulario na pagina.
       // tem que tratar pra quando retornar do banco que 
       // nao existe o cadastro só uma vez o resultado nulo.
-     
-
 //função que o Marlus mandou por face.
 // o problema era limpar a pagina quando fizesse uma nova consulta.
 
@@ -114,7 +110,6 @@
               "<div class='card-content' id='teste' ng-show='mostrar'>" +
 
               //é aqui que vai rodar os detalhes
-
               //
               "<p> </p>" +
               "</div>" +
@@ -134,9 +129,7 @@
               var content = div($scope);
               $("#divdinamica").append(content);
           });
-
-                      
-                       
+          
                   } else {
                       $('#divdinamica').empty();
                       angular.forEach(response.data, function(value, key) {
@@ -144,16 +137,11 @@
                         // a mesma função que gera o cartão cpf.
                           $scope.myText = $scope.myText + $scope.gerarcartaonome(value);
                       });
-
-
-
                   }
-
 
               }, function(response) {
                   console.log("ERROR" + response);
               });
-
 
           }
 
