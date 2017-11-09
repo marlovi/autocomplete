@@ -85,7 +85,7 @@
           }
              
           else {
-             // console.log($scope.pesquisa);
+            
               var request = $http({
                   method: "post",
                   url: "php/produto/pesquisarprodutonome.php",
