@@ -4,7 +4,7 @@
          <h2 class="center">Cadastro de Produto</h2>
          <div class="row">
             <div class="col s5 input-field">
-               <input id="nome" type="text" ng-model="produto.nome">
+               <input id="nome" type="text" ng-model="produto.nome" ng-blur="verificarNomeProduto(produto.nome)"  >
                <label for="nome">Nome</label>
             </div>
          </div>
@@ -14,7 +14,7 @@
          </div>
       </div>
       <div class="row s12 center">
-         <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="!produto.nome"  ng-click="salvar()">Enviar</button>
+         <button class="btn waves-effect waves-light" id="enviar" ng-Disabled ="produto.status !=0"  ng-click="salvar()">Enviar</button>
          <button class="waves-effect waves-teal btn-flat" id="voltar" ng-click="voltar()">Voltar</button>
       </div>
    </div>
