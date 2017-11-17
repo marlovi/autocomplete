@@ -114,7 +114,8 @@ function deleteClienteController($scope, $http, $cookieStore, focus, $timeout, m
 
         /* Successful HTTP post request or not */
         request.then(function(response) {
-            if (response.data === 'null') {
+         console.log("retornou do banco " + response.data.status_veiculo);
+            if (response.data.status_veiculo === 0) {
                 $scope.lines = [];
             } else $scope.lines = response.data;
             //console.log()

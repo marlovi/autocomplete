@@ -99,23 +99,101 @@ function editarClienteController($scope, $http, $cookieStore, focus, $timeout, $
         console.log($cookieStore.get('editarcliente'));
     }
 
+   
+      $scope.salvarVeiculo = function() {
+        // CRIAR CONDIÇÃO QUE VERIFICA SE OS CAMPOS PLACAS SÃO DIFERENTES
+ 
+          
+  
+       var   i=0;
+var listaRepetida = 0;         
+  if(!$scope.lines){
+    //SE É A PRIMEIRA DA LISTA
+          $scope.cont = $scope.veiculo;
+          $scope.lines.push($scope.cont);
+          console.log("PRIMEIRA DA LISTA");
+          $scope.veiculo = null;
+
+  }else{
+    //TRANSFIRO A INFO E LIMPO  VARIAVEL
+          $scope.cont = $scope.veiculo;
+          $scope.lines.push($scope.cont);
+          $scope.veiculo = null;
+do { 
+var n = $scope.lines[i].placa.localeCompare($scope.cont.placa);
+// TESTO TODAS AS POSIÇOES DA LISTA
+// SE DER MAIOR QUE 1 VEZ NA LISTA ENTÃO PAGADA
+// E TIRA DA LISTA.
+if(n == 0){
+  listaRepetida += 1;
+//console.log(" é igual " + listaRepetida);
+if(n == 0 && listaRepetida > 1 ){
+    // SE A STRING FOR IGUAL  E TIVER MAIS DE UMA VEZ 
+  // NA LISTA ENTÃO PARA O TESTE E SAI DO WHILE
+  // E TIRA PLACA DA LISTA.
+i = $scope.lines.length
+var meuPeixePop = $scope.lines.pop();
+}
+}
+i += 1;  
+} while (i < $scope.lines.length);
+}
+ 
+    }
+//////
+
+
+$scope.consulta_placa = function() {
+ 
+var teste_tamanho_string = "";
+teste_tamanho_string = $scope.veiculo.placa; // RETIREI A STRING DA PLACA
+            var teste_tamanho_digitado = teste_tamanho_string.length; // DESCOBRI O TAMANHO
+            //console.log($scope.veiculo);
+           // console.log(teste_tamanho_digitado);  // FAÇO O TESTE DE APROVAÇÃO DE ENVIO
+           // console.log($scope.veiculo.placa); 
+            if (teste_tamanho_digitado == 8) {
+ 
+              var request = $http({
+                  method: "post",
+                  url: "php/veiculo/pesquisarveiculoplaca_cadastro.php", 
+                  data: $scope.veiculo,
+                  // data: $scope.veiculo.placa,
+                  headers: {
+                      'Content-Type': 'application/x-www-form-urlencoded'
+                  }
+              });
+  request.then(function(response) {
+            
+
+            console.log(response.data);
+// SE RETORNAR ALGUM REGISTRO DO BANCO O ELSE RODA
+// SE NAO RETORNAR NENHUM REGISTRO DO BANCO O IF RODA
+   if(!angular.isUndefined(response.data.status_veiculo)){
+//console.log("CADASTRO PERMITIDO");
+ }else{
+  Materialize.toast('PLACA JÁ CADASTRADA', 3000,'rounded', 'center');
+ $scope.veiculo.placa = null;
+Materialize.toast();
+
+  }     
+        }, function(response) {
+            console.log("ERROR" + response);
+        });
+ 
+      
+        
+} 
+// O QUE EU QUERO FAZER?
+/* 
+COLOCAR A PLACA PARA SER PESQUISADA
+
+
+
+*/
  
 
-    // DEVE SER EDITADA!!!
-    $scope.salvarVeiculo = function() {
-
-        // $scope.cont =  $scope.cont+1;
-        $scope.cont = $scope.veiculo;
-
-        // console.log(Object.keys($scope.lines).length);
-        $scope.lines.push($scope.cont)
-
-        // $scope.lines.push($scope.cont);
-        //  console.log($scope.lines);
-        $scope.veiculo = null;
-
-
     }
+ 
 
 
 
@@ -131,7 +209,10 @@ function editarClienteController($scope, $http, $cookieStore, focus, $timeout, $
 
         /* Successful HTTP post request or not */
         request.then(function(response) {
-            if (response.data === 'null') {
+            // resolver o erro quando nao tem placa no registro cliente
+
+            console.log("retornou do banco " + response.data.status_veiculo);
+            if (response.data.status_veiculo === 0) {
                 $scope.lines = [];
             } else $scope.lines = response.data;
             //console.log()

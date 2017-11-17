@@ -235,8 +235,7 @@ if (!$scope.cliente ){
       }
       $scope.lines = [];
       $scope.cont = 1;
-
-      // DEVE SER EDITADA!!!
+ 
       $scope.salvarVeiculo = function() {
         // CRIAR CONDIÇÃO QUE VERIFICA SE OS CAMPOS PLACAS SÃO DIFERENTES
  

@@ -57,10 +57,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="linha in lines  | filter:{linha: '!'}">
-                                    <td> <input id="placa" type="text" ng-model="linha.placa"> </td>
-                                    <td><input id="tipo" type="text" ng-model="linha.tipo"></td>
-                                    <td><input id="motorista" type="text" ng-model="linha.motorista"></td>
+                                <tr ng-repeat="linha in lines  | filter:{linha: '!'}">
+                                    <td id="placa" type="text" ng-model="linha.placa"> {{linha.placa}}</td>
+                                    <td id="tipo" type="text" ng-model="linha.tipo"> {{linha.tipo}} </td>
+                                     
                                 </tr>
                             </tbody>
                         </table>
