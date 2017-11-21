@@ -6,11 +6,15 @@ function deleteClienteController($scope, $http, $cookieStore, focus, $timeout, m
         var listaClienteVeiculo = [];
         listaClienteVeiculo.push($scope.cliente);
         listaClienteVeiculo.push($scope.lines);
-        console.log(listaClienteVeiculo);
-
+       // console.log("o cliente ");
+       // console.log($scope.cliente);
+       // console.log("os veiculos ");
+      //  console.log($scope.lines);
+        // ALTERADO url: "php/cliente/deletarcliente.php",
+        // PARA TESTAR COMO PEGA OS DADOS 
         var request = $http({
             method: "post",
-            url: "php/cliente/deletarcliente.php",
+            url: "php/cliente/deletarclienteplaca.php",
             data: listaClienteVeiculo,
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -20,6 +24,9 @@ function deleteClienteController($scope, $http, $cookieStore, focus, $timeout, m
         request.then(function(response) {
             var $resposta = response.data;
             console.log($resposta);
+             
+            
+               
             $scope.cliente = null;
             $scope.lines = [];
             if ($resposta.status === true) {
@@ -31,6 +38,21 @@ function deleteClienteController($scope, $http, $cookieStore, focus, $timeout, m
                 clickOnUpload();
 
             }
+
+            if ($resposta.status === false) {
+                //alert('Cliente Deletado com Sucesso!');
+                $scope.cliente = null;
+                $scope.lines = [];
+                    meuServico.mostrar('Alteração','REGISTRO ASSOCIADO A PESAGEM, IMPOSSIVEL APAGAR!!!');
+                //Mandar para outra página.
+                clickOnUpload();
+
+            }
+
+
+
+
+
         }, function(response) {
             console.log("ERROR" + response);
         });

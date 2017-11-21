@@ -1,7 +1,7 @@
 <?php  
 	require_once 'pesagem.class.php';
 	require_once '../banco/banco.class.php';
-    require_once 'resposta.class.php';
+  require_once 'resposta_pesagem.class.php';
  
 	class DaoPesagem{
 
@@ -127,7 +127,7 @@ $banco = new Banco();
       }
 
    } else {
-     $r = new Resposta();
+     $r = new Resposta_pesagem();
      // padronizado retorno vazio
      // se 0 não encontrado o registro
      $r->status=0;
@@ -140,6 +140,86 @@ $banco = new Banco();
 
 }
    
+
+// INICIO CONSULTA PESAGEM POR PLACA
+
+
+public function consultaPesagemPlaca($id_placa){
+// pretendo consultar  se existe pesagem com essa placa
+// se sim retornar qual id da pesagem
+// qual o tipo de pesagem "manual"
+// qual a placa 
+// se nao retornar status = 0;
+	$banco = new Banco();
+   	$teste = $banco->serverName;
+	$conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
+	         if($conn->connect_error){
+	            $verificador = false;
+	            die("Problema na conexão ".$conn->connect_error);
+	         }
+   $sql = "SELECT v.`placa`, p.`status` ,  p.`id_pesagem` ,  p.`veiculo_id_veiculo`  FROM `pesagem` as `p`, `veiculo` as `v` WHERE p.`veiculo_id_veiculo` = ".$id_placa." AND v.`id_veiculo` = p.`veiculo_id_veiculo`";
+   $result = $conn->query($sql);
+   if ($result->num_rows > 0) {
+      $resultado = array();
+      while($row = $result->fetch_assoc()) {
+         $consultaPesagem = new ConsultaPesagem();  // tem que criar essa class ainda.
+         if($row['status'] = 3){
+         	$consultaPesagem->status = "PESAGEM MANUAL";
+         }
+         $consultaPesagem->id_pesagem = $row['id_pesagem'];
+         $consultaPesagem->placa = $row['placa'];
+            $consultaPesagem->id_veiculo = $row['veiculo_id_veiculo'];
+         array_push($resultado,$consultaPesagem);
+      }
+   } else {
+     $r = new Resposta_pesagem();
+     $r->status=0; // se a placa tiver pesagem
+      $resultado = $r;
+   }
+   $conn->close();
+   return $resultado;
+}
+
+// FIM CONSULTA PESAGEM POR PLACA
+
+// CONSULTA SE O ID CLIENTE TEM ALGUMA PESAGEM
+
+public function consultaPesagemCliente($id_placa){
+// pretendo consultar  se existe pesagem com essa placa
+// se sim retornar qual id da pesagem
+// qual o tipo de pesagem "manual"
+// qual a placa 
+// se nao retornar status = 0;
+  $banco = new Banco();
+    $teste = $banco->serverName;
+  $conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
+           if($conn->connect_error){
+              $verificador = false;
+              die("Problema na conexão ".$conn->connect_error);
+           }
+   $sql = "SELECT p.`status` ,  p.`id_pesagem` , p.`cliente_id_cliente`   FROM `pesagem` as `p`, `cliente` as `c` WHERE p.`cliente_id_cliente` = ".$id_placa." AND c.`id_cliente` = p.`cliente_id_cliente`";
+   $result = $conn->query($sql);
+   if ($result->num_rows > 0) {
+      $resultado = array();
+      while($row = $result->fetch_assoc()) {
+         $consultaPesagem = new ConsultaPesagem();  // tem que criar essa class ainda.
+         if($row['status'] = 3){
+          $consultaPesagem->status = "PESAGEM MANUAL";
+         }
+         $consultaPesagem->id_pesagem = $row['id_pesagem'];
+        $consultaPesagem->id_cliente = $row['cliente_id_cliente'];
+         array_push($resultado,$consultaPesagem);
+      }
+   } else {
+     $r = new Resposta_pesagem();
+     $r->status=0;  // se o cliente nao tiver pesagem
+      $resultado = $r;
+   }
+   $conn->close();
+   return $resultado;
+}
+
+// FIM CONSULTA ID CLIENTE
  
 }
 
