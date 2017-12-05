@@ -23,10 +23,9 @@ function deleteClienteController($scope, $http, $cookieStore, focus, $timeout, m
 
         request.then(function(response) {
             var $resposta = response.data;
-            console.log($resposta);
-             
-            
-               
+            var $lista_pesagem = [];
+           //console.log( response.data);
+ 
             $scope.cliente = null;
             $scope.lines = [];
             if ($resposta.status === true) {
@@ -40,18 +39,32 @@ function deleteClienteController($scope, $http, $cookieStore, focus, $timeout, m
             }
 
             if ($resposta.status === false) {
+               // console.log($resposta);
+               // console.log($resposta.status_pesagem);
+               // console.log($resposta.status_pesagem.length);
+                 
+                
+
+                
+
+                 for (var i = 0; i < $resposta.status_pesagem.length; i++) {
+                      //  console.log ("id pesagem posição " + i);
+                       $lista_pesagem.push( $resposta.status_pesagem[i]);
+                 }
+                 //console.log($lista_pesagem);
+
+
+
+                //console.log($resposta);
                 //alert('Cliente Deletado com Sucesso!');
                 $scope.cliente = null;
                 $scope.lines = [];
-                    meuServico.mostrar('Alteração','REGISTRO ASSOCIADO A PESAGEM, IMPOSSIVEL APAGAR!!!');
+  meuServico.mostrar('Alteração ','REGISTRO ASSOCIADO A PESAGEM: \n  \'' + $lista_pesagem.join(" \'") +' \' \n , IMPOSSIVEL APAGAR!!!');
+//  meuServico.mostrar('Alteração ','REGISTRO ASSOCIADO A PESAGEM: , IMPOSSIVEL APAGAR!!!');
                 //Mandar para outra página.
                 clickOnUpload();
 
             }
-
-
-
-
 
         }, function(response) {
             console.log("ERROR" + response);
