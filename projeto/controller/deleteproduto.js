@@ -6,7 +6,7 @@ function deleteProdutoController($scope, $http, $cookieStore, focus, $timeout, m
         var listaProduto  = [];
         listaProduto.push($scope.produto);
           
-        console.log($scope.produto); 
+       // console.log($scope.produto); 
 
         var request = $http({
             method: "post",
@@ -19,7 +19,8 @@ function deleteProdutoController($scope, $http, $cookieStore, focus, $timeout, m
 
         request.then(function(response) {
             var $resposta = response.data;
-            console.log($resposta);
+            console.log(response.data);
+            var $lista_pesagem = [];
             $scope.produto = null;
              
             if ($resposta.status === true) {
@@ -31,6 +32,20 @@ function deleteProdutoController($scope, $http, $cookieStore, focus, $timeout, m
                 clickOnUpload();
 
             }
+
+            if ($resposta.status === false) {
+                 for (var i = 0; i < $resposta.status_pesagem.length; i++) {
+                       $lista_pesagem.push( $resposta.status_pesagem[i]);
+                 }
+            $scope.produto = null; 
+            meuServico.mostrar('Alteração ','REGISTRO ASSOCIADO A PESAGEM: \n  \'' + $lista_pesagem.join(" \'") +' \' \n , IMPOSSIVEL APAGAR!!!');
+//  meuServico.mostrar('Alteração ','REGISTRO ASSOCIADO A PESAGEM: , IMPOSSIVEL APAGAR!!!');
+                //Mandar para outra página.
+                clickOnUpload();
+            }
+
+
+
         }, function(response) {
             console.log("ERROR" + response);
         });
