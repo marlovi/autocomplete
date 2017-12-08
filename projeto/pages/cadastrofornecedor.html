@@ -4,7 +4,7 @@
          <h2 class="center">Cadastro de Fornecedor</h2>
          <div class="row">
             <div class="col s5 input-field">
-               <input id="nome" type="text" ng-model="fornecedor.nome">
+               <input id="nome" type="text" ng-model="fornecedor.nome" ng-blur="verificarNomeFornecedor(fornecedor.nome)" >
                <label for="nome">Nome</label>
             </div>
          </div>
@@ -12,13 +12,13 @@
          </div>
          <div id="divFisica" class="col">
             <div class="col s12 input-field">
-               <input id="cpf" type="text" ng-model="fornecedor.cpf" mask="999.999.999-99" ng-Disabled="fornecedor.cnpj">
+               <input id="cpf" type="text" ng-model="fornecedor.cpf" mask="999.999.999-99" ng-Disabled="fornecedor.cnpj" ng-blur="verificarCpfFornecedor(fornecedor.cpf)">
                <label for="cpf">CPF</label>
             </div>
          </div>
          <div id="divJuridica" class="col">
             <div class="col s12 input-field">
-               <input id="divJuridica" type="text" ng-model="fornecedor.cnpj" mask="99.999.999/9999-99" ng-Disabled="fornecedor.cpf">
+               <input id="divJuridica" type="text" ng-model="fornecedor.cnpj" mask="99.999.999/9999-99" ng-Disabled="fornecedor.cpf" ng-blur="verificarCnpjFornecedor(fornecedor.cnpj)">
                <label for="cnpj">CNPJ</label>
             </div>
          </div>

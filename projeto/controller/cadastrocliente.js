@@ -238,44 +238,40 @@ if (!$scope.cliente ){
  
       $scope.salvarVeiculo = function() {
         // CRIAR CONDIÇÃO QUE VERIFICA SE OS CAMPOS PLACAS SÃO DIFERENTES
- 
-          
-  
-       var   i=0;
-var listaRepetida = 0;         
-  if(!$scope.lines){
-    //SE É A PRIMEIRA DA LISTA
-          $scope.cont = $scope.veiculo;
-          $scope.lines.push($scope.cont);
-          console.log("PRIMEIRA DA LISTA");
-          $scope.veiculo = null;
-
-  }else{
+                  var   i=0;
+                  var listaRepetida = 0;         
+            if(!$scope.lines){
+              //SE É A PRIMEIRA DA LISTA
+                    $scope.cont = $scope.veiculo;
+                    $scope.lines.push($scope.cont);
+                    console.log("PRIMEIRA DA LISTA");
+                    $scope.veiculo = null;
+            }else{
     //TRANSFIRO A INFO E LIMPO  VARIAVEL
           $scope.cont = $scope.veiculo;
           $scope.lines.push($scope.cont);
           $scope.veiculo = null;
-do { 
-var n = $scope.lines[i].placa.localeCompare($scope.cont.placa);
-// TESTO TODAS AS POSIÇOES DA LISTA
-// SE DER MAIOR QUE 1 VEZ NA LISTA ENTÃO PAGADA
-// E TIRA DA LISTA.
-if(n == 0){
-  listaRepetida += 1;
-//console.log(" é igual " + listaRepetida);
-if(n == 0 && listaRepetida > 1 ){
-    // SE A STRING FOR IGUAL  E TIVER MAIS DE UMA VEZ 
-  // NA LISTA ENTÃO PARA O TESTE E SAI DO WHILE
-  // E TIRA PLACA DA LISTA.
-i = $scope.lines.length
-var meuPeixePop = $scope.lines.pop();
-}
-}
-i += 1;  
-} while (i < $scope.lines.length);
-}
+              do { 
+                    var n = $scope.lines[i].placa.localeCompare($scope.cont.placa);
+                    // TESTO TODAS AS POSIÇOES DA LISTA
+                    // SE DER MAIOR QUE 1 VEZ NA LISTA ENTÃO PAGADA
+                    // E TIRA DA LISTA.
+                    if(n == 0){
+                      listaRepetida += 1;
+                    //console.log(" é igual " + listaRepetida);
+                    if(n == 0 && listaRepetida > 1 ){
+                        // SE A STRING FOR IGUAL  E TIVER MAIS DE UMA VEZ 
+                      // NA LISTA ENTÃO PARA O TESTE E SAI DO WHILE
+                      // E TIRA PLACA DA LISTA.
+                    i = $scope.lines.length
+                    var meuPeixePop = $scope.lines.pop();
+                    }
+                    }
+                    i += 1;  
+                  } while (i < $scope.lines.length);
+                }
  
-    }
+      }
 //////
 
 
