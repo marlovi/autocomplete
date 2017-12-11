@@ -1,13 +1,10 @@
 function deleteFornecedorController($scope, $http, $cookieStore, focus, $timeout, meuServico) {
 
     $scope.deletar = function() {
-
-        // cria um vetor vazio para armazenar o cliente e veiculos.
         var listaFornecedorVeiculo = [];
         listaFornecedorVeiculo.push($scope.fornecedor);
         listaFornecedorVeiculo.push($scope.lines);
-        console.log(listaFornecedorVeiculo);
-
+       // console.log(listaFornecedorVeiculo);
         var request = $http({
             method: "post",
             url: "php/fornecedor/deletarfornecedor.php",
@@ -16,20 +13,26 @@ function deleteFornecedorController($scope, $http, $cookieStore, focus, $timeout
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
-
         request.then(function(response) {
             var $resposta = response.data;
-            console.log($resposta);
+            var $lista_pesagem = [];
             $scope.fornecedor = null;
             $scope.lines = [];
             if ($resposta.status === true) {
-               // alert('Fornecedor Deletado com Sucesso!');
                 $scope.fornecedor = null;
                 $scope.lines = [];
                     meuServico.mostrar('Alteração','Registro alterado com Sucesso!!!');
-                //Mandar para outra página.
                 clickOnUpload();
+            }
 
+            if ($resposta.status === false) {
+                 for (var i = 0; i < $resposta.status_pesagem.length; i++) {
+                       $lista_pesagem.push( $resposta.status_pesagem[i]);
+                 }
+                $scope.fornecedor = null;
+                $scope.lines = [];
+  meuServico.mostrar('Alteração ','REGISTRO ASSOCIADO A PESAGEM: \n  \'' + $lista_pesagem.join(" \'") +' \' \n , IMPOSSIVEL APAGAR!!!');
+                clickOnUpload();
             }
         }, function(response) {
             console.log("ERROR" + response);
@@ -38,9 +41,7 @@ function deleteFornecedorController($scope, $http, $cookieStore, focus, $timeout
 
     }
 
-
     $scope.doSomething = function() {
-        // do something awesome
         focus('nome');
         focus("cpf");
         focus("cnpj");
@@ -49,7 +50,6 @@ function deleteFornecedorController($scope, $http, $cookieStore, focus, $timeout
         focus("estado");
         focus("telefone");
         focus("email");
-
     };
 
     var request = $http({
@@ -60,47 +60,28 @@ function deleteFornecedorController($scope, $http, $cookieStore, focus, $timeout
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     });
-
-    /* Successful HTTP post request or not */
     request.then(function(response) {
-        //console.log(response.data[0]);
-
         $timeout(function() {
             $scope.$apply(function() {
                 $scope.buscarVeiculos();
                 $scope.lines = [];
                 $scope.fornecedor = response.data[0];
                 $scope.doSomething();
-
-
             });
         }, 0);
-        // console.log(response.data[0].nome);
-
     }, function(response) {
         console.log("ERROR" + response);
     });
+
     $scope.teste = function() {
         console.log($cookieStore.get('deletefornecedor'));
     }
 
-
-    // DEVE SER EDITADA!!!
     $scope.salvarVeiculo = function() {
-
-        // $scope.cont =  $scope.cont+1;
         $scope.cont = $scope.veiculo;
         $scope.lines.push($scope.cont);
-       // console.log($scope.lines);
         $scope.veiculo = null;
-
-
     }
-
-   
-
-
-
 
     $scope.buscarVeiculos = function() {
         var request = $http({
@@ -111,61 +92,35 @@ function deleteFornecedorController($scope, $http, $cookieStore, focus, $timeout
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
-
-        /* Successful HTTP post request or not */
         request.then(function(response) {
-            if (response.data === 'null') {
+      //   console.log("retornou do banco " + response.data.status_veiculo);
+            if (response.data.status_veiculo === 0) {
                 $scope.lines = [];
             } else $scope.lines = response.data;
-            //console.log()
             console.log(Object.keys($scope.lines).length);
             var log = [];
             angular.forEach(response.data, function(value, key) {
                 this.push(value);
             }, log);
-            //  console.log(log);
-
-
         }, function(response) {
             console.log("ERROR" + response);
         });
     }
-
-
-
-
-
 
     function clickOnUpload() {
         $timeout(function() {
             angular.element('#voltar').triggerHandler('click');
         });
     };
-
-    // Using Angular Extend
     angular.extend($scope, {
         clickOnUpload: clickOnUpload
     });
-
-    // OR Using scope directly
     $scope.clickOnUpload = clickOnUpload;
-
-
 }
-
-
-
-
-
-
 angular
     .module('home')
     .factory('focus', function($timeout, $window) {
         return function(id) {
-            // timeout makes sure that is invoked after any other event has been triggered.
-            // e.g. click events that need to run before the focus or
-            // inputs elements that are in a disabled state but are enabled when those events
-            // are triggered.
             $timeout(function() {
                 var element = $window.document.getElementById(id);
                 if (element)
@@ -180,8 +135,6 @@ angular
                 focus(attr.eventFocusId);
             });
 
-            // Removes bound events in the element itself
-            // when the scope is destroyed
             scope.$on('$destroy', function() {
                 element.off(attr.eventFocus);
             });

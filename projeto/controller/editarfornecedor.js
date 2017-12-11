@@ -1,5 +1,22 @@
 function editarFornecedorController($scope, $http, $cookieStore, focus, $timeout, meuServico) {
 
+   $scope.openOffscreen = function() { 
+    $mdDialog.show(
+      $mdDialog.alert()
+        .clickOutsideToClose(true)
+        .title('Cadastro salvo')
+        .ok('OK')
+        .openFrom({
+          top: -50,
+          width: 30,
+          height: 80
+        })
+        .closeTo({
+          left: 1500
+        })
+    );
+  };
+
     $scope.editar = function() {
 
         // cria um vetor vazio para armazenar o cliente e veiculos.
@@ -81,33 +98,66 @@ function editarFornecedorController($scope, $http, $cookieStore, focus, $timeout
     }
 
 
+$scope.salvarVeiculo = function() {
+              var   i=0;
+              var listaRepetida = 0;         
+                if(!$scope.lines){
+                        $scope.cont = $scope.veiculo;
+                        $scope.lines.push($scope.cont);
+                        $scope.veiculo = null;
+                }else{
+                                $scope.cont = $scope.veiculo;
+                                $scope.lines.push($scope.cont);
+                                $scope.veiculo = null;
+                      do { 
+                          var n = $scope.lines[i].placa.localeCompare($scope.cont.placa);
+                          if(n == 0){
+                            listaRepetida += 1;
+                                if(n == 0 && listaRepetida > 1 ){
+                                      i = $scope.lines.length
+                                      var meuPeixePop = $scope.lines.pop();
+                                }
+                          }
+                          i += 1;  
+                      } while (i < $scope.lines.length);
+                }
+               
+        }
 
+/////////////////
 
+$scope.consulta_placa = function() {
+var teste_tamanho_string = "";
+teste_tamanho_string = $scope.veiculo.placa; // RETIREI A STRING DA PLACA
+            var teste_tamanho_digitado = teste_tamanho_string.length; // DESCOBRI O TAMANHO
+            if (teste_tamanho_digitado == 8) {
+ 
+              var request = $http({
+                  method: "post",
+                  url: "php/veiculo/pesquisarveiculoplaca_cadastro.php", 
+                  data: $scope.veiculo,
+                  // data: $scope.veiculo.placa,
+                  headers: {
+                      'Content-Type': 'application/x-www-form-urlencoded'
+                  }
+              });
+  request.then(function(response) {
 
-
-
-
-
-
-
-
-
-    // DEVE SER EDITADA!!!
-    $scope.salvarVeiculo = function() {
-
-        // $scope.cont =  $scope.cont+1;
-        $scope.cont = $scope.veiculo;
-
-        // console.log(Object.keys($scope.lines).length);
-        $scope.lines.push($scope.cont)
-
-        // $scope.lines.push($scope.cont);
-        //  console.log($scope.lines);
-        $scope.veiculo = null;
-
+   if(!angular.isUndefined(response.data.status_veiculo)){
+ }else{
+  Materialize.toast('PLACA JÁ CADASTRADA', 3000,'rounded', 'center');
+ $scope.veiculo.placa = null;
+Materialize.toast();
+  }     
+        }, function(response) {
+            console.log("ERROR" + response);
+        });    
+} 
 
     }
+ 
 
+/////////////////
 
 
     $scope.buscarVeiculos = function() {
@@ -122,7 +172,7 @@ function editarFornecedorController($scope, $http, $cookieStore, focus, $timeout
 
         /* Successful HTTP post request or not */
         request.then(function(response) {
-            if (response.data === 'null') {
+             if (response.data.status_veiculo === 0) {
                 $scope.lines = [];
             } else $scope.lines = response.data;
             //console.log()
@@ -131,7 +181,6 @@ function editarFornecedorController($scope, $http, $cookieStore, focus, $timeout
             angular.forEach(response.data, function(value, key) {
                 this.push(value);
             }, log);
-            //  console.log(log);
 
 
         }, function(response) {
