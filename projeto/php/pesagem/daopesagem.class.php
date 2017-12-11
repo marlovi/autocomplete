@@ -220,7 +220,41 @@ public function consultaPesagemCliente($id_placa){
 }
 
 // FIM CONSULTA ID CLIENTE
+////////////////
 
+
+public function consultaPesagemFornecedor($id_placa){
+    $banco = new Banco();
+    $teste = $banco->serverName;
+    $conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
+           if($conn->connect_error){
+              $verificador = false;
+              die("Problema na conexão ".$conn->connect_error);
+           }
+   $sql = "SELECT p.`status` ,  p.`id_pesagem` , p.`fornecedor_id_fornecedor`   FROM `pesagem` as `p`, `fornecedor` as `c` WHERE p.`fornecedor_id_fornecedor` = ".$id_placa." AND c.`id_fornecedor` = p.`fornecedor_id_fornecedor`";
+   $result = $conn->query($sql);
+   if ($result->num_rows > 0) {
+      $resultado = array();
+      while($row = $result->fetch_assoc()) {
+         $consultaPesagem = new ConsultaPesagem();  // tem que criar essa class ainda.
+         if($row['status'] = 3){
+          $consultaPesagem->status = "PESAGEM MANUAL";
+         }
+         $consultaPesagem->id_pesagem = $row['id_pesagem'];
+        $consultaPesagem->id_fornecedor = $row['fornecedor_id_fornecedor'];
+         array_push($resultado,$consultaPesagem);
+      }
+   } else {
+     $r = new Resposta_pesagem();
+     $r->status=0;  // se o cliente nao tiver pesagem
+      $resultado = $r;
+   }
+   $conn->close();
+   return $resultado;
+}
+
+
+//////////////
 
 ///////////// CONSULTA PESAGEM PRODUTO /////////////////////////////
 

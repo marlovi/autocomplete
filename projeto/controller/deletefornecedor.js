@@ -7,7 +7,7 @@ function deleteFornecedorController($scope, $http, $cookieStore, focus, $timeout
        // console.log(listaFornecedorVeiculo);
         var request = $http({
             method: "post",
-            url: "php/fornecedor/deletarfornecedor.php",
+            url: "php/fornecedor/deletarfornecedorplaca.php",
             data: listaFornecedorVeiculo,
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -18,6 +18,7 @@ function deleteFornecedorController($scope, $http, $cookieStore, focus, $timeout
             var $lista_pesagem = [];
             $scope.fornecedor = null;
             $scope.lines = [];
+            console.log(response.data);
             if ($resposta.status === true) {
                 $scope.fornecedor = null;
                 $scope.lines = [];
