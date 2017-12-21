@@ -269,7 +269,10 @@ function pesagemManualClienteController($scope, $http, $cookieStore, $mdDialog, 
                 //$scope.dicas = response.data;
                 $scope.teste_de_resultado_de_busca = response.data;
             } else {
-                console.log("Nenhum cliente retornado");
+                // COLOCAR AQUI ALERT INFORMANDO QUE NAO TEM O REGISTRO
+                 Materialize.toast('REGISTRO NAO ENCONTRADO', 1000,'rounded', 'center');
+                 Materialize.toast();
+              //  console.log("Nenhum cliente retornado");
                 exibir = true;
             }
         }, function(response) {
@@ -369,7 +372,9 @@ var self = this;
                 //$scope.dicas = response.data;
                 $scope.teste_de_resultado_de_busca = response.data;
             } else {
-                console.log("Nenhum fornecedor retornado");
+                Materialize.toast('REGISTRO NAO ENCONTRADO', 1000,'rounded', 'center');
+                Materialize.toast();
+              //  console.log("Nenhum fornecedor retornado");
                 exibir = true;
             }
         }, function(response) {
@@ -568,7 +573,9 @@ function pesagemManualProdutoController($scope, $http, $cookieStore, $mdDialog, 
                 //$scope.dicas = response.data;
                 $scope.teste_de_resultado_de_busca = response.data;
             } else {
-                console.log("Nenhum produto retornado");
+                Materialize.toast('REGISTRO NAO ENCONTRADO', 1000,'rounded', 'center');
+                Materialize.toast();
+               // console.log("Nenhum produto retornado");
                 exibir = true;
             }
         }, function(response) {

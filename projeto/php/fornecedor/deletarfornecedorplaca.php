@@ -7,7 +7,9 @@
     require_once "../pesagem/consultapesagem.class.php";
     require_once "../pesagem/daopesagem.class.php";
 
-    	 $resposta = new Resposta();
+          $daoFornecedor = new DaoFornecedor();
+          $fornecedor = new Fornecedor();
+         $resposta = new Resposta();
          $daopesagem = new DaoPesagem();
          $objetoPesagem = new Pesagem();
          $daoVeiculo = new DaoVeiculo();
@@ -127,25 +129,21 @@ $lista_consulta_pesagem_fornecedor = $daopesagem->consultaPesagemFornecedor($req
     }
   }
  /////////FIM   TESTE DAS CONSULTAS PESAGEM CLIENTE E PLACAS///////////////////////////
- if ($teste_status_pesagem == 0) { // SE O CLIENTE E AS PLACAS NAO TIVEREM PESAGEM 
-    // $fornecedor->preencher($request[0]);
-    // $listaVeiculos = $request[1];
-    // $daoVeiculo = new DaoVeiculo();
-    // foreach($listaVeiculos as $key => $value) {
-       //  $veiculo = new Veiculo();
-       //  $veiculo->preencher($value);
-       //  $daoVeiculo->delete($veiculo);
-    // }
-   // $dao->delete($fornecedor);
+ if ($teste_status_pesagem == 0) { 
+
+
+      $fornecedor->preencher($request[0]);
+      $listaVeiculos = $request[1];
+      $daoVeiculo = new DaoVeiculo();
+     foreach($listaVeiculos as $key => $value) {
+         $veiculo = new Veiculo();
+         $veiculo->preencher($value);
+         $daoVeiculo->delete($veiculo);
+     }
+    $daoFornecedor->delete($fornecedor);
     $resposta->status = true; // aqui retorna que apagou
     echo json_encode($resposta, true);
  }
-
-
-
-
-
-
 
         /*
         $resposta = new Resposta();
