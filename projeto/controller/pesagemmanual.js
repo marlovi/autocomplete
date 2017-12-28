@@ -201,7 +201,7 @@ function pesagemManualController($scope, $http, $log, $cookieStore, $mdDialog, $
         };
     */
 
-
+ 
 
 }
 
@@ -235,6 +235,7 @@ function pesagemManualClienteController($scope, $http, $cookieStore, $mdDialog, 
         }
     }
     function searchTextChange(text) {
+
         $log.info('pesquisando por: ' + text);
         loadAll(text);
     }
@@ -252,6 +253,33 @@ function pesagemManualClienteController($scope, $http, $cookieStore, $mdDialog, 
             'forks': '16,175'
         }];
         console.log(text);
+// TRATAMENTO SE SELECIONAR E DEPOIS APAGAR A SELEÇÃO DEVE APAGAR DO
+// OBJETO O QUE FOI SELECIONADO
+       if($scope.pesagem === undefined){
+            }else{
+                 if($scope.pesagem.placa === undefined){
+              console.log("primeira consulta sem seleção");
+                }else{
+                     if(text.length === 0){
+                        console.log("SELECIONADO e depois apagado");
+                        Materialize.toast('ITEM SELECIONADO APAGADO', 1000,'rounded', 'center');
+                        Materialize.toast();
+                        $scope.pesagem.cliente_id_cliente = null;
+                        $scope.selected = null;
+                        console.log($scope.pesagem);
+                        }
+                    }
+                }
+// FIM DO TRATAMENTO
+
+
+
+
+
+
+
+
+
         var request = $http({
             method: "post",
             url: "php/cliente/manualpesquisanomecliente.php",
@@ -362,6 +390,35 @@ var self = this;
         });
 
         console.log(text);
+
+// TRATAMENTO SE SELECIONAR E DEPOIS APAGAR A SELEÇÃO DEVE APAGAR DO
+// OBJETO O QUE FOI SELECIONADO
+       if($scope.pesagem === undefined){
+            }else{
+                 if($scope.pesagem.placa === undefined){
+              console.log("primeira consulta sem seleção");
+                }else{
+                     if(text.length === 0){
+                        console.log("SELECIONADO e depois apagado");
+                        Materialize.toast('ITEM SELECIONADO APAGADO', 1000,'rounded', 'center');
+                        Materialize.toast();
+                        $scope.pesagem.fornecedor_id_fornecedor = null;
+                        $scope.selected = null;
+                        console.log($scope.pesagem);
+                        }
+                    }
+                }
+// FIM DO TRATAMENTO
+
+
+
+
+
+
+
+
+
+
  
         request.then(function(response) {
             repos = response.data;
@@ -556,6 +613,33 @@ function pesagemManualProdutoController($scope, $http, $cookieStore, $mdDialog, 
             'forks': '16,175'
         }];
         console.log(text);
+// TRATAMENTO SE SELECIONAR E DEPOIS APAGAR A SELEÇÃO DEVE APAGAR DO
+// OBJETO O QUE FOI SELECIONADO
+       if($scope.pesagem === undefined){
+            }else{
+                 if($scope.pesagem.placa === undefined){
+              console.log("primeira consulta sem seleção");
+                }else{
+                     if(text.length === 0){
+                        console.log("SELECIONADO e depois apagado");
+                        Materialize.toast('ITEM SELECIONADO APAGADO', 1000,'rounded', 'center');
+                        Materialize.toast();
+                        $scope.pesagem.produto_id_produto = null;
+                        $scope.selected = null;
+                        console.log($scope.pesagem);
+                        }
+                    }
+                }
+// FIM DO TRATAMENTO
+
+
+
+
+
+
+
+
+
         var request = $http({
             method: "post",
             url: "php/produto/manualpesquisanomeproduto.php",
@@ -747,6 +831,29 @@ var self = this;
             'watchers': '3,623',
             'forks': '16,175'
         }];
+// TRATAMENTO SE SELECIONAR E DEPOIS APAGAR A SELEÇÃO DEVE APAGAR DO
+// OBJETO O QUE FOI SELECIONADO
+       if($scope.pesagem === undefined){
+            }else{
+                 if($scope.pesagem.placa === undefined){
+              console.log("primeira consulta sem seleção");
+                }else{
+                     if(text.length === 0){
+                        console.log("SELECIONADO e depois apagado");
+                        Materialize.toast('ITEM SELECIONADO APAGADO', 1000,'rounded', 'center');
+                        Materialize.toast();
+                        $scope.pesagem.veiculo_id_veiculo = null;
+                        $scope.pesagem.placa = null;
+                        $scope.pesagem.tipo_veiculo = null;
+                        $scope.selected = null;
+                        console.log($scope.pesagem);
+                        }
+                    }
+                }
+// FIM DO TRATAMENTO
+       
+
+            
         console.log(text);
         var request = $http({
             method: "post",
@@ -793,6 +900,8 @@ Materialize.toast();
                 return repo;
             });
         }
+
+        
     }
     function createFilterFor(query) {
         var lowercaseQuery = angular.lowercase(query);
