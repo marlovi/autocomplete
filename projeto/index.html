@@ -2,8 +2,11 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SPA  - Versão 2018 1.1</title>
-    <!--Import materialize.css-->
+    <title>SPA  - Versão 2018 1.12</title>
+    <!--
+    NESSA VERSAO FAZ-SE A INTEGRAÇÃO DOS DOIS SISTEMAS
+    CONTROLDE DE ACESSORIOS E O CONTROLE DE PESAGEM.
+    -->
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
     <link type="text/css" rel="stylesheet" href="css/autocomplete.css" />
     <link href="fonts/iconfont/material-icons.css" rel="stylesheet">
@@ -24,11 +27,10 @@
     <meta charset="utf-8" />
 </head>
 <body ng-app="home">
-    <script>
-    </script>
+     
 <!-- para travar o tamanho <div class="row center" style= "width: 1200px; height: 800px;" >-->
-    <div class=" row container ">
-        <div class="col s12 ">
+    <div class=" row   ">
+        <div class="col s12  center">
             <!-- Menu Cadastro -->
             <ul id="dropdown1" class="dropdown-content ">
                 <li class="divider"></li>
@@ -84,9 +86,9 @@
                 <li><a ui-sref="pesquisaproduto">Pesagem Avulsa NAO</a></li>
                 <li class="divider"></li>
             </ul>
-            <nav>
-                <div class="nav-wrapper ">
-                    <ul class="center hide-on-med-and-down">
+            <nav >
+                <div class="nav-wrapper center ">
+                    <ul class="center  hide-on-med-and-down">
  <!-- Aqui tenho que colocar aquela tela de automação das cancelas e semaforos-->
                         <li><a ui-sref="home">Controle Balança</a></li>
                         <li><a class="dropdown-button " href="#!" data-activates="dropdown4">Pesagem<i class="material-icons right">arrow_drop_down</i></a></li>
@@ -96,9 +98,101 @@
                     </ul>
                 </div>
             </nav>
-            <div class="row  ">
-                <ui-view></ui-view>
+        </div>
+ 
+<!-- OBJETIVO CRIAR MENU LATERAL PARA CONTROLE
+DA AUTOMAÇÃO  -->
+
+  <div class="row s12   card-panel">
+
+      <div class="col s9 push-s3 card-panel center">
+   
+         <ui-view></ui-view>
+      </div>
+
+      <div class="col s3 pull-s9 ">
+        <div class="row"></div>
+    <div class="row">
+        <div class='col s5'>
+               <label for='botao_semafaro_externo_A'>Entrada A <br> </label>
+               <label for='botao_semafaro_externo_A'>Semáforo externo</label>
+               <button class='waves-effect waves-light btn black ' id="botao_semafaro_externo_A" name='botao_semafaro_externo_A' ><i class='material-icons'>highlight</i></button>
             </div>
+
+        <div class="row">
+               <div class='col s5 input-field'>
+                  <input class='black-text  ' disabled id='sensor_aproximacao_A' type='text' name='sensor_aproximacao_A' value= 'BLOQUEADO' >
+                  <label for='sensor_aproximacao_A'>Sensor aproximoção</label>
+               </div>
+            </div>
+    </div>
+
+    <div class="row">
+               <div class='col s5'>
+                  <label for='botao_semafaro_interno_A'>Semáforo interno</label>
+                  <button  class='waves-effect waves-light btn black' id="botao_semafaro_interno_A" name='botao_semafaro_interno_A' ><i class='material-icons '>highlight_off</i></button>
+               </div>
+               <div class='col s5 input-field'>
+                  <input class='black-text' disabled id='sensor_seguranca_A' type='text' name='sensor_seguranca_A' value='BLOQUEADO' >
+                  <label for='sensor_seguranca_A'>Sensor de Segurança</label>
+               </div>
+                
+    </div>
+
+    <div class="row"> 
+        <div class="col s5 ">
+                <label for='botao_semafaro_interno_A'>controle cancelas</label>
+                <button class='waves-effect waves-light btn red' id= "botao_controle_cancelas_abrir" name='botao_controle_cancelas'><i class=' material-icons ' style='font-size: 22px'>beenhere</i>
+               </button>
+              </div>
+               
+        <div class = "row">
+                <div class='col s5  input-field'>
+                  <input class='black-text' disabled id = 'estabilidade' type='text' name='estabilidade' value = 'ESTÁVEL'>
+                  <label for='estabilidade'>Plataforma</label>
+               </div>
+
+        </div>
+        <div class='col s10 offset-s1 input-field'>
+                  <input style='font-size: 25px' class='black-text ' disabled id='leiturapeso' type='text' name='leiturapeso' value="Calculando">
+                  <label for='leiturapeso'>Peso</label>
+        </div>
+    </div>
+
+    <div class="row">
+               <div class='col s5'>
+                  <label for='botao_semafaro_interno_B'>Semáforo interno</label>
+                  <button  class=' waves-effect waves-light btn black ' id= "botao_semafaro_interno_B" name='botao_semafaro_interno_B' ><i class='material-icons '>highlight_off</i></button>
+               </div>
+               <div class='col s5 input-field'>
+                  <input class='black-text' disabled id='sensor_seguranca_B' type='text' name='sensor_seguranca_B' value='BLOQUEADO' >
+                  <label for='sensor_seguranca_B'>Sensor de Segurança</label>
+               </div>
+    </div>
+
+    <div class="row">
+                <div class='col s5'>
+                  <label for='botao_semafaro_externo_B'>Semáforo externo</label>
+                  <label for='botao_semafaro_externo_B'> <br> Entrada B <br>  </label>
+                  <button id= "botao_semafaro_externo_B" class='waves-effect waves-light btn black' id="botao_semafaro_externo_B" name='botao_semafaro_externo_B' ><i class='material-icons '>highlight</i></button>
+                  
+               </div>
+     
+               
+               <div class='col s5 input-field'>
+                  <input class='black-text' disabled id='sensor_aproximacao_B' type='text' name='sensor_aproximacao_B' value='BLOQUEADO' >
+                  <label for='sensor_aproximacao_B'>Sensor aproximoção</label>
+               </div>
+    </div>
+
+
+         
+      </div>
+  </div>
+   
+
+
+ 
             <script type="text/javascript" src="app.js"></script>
             <script type="text/javascript" src="router/route.js"></script>
             <script type="text/javascript" src="controller/home.js"></script>
