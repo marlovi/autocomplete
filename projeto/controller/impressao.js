@@ -32,6 +32,22 @@ $scope.printDiv = function() {
   popupWin.document.close();
   $cookies.remove('impressao')
 } 
+
+
+$scope.printDiv_entrada = function() {
+  //console.log($scope.pesagem);
+// função que abre pop up para impressão.
+    var divName = "printable_entrada";
+    var printContents = document.getElementById(divName).innerHTML;
+    var popupWin = window.open('', '_blank', "width="+screen.availWidth+",height="+screen.availHeight);
+  popupWin.document.open();
+  popupWin.document.write('<html><head>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1.0"/> </head> <style type="text/css" media="print"> body { **zoom:75%;}  </style><body onload="window.print()">  ' + printContents + ' </body></html>');
+  popupWin.document.close();
+  $cookies.remove('impressao')
+}
+
+
+
 }
 
 angular

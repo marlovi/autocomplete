@@ -131,12 +131,28 @@ var pesagemmanual = {
          
      }
 
+var pesagementrada = {
+         name: 'pesagementrada',
+         url: '/pesagementrada', // endereço visivel ao usuario
+         templateUrl: "pages/pesagementrada.html",
+         controller: "pesagemEntradaController"
+         
+     }
+
  
 
-     var layoutMeiaPag = {
+     var layoutMeiaPag = {// pesagem manual
          name: 'layoutMeiaPag',
          url: '/impressao', // endereço visivel ao usuario
          templateUrl: "pages/layoutMeiaPag.html",
+         controller: "impressaoController"
+         
+     }
+
+     var layoutMeiaPag_entrada = {// pesagem entrada
+         name: 'layoutMeiaPag_entrada',
+         url: '/impressao_entrada', // endereço visivel ao usuario
+         templateUrl: "pages/layoutMeiaPag_entrada.html",
          controller: "impressaoController"
          
      }
@@ -166,8 +182,10 @@ var pesagemmanual = {
          .state(deletecliente)
           
          .state(pesagemmanual)
+         .state(pesagementrada)
 
-         .state(layoutMeiaPag);
+         .state(layoutMeiaPag)
+         .state(layoutMeiaPag_entrada);
 
 
  });

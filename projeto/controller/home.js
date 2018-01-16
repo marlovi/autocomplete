@@ -1,5 +1,8 @@
 function homeController($scope) {
 
+// TENTAR COLOCAR AQUI O CONTROLE DOS ACESSORIOS
+ 
+
 }
 angular
     .module('home')
@@ -48,10 +51,6 @@ var $newDiv = $(     "<div class='row'>" +
 
               "</div>"  );
 
-
-
-
-    
       $injector.invoke(function ($compile) {
           var div = $compile($newDiv);
           var content = div($scope);

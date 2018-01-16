@@ -92,8 +92,11 @@ $banco = new Banco();
          $consultaPesagem->data = $row['data'];
          //$consultaPesagem->data = date_format(p.`data`, 'd/m/Y H:i:s'); 
           
-         if($row['status'] = 3){
+         if($row['status'] == 3){
          	$consultaPesagem->status = "PESAGEM MANUAL";
+         }
+         if($row['status'] == 1){
+          $consultaPesagem->status = "PESAGEM ENTRADA";
          }
 
          $consultaPesagem->id_pesagem = $row['id_pesagem'];

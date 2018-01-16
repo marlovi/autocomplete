@@ -1,3 +1,11 @@
 input[readonly] {
     font-weight: bold;
 }
+input[type="number"][disabled] {
+   color: black;
+   font-weight: bold;
+ }
+ label[id=label_liquido] {
+   color: red;
+   font-weight: bold;
+ }

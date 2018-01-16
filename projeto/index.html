@@ -8,10 +8,18 @@
     CONTROLDE DE ACESSORIOS E O CONTROLE DE PESAGEM.
     -->
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="css/input.css" />
     <link type="text/css" rel="stylesheet" href="css/autocomplete.css" />
     <link href="fonts/iconfont/material-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="css/angular-material.min.css">
     <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <!-- DEPENDENCIAS DO CONTROLE DE ACESSORIOS -->
+    <script type="text/javascript" src="off_js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="off_js/front/botoes.js"></script>
+    <script type="text/javascript" src="off_js/alterarStatus.js"></script>
+    <script type="text/javascript" src="off_js/envioArduino.js"></script>
+    <script type="text/javascript" src="off_js/lerPeso.js"></script>
+    <!-- FIM DEPENDENCIAS DO CONTROLE DE ACESSORIOS -->
     <script type="text/javascript" src="js/angular.js"></script>
     <script type="text/javascript" src="js/angular-cookies.js"></script>
     <script src="js/angular-animate.min.js"></script>
@@ -23,11 +31,124 @@
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <script src="off_js/bower-material-master/angular-material.js"></script>
     <script type="text/javascript" src="js/autocomplete.min.js"></script>
-    
     <meta charset="utf-8" />
 </head>
-<body ng-app="home">
-     
+<!-- passar esses script para algum controler -->
+<script type="text/javascript">
+        $(document).ready(function() {
+        $('#botao_semafaro_externo_A').click(function(event) {
+        $('#botao_semafaro_externo_A').prop("disabled", true);
+        $('#botao_semafaro_externo_B').prop("disabled", true);
+        $('#botao_controle_cancelas_abrir').prop("disabled", true);
+         /*
+quando o botao for precionado o sistema pergunta
+para a CONTROLADOR como está a condiçao dos acessorios.
+*PERGUNTA FAZENDO O ENVIO DE UM COMANDO SEM DATA.
+ baseado na resposta tem se as opçoes de controle qeu sao:
+  Mudar a cor dos  botoes da pagina de acordo com a condição do sistema fisico.
+os semaforos internos nao terá autonomia para mudança de estado via
+software.
+         */ 
+         $.ajax({ 
+        url: "http://192.168.25.177:80",
+        dataType: 'jsonp',
+        crossDomain: true,
+        jsonp: false,
+        jsonpCallback: 'dados',
+        success: function(data,status,xhr) {
+        // LOGICA SEMAFORO EXTERNO A
+        // SE VERDE EXTERNO ESTIVER LIGADO BOTAO FICA VERDE
+        if (data.VD_EXT_A === 1){
+            enviarComando('NOT_AB000');
+        } else if(data.VM_EXT_A === 1){
+            // SE VERMELHO EXTERNO LIGADO BOTAO FICA VERMELHO
+            enviarComando('OFF_AB000');
+        } else if(data.VD_EXT_A === 0){
+            if(data.VM_EXT_A === 0){
+               //se estiver desligado os dois semaforos entao
+            enviarComando('ENTRA_A00');
+       }    
+            }
+        }
+      });
+        });
+        // inicio logica semaforo externo B
+            $('#botao_semafaro_externo_B').click(function(event) {
+            $('#botao_semafaro_externo_A').prop("disabled", true);
+            $('#botao_semafaro_externo_B').prop("disabled", true);
+            $('#botao_controle_cancelas_abrir').prop("disabled", true);
+         $.ajax({      
+        url: "http://192.168.25.177:80",
+        dataType: 'jsonp',
+        crossDomain: true,
+        jsonp: false,
+        jsonpCallback: 'dados',
+        success: function(data,status,xhr) {
+        // LOGICA SEMAFORO EXTERNO B
+        // SE VERDE EXTERNO ESTIVER LIGADO BOTAO FICA VERDE
+        if (data.VD_EXT_B === 1){
+            enviarComando('NOT_AB000');
+        } else if(data.VM_EXT_B === 1){
+            // SE VERMELHO EXTERNO LIGADO BOTAO FICA VERMELHO
+            enviarComando('OFF_AB000');
+        } else if(data.VD_EXT_A === 0){
+            if(data.VM_EXT_A === 0){
+               //se estiver desligado os dois semaforos entao
+            enviarComando('ENTRA_B00');
+       }    
+            }    
+        }
+      });
+        });
+        // inicio logica cancelas
+            $('#botao_controle_cancelas_abrir').click(function(event) {
+            $('#botao_semafaro_externo_A').prop("disabled", true);
+            $('#botao_semafaro_externo_B').prop("disabled", true);
+            $('#botao_controle_cancelas_abrir').prop("disabled", true);
+         $.ajax({      
+        url: "http://192.168.25.177:80",
+        dataType: 'jsonp',
+        crossDomain: true,
+        jsonp: false,
+        jsonpCallback: 'dados',
+        success: function(data,status,xhr) {
+        if (data.CA_A === 1){ 
+                if(data.CA_B === 1){
+                      enviarComando('FC_AB0000');
+                     // $('#botao_controle_cancelas_fechar').removeClass('hide');
+                     // $('#botao_controle_cancelas_fechar').addClass('show '); 
+                    } 
+         }else if (data.CA_A === 0){ 
+                if(data.CA_B === 0){
+                  enviarComando('AC_AB0000');
+                 // $('#botao_controle_cancelas_fechar').removeClass('show');
+                 // $('#botao_controle_cancelas_fechar').addClass('hide '); 
+                }    
+            }    
+        }
+      });
+        });
+
+// aqui faço a pagina atualizar sozinha
+function fazerRequisicao(){
+      $.ajax({
+        url: "http://192.168.25.177:80",
+        dataType: 'jsonp', // IMPORTANTE
+        crossDomain: true, // IMPORTANTE
+        jsonp: false,
+        jsonpCallback: 'dados', // IMPORTANTE
+        success: function(data,status,xhr) {
+alterarStatus(data);
+        console.log(data);
+        }
+      });
+        return false;
+    }
+setInterval(fazerRequisicao, 5000);
+      }); 
+      </script>
+<!-- passar esses script para algum controler -->
+<body ng-app="home">    
 <!-- para travar o tamanho <div class="row center" style= "width: 1200px; height: 800px;" >-->
     <div class=" row   ">
         <div class="col s12  center">
@@ -78,16 +199,16 @@
                 <li class="divider"></li>
                 <li><a ui-sref="pesagemmanual">Pesagem Manual</a></li>
                 <li class="divider"></li>
-                <li><a ui-sref="pesquisacliente">Pesagem de Entrada NAO</a></li>
+                <li><a ui-sref="pesagementrada">Pesagem Entrada</a></li>
                 <li class="divider"></li>
-                <li><a ui-sref="pesquisafornecedor">Pesagem de Saida NAO</a></li>
+                <li><a ui-sref="pesquisafornecedor">Pesagem Saida NAO</a></li>
                 <li class="divider"></li>
                 <li class="divider"></li>
                 <li><a ui-sref="pesquisaproduto">Pesagem Avulsa NAO</a></li>
                 <li class="divider"></li>
             </ul>
             <nav >
-                <div class="nav-wrapper center ">
+                <div class="nav-wrapper center teal light-green darken-4 ">
                     <ul class="center  hide-on-med-and-down">
  <!-- Aqui tenho que colocar aquela tela de automação das cancelas e semaforos-->
                         <li><a ui-sref="home">Controle Balança</a></li>
@@ -99,17 +220,12 @@
                 </div>
             </nav>
         </div>
- 
 <!-- OBJETIVO CRIAR MENU LATERAL PARA CONTROLE
 DA AUTOMAÇÃO  -->
-
   <div class="row s12   card-panel">
-
       <div class="col s9 push-s3 card-panel center">
-   
          <ui-view></ui-view>
       </div>
-
       <div class="col s3 pull-s9 ">
         <div class="row"></div>
     <div class="row">
@@ -118,7 +234,6 @@ DA AUTOMAÇÃO  -->
                <label for='botao_semafaro_externo_A'>Semáforo externo</label>
                <button class='waves-effect waves-light btn black ' id="botao_semafaro_externo_A" name='botao_semafaro_externo_A' ><i class='material-icons'>highlight</i></button>
             </div>
-
         <div class="row">
                <div class='col s5 input-field'>
                   <input class='black-text  ' disabled id='sensor_aproximacao_A' type='text' name='sensor_aproximacao_A' value= 'BLOQUEADO' >
@@ -126,7 +241,6 @@ DA AUTOMAÇÃO  -->
                </div>
             </div>
     </div>
-
     <div class="row">
                <div class='col s5'>
                   <label for='botao_semafaro_interno_A'>Semáforo interno</label>
@@ -135,30 +249,25 @@ DA AUTOMAÇÃO  -->
                <div class='col s5 input-field'>
                   <input class='black-text' disabled id='sensor_seguranca_A' type='text' name='sensor_seguranca_A' value='BLOQUEADO' >
                   <label for='sensor_seguranca_A'>Sensor de Segurança</label>
-               </div>
-                
+               </div>    
     </div>
-
     <div class="row"> 
         <div class="col s5 ">
                 <label for='botao_semafaro_interno_A'>controle cancelas</label>
                 <button class='waves-effect waves-light btn red' id= "botao_controle_cancelas_abrir" name='botao_controle_cancelas'><i class=' material-icons ' style='font-size: 22px'>beenhere</i>
                </button>
               </div>
-               
         <div class = "row">
                 <div class='col s5  input-field'>
                   <input class='black-text' disabled id = 'estabilidade' type='text' name='estabilidade' value = 'ESTÁVEL'>
                   <label for='estabilidade'>Plataforma</label>
                </div>
-
         </div>
         <div class='col s10 offset-s1 input-field'>
                   <input style='font-size: 25px' class='black-text ' disabled id='leiturapeso' type='text' name='leiturapeso' value="Calculando">
                   <label for='leiturapeso'>Peso</label>
         </div>
     </div>
-
     <div class="row">
                <div class='col s5'>
                   <label for='botao_semafaro_interno_B'>Semáforo interno</label>
@@ -169,34 +278,24 @@ DA AUTOMAÇÃO  -->
                   <label for='sensor_seguranca_B'>Sensor de Segurança</label>
                </div>
     </div>
-
     <div class="row">
                 <div class='col s5'>
                   <label for='botao_semafaro_externo_B'>Semáforo externo</label>
                   <label for='botao_semafaro_externo_B'> <br> Entrada B <br>  </label>
                   <button id= "botao_semafaro_externo_B" class='waves-effect waves-light btn black' id="botao_semafaro_externo_B" name='botao_semafaro_externo_B' ><i class='material-icons '>highlight</i></button>
-                  
                </div>
-     
-               
                <div class='col s5 input-field'>
                   <input class='black-text' disabled id='sensor_aproximacao_B' type='text' name='sensor_aproximacao_B' value='BLOQUEADO' >
                   <label for='sensor_aproximacao_B'>Sensor aproximoção</label>
                </div>
     </div>
-
-
-         
       </div>
   </div>
-   
 
-
- 
             <script type="text/javascript" src="app.js"></script>
             <script type="text/javascript" src="router/route.js"></script>
             <script type="text/javascript" src="controller/home.js"></script>
-           
+
             <script type="text/javascript" src="controller/cadastrocliente.js"></script>
             <script type="text/javascript" src="controller/pesquisacliente.js"></script>
             <script type="text/javascript" src="controller/editarcliente.js"></script>
@@ -218,6 +317,7 @@ DA AUTOMAÇÃO  -->
             <script type="text/javascript" src="controller/deletefornecedor.js"></script>
 
             <script type="text/javascript" src="controller/pesagemmanual.js"></script>
+            <script type="text/javascript" src="controller/pesagementrada.js"></script>
 
             <script type="text/javascript" src="controller/impressao.js"></script>
         </div>
