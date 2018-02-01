@@ -95,8 +95,11 @@ $banco = new Banco();
          if($row['status'] == 3){
          	$consultaPesagem->status = "PESAGEM MANUAL";
          }
-         if($row['status'] == 1){
+         if($row['status'] == 0){
           $consultaPesagem->status = "PESAGEM ENTRADA";
+         }
+         if($row['status'] == 2){
+          $consultaPesagem->status = "PESAGEM AVULSA";
          }
 
          $consultaPesagem->id_pesagem = $row['id_pesagem'];
@@ -166,8 +169,14 @@ public function consultaPesagemPlaca($id_placa){
       $resultado = array();
       while($row = $result->fetch_assoc()) {
          $consultaPesagem = new ConsultaPesagem();  // tem que criar essa class ainda.
-         if($row['status'] = 3){
-         	$consultaPesagem->status = "PESAGEM MANUAL";
+         if($row['status'] == 3){
+          $consultaPesagem->status = "PESAGEM MANUAL";
+         }
+         if($row['status'] == 0){
+          $consultaPesagem->status = "PESAGEM ENTRADA";
+         }
+         if($row['status'] == 2){
+          $consultaPesagem->status = "PESAGEM AVULSA";
          }
          $consultaPesagem->id_pesagem = $row['id_pesagem'];
          $consultaPesagem->placa = $row['placa'];
@@ -206,8 +215,14 @@ public function consultaPesagemCliente($id_placa){
       $resultado = array();
       while($row = $result->fetch_assoc()) {
          $consultaPesagem = new ConsultaPesagem();  // tem que criar essa class ainda.
-         if($row['status'] = 3){
+         if($row['status'] == 3){
           $consultaPesagem->status = "PESAGEM MANUAL";
+         }
+         if($row['status'] == 0){
+          $consultaPesagem->status = "PESAGEM ENTRADA";
+         }
+         if($row['status'] == 2){
+          $consultaPesagem->status = "PESAGEM AVULSA";
          }
          $consultaPesagem->id_pesagem = $row['id_pesagem'];
         $consultaPesagem->id_cliente = $row['cliente_id_cliente'];
@@ -240,8 +255,14 @@ public function consultaPesagemFornecedor($id_placa){
       $resultado = array();
       while($row = $result->fetch_assoc()) {
          $consultaPesagem = new ConsultaPesagem();  // tem que criar essa class ainda.
-         if($row['status'] = 3){
+         if($row['status'] == 3){
           $consultaPesagem->status = "PESAGEM MANUAL";
+         }
+         if($row['status'] == 0){
+          $consultaPesagem->status = "PESAGEM ENTRADA";
+         }
+         if($row['status'] == 2){
+          $consultaPesagem->status = "PESAGEM AVULSA";
          }
          $consultaPesagem->id_pesagem = $row['id_pesagem'];
         $consultaPesagem->id_fornecedor = $row['fornecedor_id_fornecedor'];
@@ -277,8 +298,14 @@ public function consultaPesagemProduto($id_pro){
       $resultado = array();
       while($row = $result->fetch_assoc()) {
          $consultaPesagem = new ConsultaPesagem();  // tem que criar essa class ainda.
-         if($row['status'] = 3){
+         if($row['status'] == 3){
           $consultaPesagem->status = "PESAGEM MANUAL";
+         }
+         if($row['status'] == 0){
+          $consultaPesagem->status = "PESAGEM ENTRADA";
+         }
+         if($row['status'] == 2){
+          $consultaPesagem->status = "PESAGEM AVULSA";
          }
          $consultaPesagem->id_pesagem = $row['id_pesagem'];
        // $consultaPesagem->id_produto = $row['produto_id_produto'];

@@ -1,6 +1,6 @@
-  function pesagemEntradaController($scope, $http, $log, $cookieStore, $mdDialog, $q, $timeout, meuServico, $cookies) {
+  function pesagemAvulsaController($scope, $http, $log, $cookieStore, $mdDialog, $q, $timeout, meuServico, $cookies) {
      $scope.capturar_peso = function() {
-        console.log("pesagemEntradaController :capturar_peso");
+        console.log("pesagemAvulsaController :capturar_peso");
          console.log("Coleta de peso");
          var ipx = window.location.hostname;
          var xhr = $.ajax({
@@ -17,28 +17,33 @@
                  });
                  // se chegou até aqui é pq todos os campos foram atendidos e o peso foi coletado 
                  // então pode liberar o envio da pesagem
-                 $scope.autorizar_envio_pesagem_entrada();
+                 $scope.autorizar_envio_pesagem_avulsa();
+                 $scope.modulo( );
+          
              } else {
                  // console.log("colocar alert e solicitar captura novamente");
                  Materialize.toast('PESO INSTÁVEL.', 3000, 'rounded', 'center');
                  Materialize.toast();
              }
          });
+         
+
      }
 
-     $scope.autorizar_envio_pesagem_entrada = function() {
-        console.log("pesagemEntradaController :autorizar_envio_pesagem_entrada");
+     $scope.autorizar_envio_pesagem_avulsa = function() {
+        console.log("pesagemAvulsaController :autorizar_envio_pesagem_avulsa");
          // fazer o teste de liberação do botao.
          // teste para pesagem de entrada
-         var permite_pesagem_entrada = $scope.pesagem.peso_1;
-         if ($.isNumeric(permite_pesagem_entrada) == true) {
-             $scope.pesagem.status = 0;
+         var permite_pesagem_avulsa = $scope.pesagem.peso_1;
+         if ($.isNumeric(permite_pesagem_avulsa) == true) {
+             $scope.pesagem.status = 2;
          }
+         $scope.modulo();
      }
 
 
      $scope.openFromLeft = function() {
-        console.log("pesagemEntradaController :openFromLeft");
+        console.log("pesagemAvulsaController :openFromLeft");
          $mdDialog.show(
              $mdDialog.alert()
              .clickOutsideToClose(true)
@@ -54,7 +59,7 @@
      };
 
      $scope.openOffscreen = function() {
-        console.log("pesagemEntradaController :openOffscreen");
+        console.log("pesagemAvulsaController :openOffscreen");
          $mdDialog.show(
              $mdDialog.alert()
              .clickOutsideToClose(true)
@@ -74,7 +79,7 @@
 
      /////// função em teste
      $scope.abrirPDFManual = function(pesagem) {
-        console.log("pesagemEntradaController :abrirPDFManual");
+        console.log("pesagemAvulsaController :abrirPDFManual");
          var request = $http({
              method: "post",
              url: "php/pesagem/impressaopesagemmanual.php",
@@ -92,7 +97,7 @@
      }
 
      $scope.salvar = function() {
-        console.log("pesagemEntradaController :salvar");
+        console.log("pesagemAvulsaController :salvar");
          //console.log($scope.pesagem);
          //console.log("aqui vai para o banco");
          // percebi ser interessante converter em int os dados antes de salvar no 
@@ -103,6 +108,13 @@
          $scope.pesagem.fornecedor_id_fornecedor = parseInt($scope.pesagem.fornecedor_id_fornecedor);
          $scope.pesagem.peso_1 = parseInt($scope.pesagem.peso_1);
          if ($scope.pesagem.status == 3) {
+             $scope.pesagem.peso_1 = parseInt($scope.pesagem.peso_1);
+             $scope.pesagem.peso_2 = parseInt($scope.pesagem.peso_2);
+             $scope.pesagem.peso_descontos = parseInt($scope.pesagem.peso_descontos);
+             $scope.pesagem.peso_liquido = parseInt($scope.pesagem.peso_liquido);
+
+         }
+         if ($scope.pesagem.status == 2) {
              $scope.pesagem.peso_1 = parseInt($scope.pesagem.peso_1);
              $scope.pesagem.peso_2 = parseInt($scope.pesagem.peso_2);
              $scope.pesagem.peso_descontos = parseInt($scope.pesagem.peso_descontos);
@@ -144,7 +156,7 @@
      var exibir = false;
      //para mostrar a mensagem que não houve resultados
      $scope.exibe = function(nome) {
-        console.log("pesagemEntradaController :exibe");
+        console.log("pesagemAvulsaController :exibe");
          //console.log(nome.length);
          //console.log("".localeCompare(nome));
          return (("".localeCompare(nome) != 0) && exibir);
@@ -152,7 +164,7 @@
 
 
      $scope.autorizar_envio = function() {
-        console.log("pesagemEntradaController :autorizar_envio");
+        console.log("pesagemAntradaController :autorizar_envio");
          //OBJETIVO
          // aqui defini que a pesagem foi manual   
          // contar quantas string tem no objeto campo pesagem.placa
@@ -161,9 +173,9 @@
          // coloque 3 no pesagem.status
          // fazer o teste de liberação do botao.
          // teste para pesagem de entrada
-         var permite_pesagem_entrada = $scope.pesagem.peso_1;
-         if ($.isNumeric(permite_pesagem_entrada) == true) {
-             $scope.pesagem.status = 0;
+         var permite_pesagem_avulsa = $scope.pesagem.peso_1;
+         if ($.isNumeric(permite_pesagem_avulsa) == true) {
+             $scope.pesagem.status = 2;
          }
 
          // fim  teste para pesagem de entrada
@@ -173,7 +185,7 @@
          //console.log($scope.veiculo);
          //console.log(teste_tamanho);  // FAÇO O TESTE DE APROVAÇÃO DE ENVIO
          if ($scope.pesagem.peso_liquido != null && teste_tamanho == 8) {
-             $scope.pesagem.status = 3;
+             $scope.pesagem.status = 2;
          } else {
              $scope.pesagem.status = null;
          }
@@ -182,7 +194,7 @@
      // aponte peso liquido positivo se o desconto não for
      // maior que o peso liquido
      $scope.modulo = function() {
-        console.log("pesagemEntradaController :modulo");
+        console.log("pesagemAvulsaController :modulo");
          $scope.pesagem.peso_liquido = ($scope.pesagem.peso_1 - $scope.pesagem.peso_2);
          if ($scope.pesagem.peso_liquido < 0) {
              $scope.pesagem.peso_liquido = ($scope.pesagem.peso_liquido * -1);
@@ -194,7 +206,7 @@
      }
 
      $scope.isEmpty = function(obj) {
-        console.log("pesagemEntradaController :isEmpty");
+        console.log("pesagemAvulsaController :isEmpty");
          for (var prop in obj) {
              if (obj.hasOwnProperty(prop))
                  return false;
@@ -208,13 +220,13 @@
  ///////
  angular
      .module('home')
-     .controller('pesagemEntradaController', pesagemEntradaController);
+     .controller('pesagemAvulsaController', pesagemAvulsaController);
  /////
 
  //////////////////////////////////////////////////////////////////////////////////
 
  // inicio controller pesagemManualClienteController
- function pesagemEntradaClienteController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log) {
+ function pesagemAvulsaClienteController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log) {
      var self = this;
      self.simulateQuery = false;
      self.isDisabled = false;
@@ -224,7 +236,7 @@
      self.searchTextChange = searchTextChange;
 
      function querySearch(query) {
-        console.log("pesagemEntradaClienteController :querySearch");
+        console.log("pesagemAvulsaClienteController :querySearch");
 
          var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
              deferred;
@@ -240,14 +252,14 @@
      }
 
      function searchTextChange(text) {
-         console.log("pesagemEntradaClienteController :searchTextChange");
+         console.log("pesagemAvulsaClienteController :searchTextChange");
 
          $log.info('pesquisando por: ' + text);
          loadAll(text);
      }
 
      function selectedItemChange(item) {
-        console.log("pesagemEntradaClienteController :selectedItemChange");
+        console.log("pesagemAvulsaClienteController :selectedItemChange");
          // $log.info('Item changed to stenio' + JSON.stringify(item));
          $scope.pesagem.cliente_id_cliente = item.id_cliente;
          $scope.selected = item;
@@ -255,7 +267,7 @@
      }
 
      function loadAll(text) {
-         console.log("pesagemEntradaClienteController :loadAll");
+         console.log("pesagemAvulsaClienteController :loadAll");
          var repos = [{
              'nome': 'AngularJS',
              'url': 'https://github.com/angular/angular.js',
@@ -328,7 +340,7 @@
      }
 
      function createFilterFor(query) {
-        console.log("pesagemEntradaClienteController :createFilterFor");
+        console.log("pesagemAvulsaClienteController :createFilterFor");
          var lowercaseQuery = angular.lowercase(query);
          return function filterFn(item) {
              return (item.value.indexOf(lowercaseQuery) === 0);
@@ -337,11 +349,11 @@
  }
  angular
      .module('home')
-     .controller('pesagemEntradaClienteController', pesagemEntradaClienteController);
+     .controller('pesagemAvulsaClienteController', pesagemAvulsaClienteController);
  // fim controller pesagemManualClienteController
  // inicio controler 
  // falta criar as rotinas para pesquisa de fornecedor
- function pesagemEntradaFornecedorController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log) {
+ function pesagemAvulsaFornecedorController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log) {
      // NOVA VERSÃO DA ROTINA DE PESQUISA
      var self = this;
      self.simulateQuery = false;
@@ -352,7 +364,7 @@
      self.searchTextChange = searchTextChange;
 
      function querySearch(query) {
-         console.log("pesagemEntradaFornecedorController :querySearch");
+         console.log("pesagemAvulsaFornecedorController :querySearch");
          var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
              deferred;
          if (self.simulateQuery) {
@@ -367,13 +379,13 @@
      }
 
      function searchTextChange(text) {
-        console.log("pesagemEntradaFornecedorController :searchTextChange");
+        console.log("pesagemAvulsaFornecedorController :searchTextChange");
          $log.info('pesquisando por: ' + text);
          loadAll(text);
      }
 
      function selectedItemChange(item) {
-         console.log("pesagemEntradaFornecedorController :selectedItemChange");
+         console.log("pesagemAvulsaFornecedorController :selectedItemChange");
          // $log.info('Item changed to stenio' + JSON.stringify(item));
          $scope.pesagem.fornecedor_id_fornecedor = item.id_fornecedor;
          $scope.selected = item;
@@ -381,7 +393,7 @@
      }
 
      function loadAll(text) {
-        console.log("pesagemEntradaFornecedorController :loadAll");
+        console.log("pesagemAvulsaFornecedorController :loadAll");
          var repos = [{
              'nome': 'AngularJS',
              'url': 'https://github.com/angular/angular.js',
@@ -454,7 +466,7 @@
      }
 
      function createFilterFor(query) {
-        console.log("pesagemEntradaFornecedorController :createFilterFor");
+        console.log("pesagemAvulsaFornecedorController :createFilterFor");
          var lowercaseQuery = angular.lowercase(query);
          return function filterFn(item) {
              return (item.value.indexOf(lowercaseQuery) === 0);
@@ -464,9 +476,9 @@
  }
  angular
      .module('home')
-     .controller('pesagemEntradaFornecedorController', pesagemEntradaFornecedorController);
+     .controller('pesagemAvulsaFornecedorController', pesagemAvulsaFornecedorController);
 
- function pesagemEntradaProdutoController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log) {
+ function pesagemAvulsaProdutoController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log) {
      //VERSÃO NOVA
      var self = this;
      self.simulateQuery = false;
@@ -477,7 +489,7 @@
      self.searchTextChange = searchTextChange;
 
      function querySearch(query) {
-        console.log("pesagemEntradaProdutoController :querySearch");
+        console.log("pesagemAvulsaProdutoController :querySearch");
          var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
              deferred;
          if (self.simulateQuery) {
@@ -492,13 +504,13 @@
      }
 
      function searchTextChange(text) {
-        console.log("pesagemEntradaProdutoController :searchTextChange");
+        console.log("pesagemAvulsaProdutoController :searchTextChange");
          $log.info('pesquisando por: ' + text);
          loadAll(text);
      }
 
      function selectedItemChange(item) {
-        console.log("pesagemEntradaProdutoController :selectedItemChange");
+        console.log("pesagemAvulsaProdutoController :selectedItemChange");
          // $log.info('Item changed to stenio' + JSON.stringify(item));
          $scope.pesagem.produto_id_produto = item.id_produto;
          $scope.selected = item;
@@ -506,7 +518,7 @@
      }
 
      function loadAll(text) {
-        console.log("pesagemEntradaProdutoController :loadAll");
+        console.log("pesagemAvulsaProdutoController :loadAll");
          var repos = [{
              'nome': 'AngularJS',
              'url': 'https://github.com/angular/angular.js',
@@ -578,7 +590,7 @@
      }
 
      function createFilterFor(query) {
-          console.log("pesagemEntradaProdutoController :createFilterFor");
+          console.log("pesagemAvulsaProdutoController :createFilterFor");
          var lowercaseQuery = angular.lowercase(query);
          return function filterFn(item) {
              return (item.value.indexOf(lowercaseQuery) === 0);
@@ -588,10 +600,10 @@
  }
  angular
      .module('home')
-     .controller('pesagemEntradaProdutoController', pesagemEntradaProdutoController);
+     .controller('pesagemAvulsaProdutoController', pesagemAvulsaProdutoController);
 
  //inicio desenvolvimento controler veiculos na pesagem manual
- function pesagemEntradaVeiculoController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log) {
+ function pesagemAvulsaVeiculoController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log) {
 
      var self = this;
      self.simulateQuery = false;
@@ -602,7 +614,7 @@
      self.searchTextChange = searchTextChange;
 
      function querySearch(query) {
-        console.log("pesagemEntradaVeiculoController :querySearch");
+        console.log("pesagemAvulsaVeiculoController :querySearch");
          var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
              deferred;
          if (self.simulateQuery) {
@@ -617,13 +629,13 @@
      }
 
      function searchTextChange(text) {
-        console.log("pesagemEntradaVeiculoController :searchTextChange");
+        console.log("pesagemAvulsaVeiculoController :searchTextChange");
          $log.info('pesquisando por: ' + text);
          loadAll(text);
      }
 
      function selectedItemChange(item) {
-        console.log("pesagemEntradaVeiculoController :selectedItemChange");
+        console.log("pesagemAvulsaVeiculoController :selectedItemChange");
          console.log(item.id_veiculo);
          console.log($scope.pesagem);
          // $log.info('Item changed to stenio' + JSON.stringify(item));
@@ -635,7 +647,7 @@
      }
 
      function loadAll(text) {
-          console.log("pesagemEntradaVeiculoController :loadAll");
+          console.log("pesagemAvulsaVeiculoController :loadAll");
          var repos = [{
              'nome': 'AngularJS',
              'url': 'https://github.com/angular/angular.js',
@@ -710,7 +722,7 @@
      }
 
      function createFilterFor(query) {
-        console.log("pesagemEntradaVeiculoController :createFilterFor");
+        console.log("pesagemAvulsaVeiculoController :createFilterFor");
          var lowercaseQuery = angular.lowercase(query);
          return function filterFn(item) {
              return (item.value.indexOf(lowercaseQuery) === 0);
@@ -720,4 +732,4 @@
  }
  angular
      .module('home')
-     .controller('pesagemEntradaVeiculoController', pesagemEntradaVeiculoController);
+     .controller('pesagemAvulsaVeiculoController', pesagemAvulsaVeiculoController);

@@ -123,6 +123,7 @@
      }
     
 ///////////////////////////////////////////////////////////////////////// 
+
 var pesagemmanual = {
          name: 'pesagemmanual',
          url: '/pesagemmanual', // endereço visivel ao usuario
@@ -139,7 +140,17 @@ var pesagementrada = {
          
      }
 
+var pesagemavulsa = {
+         name: 'pesagemavulsa',
+         url: '/pesagemavulsa', // endereço visivel ao usuario
+         templateUrl: "pages/pesagemavulsa.html",
+         controller: "pesagemAvulsaController"
+         
+     }
+
  
+
+/////////////////////////////////////////////////////////////////////////
 
      var layoutMeiaPag = {// pesagem manual
          name: 'layoutMeiaPag',
@@ -153,6 +164,14 @@ var pesagementrada = {
          name: 'layoutMeiaPag_entrada',
          url: '/impressao_entrada', // endereço visivel ao usuario
          templateUrl: "pages/layoutMeiaPag_entrada.html",
+         controller: "impressaoController"
+         
+     }
+
+     var layoutMeiaPag_avulsa = {// pesagem avulsa
+         name: 'layoutMeiaPag_avulsa',
+         url: '/impressao_avulsa', // endereço visivel ao usuario
+         templateUrl: "pages/layoutMeiaPag_avulsa.html",
          controller: "impressaoController"
          
      }
@@ -183,9 +202,11 @@ var pesagementrada = {
           
          .state(pesagemmanual)
          .state(pesagementrada)
+         .state(pesagemavulsa)
 
          .state(layoutMeiaPag)
-         .state(layoutMeiaPag_entrada);
+         .state(layoutMeiaPag_entrada)
+         .state(layoutMeiaPag_avulsa);
 
 
  });

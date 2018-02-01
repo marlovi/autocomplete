@@ -4,7 +4,7 @@ var ipx = window.location.hostname;
     
              var xhr =   $.ajax({
          
-                             url: 'http://'+ ipx +'/projeto/SUPERVISORIO/comandos/LER_PESO.php',
+                             url: 'http://'+ ipx +'/autocomplete/projeto/php/comandos/LER_PESO.php',
                              async: true,
                              timeout: 10000,
                              }).done(function(data) {
