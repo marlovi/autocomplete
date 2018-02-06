@@ -102,7 +102,7 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
          </div>
          <div class="col s3 input-field">
             <input id="segunda" type="text" ng-model="pesagem.peso_2" ng-change="modulo(pesagem.peso_2)" mask="999999" ng-Disabled="!pesagem.peso_1 ">
-            <label for="segunda" class="active"> Segunda Pesagem </label>
+            <label for="segunda" class="active"> TARA </label>
          </div>
          <div class="col s3 input-field">
             <div> <label for="liquido" id="label_liquido" class="active"> Liquido </label></div>
@@ -121,7 +121,7 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
       <div class="row">
          <div class="row s12 center">
             <!-- isso aqui é usado para sair da pagina atual ui-sref="home" -->
-            <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="pesagem.status != 2 " ng-click="salvar()" ui-sref="layoutMeiaPag_avulsa" >Enviar</button>
+            <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="!pesagem.peso_liquido" ng-click="salvar()" ui-sref="layoutMeiaPag_avulsa" >Enviar</button>
             <button class="btn waves-effect waves-light" id="capturar_peso" ng-click="capturar_peso()  " ng-Disabled = " !pesagem.produto_id_produto " >capturar peso</button>
          </div>
       </div>
