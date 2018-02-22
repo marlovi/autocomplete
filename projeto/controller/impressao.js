@@ -60,6 +60,19 @@
          $cookies.remove('impressao')
      }
 
+     $scope.printDiv_saida = function() {
+        console.log("impressaoController :printDiv_saida");
+         //console.log($scope.pesagem);
+         // função que abre pop up para impressão.
+         var divName = "printable_saida";
+         var printContents = document.getElementById(divName).innerHTML;
+         var popupWin = window.open('', '_blank', "width=" + screen.availWidth + ",height=" + screen.availHeight);
+         popupWin.document.open();
+         popupWin.document.write('<html><head><title>SPA  - Versão 2018 1.12</title>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1.0"/> </head> <style type="text/css" media="print"> body { **zoom:75%;}  </style><body onload="window.print()">  ' + printContents + ' </body></html>');
+         popupWin.document.close();
+         $cookies.remove('impressao')
+     }
+
 
 
 

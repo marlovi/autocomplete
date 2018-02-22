@@ -1,0 +1,108 @@
+ <div class="row center">
+   <div class="col s12">
+      <div class="input-field ">
+         <button class="btn waves-effect waves-light" autofocus class="validate" ng-model="pesagem.nome" ng-init="pesagem.nome = '0'" ng-focus="init()" id="enviar" ng-model ="imprimir"  ng-click="printDiv_saida('printable_saida')"   ng-hide ="false"  ui-sref="home" >imprimir ticket</button>
+      </div>
+   </div>
+</div>
+<div id="printable_saida"  ng-show="myValue" class="ng-hide" >
+<div id="formConfirmation">
+   <div class="container" role="main" style="zoom: 90%" >
+      <div class="row">
+         <div class="col-6">
+            <h4> Balanças Rio Verde </h4>
+            <h5> Avenida Presidente Vargas QD.47 LT.07  </h5>
+            <p> Rio Verde -GO </p>
+            <p> Fone:( 64 ) 3612-4882 <br> </p>
+         </div>
+      </div>
+      <div class="row ">
+         <div class="col s1">ENTRADA: </div>
+         <div class="col s1"> </div>
+         <div class="col s3 right-align"> {{pesagem.data}}</div>
+         <div class="col s1"> </div>
+         <div class="col s1">SAÍDA: </div>
+         <div class="col s3 right-align"> {{pesagem.data}}</div>
+         <div class="col s1"> </div>
+      </div>
+      <div class="row">
+         <div class="col-6">
+            <table   >
+            </table>
+            <br>
+            <table class="bordered">
+               <tr>
+                  <th style="font-size: 80%; ">Placa:</th>
+                  <th colspan="1" style="text-align: left;">{{pesagem.placa}}</th>
+                  <th style="font-size: 80%; ">Pesagem:</th>
+                  <th style="text-align: left;">{{pesagem.id_pesagem}}</th>
+                  <th style="font-size: 80%; ">Motorista:</th>
+                  <th style="text-align: left;">{{pesagem.motorista}}</th>
+               </tr>
+               <tr>
+                  <th style="font-size: 80%; ">Cliente:</th>
+                  <th colspan="2" ng-model="pesagem.cliente">{{pesagem.cliente}} </th>
+                  <th style="font-size: 80%; ">CPF/CNPJ:</th>
+                  <th colspan="2">{{pesagem.cpf_cnpj_cliente}}</th>
+               </tr>
+               <tr>
+                  <th style="font-size: 80%; ">Fornecedor:</th>
+                  <th colspan="2">{{pesagem.fornecedor}}</th>
+                  <th style="font-size: 80%; ">CPF/CNPJ:</th>
+                  <th colspan="2">{{pesagem.cpf_cnpj_fornecedor}}</th>
+               </tr>
+               <tr>
+                  <th style="font-size: 80%; ">Produto:</th>
+                  <th colspan="2">{{pesagem.produto}}</th>
+                  <th style="font-size: 80%; ">COD. PROD.:</th>
+                  <th  colspan="2"  >{{pesagem.cod_prod}}</th>
+               </tr>
+               <tr>
+                  <th style="font-size: 80%; ">Operação:</th>
+                  <th  >{{pesagem.status}}</th>
+                  <th > </th>
+                  <th style="font-size: 80%; ">Frete:</th>
+                  <th > </th>
+                  <th style="font-size: 80%; ">N.F.:</th>
+                  <th  > </th>
+               </tr>
+                <tr>
+                  <th style="font-size: 80%; ">Observação:</th>
+                  <th  >{{pesagem.observacao}}</th>
+                 
+                  
+               </tr>
+               </thead>
+            </table>
+            <table class="striped">
+               <tbody>
+                  <tr>
+                     <th>Peso Entrada</th>
+                     <th>{{pesagem.peso_1}} kg</th>
+                     <th> </th>
+                     <th>Descontos:</th>
+                     <th>{{pesagem.peso_descontos}}  kg</th>
+                  </tr>
+                  <tr>
+                     <th>Peso Saida</th>
+                     <th>{{pesagem.peso_2}}  kg</th>
+                     <th> </th>
+                     <th>Peso Liquido</th>
+                     <th>{{pesagem.peso_liquido}}  kg</th>
+                  </tr>
+                  <tr>
+                     <th>ASS. BALANCEIRO:</th>
+                     <th  >_________________</th>
+                     <th> </th>
+                     <th>ASS. TRANSPORTADOR:</th>
+                     <th  >________________</th>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+</div>
+<div>
+</div>
+<div ></div>

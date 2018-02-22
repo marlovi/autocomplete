@@ -1,0 +1,129 @@
+<!--
+Após selecionar a placa deve se verificar:
+se existe pesagem com status de pesagem "0" entrada.
+se existe quantas pesagens de entrada?
+se existe pesagem de saida "1" saida.
+se existe quantas pesagem de saida?
+se registros de entrada = registros de saida
+então permitir pesagem
+se registro de entrada > registro de saida
+então informar alert:" Veículo informado já encontra-se dentro do pátio! "
+ -->
+ <div class="col s12 card-panel center">
+   <!-- {{pesagem}} --> 
+   <div class="row center">
+      <div class="col s12 center">
+         <h3>PESAGEM SAIDA</h3>
+      </div>
+   </div>
+   <div class="col s12 center">
+      <div class="row  ">
+         <div class="col s4 input-field">
+            <input id="motorista" type="text" ng-model="pesagem.motorista">
+            <label for="motorista"> Motorista </label>
+         </div>
+         <div class="col s4 left-align ">
+            <label for="veiculo" class="active "> Pesquisar placa </label>
+            <div data-ng-controller="pesagemSaidaVeiculoController as PVeiculo"  >
+               <md-autocomplete  ng-Disabled="!pesagem.motorista" id="placa" ngb-disabled="PVeiculo.isDisabled " md-no-cache="PVeiculo.noCache" md-selected-item="selected" md-search-text-change="PVeiculo.searchTextChange(PVeiculo.searchText)" md-search-text="PVeiculo.searchText "
+                  md-selected-item-change="PVeiculo.selectedItemChange(item)" md-items="item in PVeiculo.querySearch(PVeiculo.searchText) " md-item-text="item.placa " md-min-length="3" placeholder="Pesquise um Veiculo" md-menu-class="autocomplete-custom-template ">
+                  <md-item-template>
+                     <span class="item-title">
+                     <em> PLACA: </em>
+                     <strong> {{item.placa}} </strong> 
+                     </span>
+                  </md-item-template>
+               </md-autocomplete>
+            </div>
+         </div>
+         <div class="col s4 left-align ">
+            <label for="cliente" class="active "> Cliente </label>
+            <div data-ng-controller="pesagemSaidaClienteController as Pcliente">
+               <md-autocomplete ng-Disabled="!pesagem.placa" id="auto" ngb-disabled="Pcliente.isDisabled " md-no-cache="Pcliente.noCache" md-selected-item="selected" md-search-text-change="Pcliente.searchTextChange(Pcliente.searchText)" md-search-text="Pcliente.searchText "
+                  md-selected-item-change="Pcliente.selectedItemChange(item)" md-items="item in Pcliente.querySearch(Pcliente.searchText) " md-item-text="item.nome " md-min-length="1" placeholder="Pesquise um Cliente"   md-menu-class="autocomplete-custom-template ">
+                  <md-item-template>
+                     <span class="item-title">
+                     <em> NOME: </em>
+                     <strong> {{item.nome}} </strong> 
+                     </span>
+                     <span class="item-metadata">
+                     <em> CPF: </em>
+                     <strong>{{item.cpf}}</strong>
+                     </span >
+                     <span class="item-metadata">
+                     <em> CNPJ: </em>
+                     <strong>{{item.cnpj}}</strong>
+                     </span>
+                  </md-item-template>
+               </md-autocomplete>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col s4 left-align ">
+            <label for="fornecedor" class="active "> Fornecedor </label>
+            <div data-ng-controller="pesagemSaidaFornecedorController as Pfornecedor">
+               <md-autocomplete ng-Disabled="!pesagem.cliente_id_cliente" id="auto" ngb-disabled="Pfornecedor.isDisabled " md-no-cache="Pfornecedor.noCache" md-selected-item="Pfornecedor.selectedItem" md-search-text-change="Pfornecedor.searchTextChange(Pfornecedor.searchText)" md-search-text="Pfornecedor.searchText "
+                  md-selected-item-change="Pfornecedor.selectedItemChange(item)" md-items="item in Pfornecedor.querySearch(Pfornecedor.searchText) " md-item-text="item.nome " md-min-length="1" placeholder="Pesquise um Fornecedor" md-menu-class="autocomplete-custom-template ">
+                  <md-item-template>
+                     <span class="item-title">
+                     <em> NOME: </em>
+                     <strong> {{item.nome}} </strong> 
+                     </span>
+                     <span class="item-metadata">
+                     <em> CPF: </em>
+                     <strong>{{item.cpf}}</strong>
+                     </span >
+                     <span class="item-metadata">
+                     <em> CNPJ: </em>
+                     <strong>{{item.cnpj}}</strong>
+                     </span>
+                  </md-item-template>
+               </md-autocomplete>
+            </div>
+         </div>
+         <div class="col s4 left-align ">
+            <label for="produto" class="active "> Produto </label>
+            <div data-ng-controller="pesagemSaidaProdutoController as Pproduto">
+               <md-autocomplete ng-Disabled="!pesagem.fornecedor_id_fornecedor" id="auto" ngb-disabled="Pproduto.isDisabled " md-no-cache="Pproduto.noCache" md-selected-item="Pproduto.selectedItem" md-search-text-change="Pproduto.searchTextChange(Pproduto.searchText)" md-search-text="Pproduto.searchText "
+                  md-selected-item-change="Pproduto.selectedItemChange(item)" md-items="item in Pproduto.querySearch(Pproduto.searchText) " md-item-text="item.nome " md-min-length="1" placeholder="Pesquise um Produto" md-menu-class="autocomplete-custom-template ">
+                  <md-item-template>
+                     <span class="item-produto">
+                     <em> NOME: </em>
+                     <strong> {{item.nome}} </strong> 
+                     </span>
+                  </md-item-template>
+               </md-autocomplete>
+            </div>
+         </div>
+         <label for="primeira" class="active"> Primeira Pesagem </label>
+         <div class="col s3 input-field">
+      <input style='font-size: 25px' class='black-text ' disabled id="primeira" id="primeira" name="primeira" type="text" ng-model="pesagem.peso_1" mask="999999">
+         </div>
+         <div class="col s3 input-field">
+            <input id="segunda" type="text" ng-model="pesagem.peso_2" ng-change="modulo(pesagem.peso_2)" mask="999999" ng-Disabled="!pesagem.peso_1 ">
+            <label for="segunda" class="active"> TARA </label>
+         </div>
+         <div class="col s3 input-field">
+            <div> <label for="liquido" id="label_liquido" class="active"> Liquido </label></div>
+             
+            <input id="liquido" type="number" name="liquido" ng-model="pesagem.peso_liquido" disabled="disabled">
+           
+         </div>
+      </div>
+      <div class="row">
+         <div class="input-field col s12   ">
+            <textarea id="observacao" type="text" class="materialize-textarea" ng-model=" pesagem.observacao">
+            </textarea>
+            <label for="textarea1">Observação</label>
+         </div>
+      </div>
+      <div class="row">
+         <div class="row s12 center">
+            <!-- isso aqui é usado para sair da pagina atual ui-sref="home" -->
+            <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="!pesagem.peso_liquido" ng-click="salvar()" ui-sref="layoutMeiaPag_saida" >Enviar</button>
+            <button class="btn waves-effect waves-light" id="capturar_peso" ng-click="capturar_peso()  " ng-Disabled = " !pesagem.produto_id_produto " >capturar peso</button>
+         </div>
+      </div>
+   </div>
+</div>
