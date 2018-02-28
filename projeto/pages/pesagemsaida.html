@@ -14,6 +14,7 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
    <div class="row center">
       <div class="col s12 center">
          <h3>PESAGEM SAIDA</h3>
+         {{pesagem}}
       </div>
    </div>
    <div class="col s12 center">
@@ -36,68 +37,38 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
                </md-autocomplete>
             </div>
          </div>
-         <div class="col s4 left-align ">
-            <label for="cliente" class="active "> Cliente </label>
-            <div data-ng-controller="pesagemSaidaClienteController as Pcliente">
-               <md-autocomplete ng-Disabled="!pesagem.placa" id="auto" ngb-disabled="Pcliente.isDisabled " md-no-cache="Pcliente.noCache" md-selected-item="selected" md-search-text-change="Pcliente.searchTextChange(Pcliente.searchText)" md-search-text="Pcliente.searchText "
-                  md-selected-item-change="Pcliente.selectedItemChange(item)" md-items="item in Pcliente.querySearch(Pcliente.searchText) " md-item-text="item.nome " md-min-length="1" placeholder="Pesquise um Cliente"   md-menu-class="autocomplete-custom-template ">
-                  <md-item-template>
-                     <span class="item-title">
-                     <em> NOME: </em>
-                     <strong> {{item.nome}} </strong> 
-                     </span>
-                     <span class="item-metadata">
-                     <em> CPF: </em>
-                     <strong>{{item.cpf}}</strong>
-                     </span >
-                     <span class="item-metadata">
-                     <em> CNPJ: </em>
-                     <strong>{{item.cnpj}}</strong>
-                     </span>
-                  </md-item-template>
-               </md-autocomplete>
-            </div>
+         
+
+        
+         <div class="col s3 input-field">
+            <div> <label for="cliente" id="cliente" class="active"> Cliente </label></div>
+             
+            <input id="cliente"   name="cliente" ng-model="pesagem.cliente" disabled="disabled">
+           
          </div>
+
       </div>
       <div class="row">
+          <div class="col s3 input-field">
+            <div> <label for="fornecedor" id="fornecedor" class="active"> Fornecedor </label></div>
+             
+            <input id="fornecedor"   name="fornecedor" ng-model="pesagem.fornecedor" disabled="disabled">
+           
+         </div> 
          <div class="col s4 left-align ">
-            <label for="fornecedor" class="active "> Fornecedor </label>
-            <div data-ng-controller="pesagemSaidaFornecedorController as Pfornecedor">
-               <md-autocomplete ng-Disabled="!pesagem.cliente_id_cliente" id="auto" ngb-disabled="Pfornecedor.isDisabled " md-no-cache="Pfornecedor.noCache" md-selected-item="Pfornecedor.selectedItem" md-search-text-change="Pfornecedor.searchTextChange(Pfornecedor.searchText)" md-search-text="Pfornecedor.searchText "
-                  md-selected-item-change="Pfornecedor.selectedItemChange(item)" md-items="item in Pfornecedor.querySearch(Pfornecedor.searchText) " md-item-text="item.nome " md-min-length="1" placeholder="Pesquise um Fornecedor" md-menu-class="autocomplete-custom-template ">
-                  <md-item-template>
-                     <span class="item-title">
-                     <em> NOME: </em>
-                     <strong> {{item.nome}} </strong> 
-                     </span>
-                     <span class="item-metadata">
-                     <em> CPF: </em>
-                     <strong>{{item.cpf}}</strong>
-                     </span >
-                     <span class="item-metadata">
-                     <em> CNPJ: </em>
-                     <strong>{{item.cnpj}}</strong>
-                     </span>
-                  </md-item-template>
-               </md-autocomplete>
-            </div>
+            <div class="col s3 input-field">
+            <div> <label for="produto" id="produto" class="active"> Produto </label></div>
+             
+            <input id="produto"   name="produto" ng-model="pesagem.produto" disabled="disabled">
+           
+         </div> 
+             
+             
          </div>
-         <div class="col s4 left-align ">
-            <label for="produto" class="active "> Produto </label>
-            <div data-ng-controller="pesagemSaidaProdutoController as Pproduto">
-               <md-autocomplete ng-Disabled="!pesagem.fornecedor_id_fornecedor" id="auto" ngb-disabled="Pproduto.isDisabled " md-no-cache="Pproduto.noCache" md-selected-item="Pproduto.selectedItem" md-search-text-change="Pproduto.searchTextChange(Pproduto.searchText)" md-search-text="Pproduto.searchText "
-                  md-selected-item-change="Pproduto.selectedItemChange(item)" md-items="item in Pproduto.querySearch(Pproduto.searchText) " md-item-text="item.nome " md-min-length="1" placeholder="Pesquise um Produto" md-menu-class="autocomplete-custom-template ">
-                  <md-item-template>
-                     <span class="item-produto">
-                     <em> NOME: </em>
-                     <strong> {{item.nome}} </strong> 
-                     </span>
-                  </md-item-template>
-               </md-autocomplete>
-            </div>
-         </div>
-         <label for="primeira" class="active"> Primeira Pesagem </label>
+          
+          
          <div class="col s3 input-field">
+            <div> <label for="primeira" id="primeira" class="active"> Primeira Pesagem</label></div>
       <input style='font-size: 25px' class='black-text ' disabled id="primeira" id="primeira" name="primeira" type="text" ng-model="pesagem.peso_1" mask="999999">
          </div>
          <div class="col s3 input-field">

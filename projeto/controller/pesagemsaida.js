@@ -634,16 +634,140 @@
          loadAll(text);
      }
 
+function regraPesagemSaida(item) {
+    
+    // FUNÇÃO QUE CONSULTA AS PESAGENS RELACIONADAS POR ID VEICULO PLACA
+    // OBJETIVO RETORNAR 
+    // ok  consultar se a placa tem pesagem 
+    // contar quantas pesagem de entrada
+    // contar quantas pesagem de saida
+    var request = $http({
+        method: "post",
+        url: "php/pesagem/consultaplacapesagementrada.php",
+        data: $scope.pesagem,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    });
+    console.log($scope.pesagem);
+    request.then(function(response) {
+        //  console.log(response.data);
+        var id_pesagem_entrada = [];
+        var cont_pesagem_entrada = 0;
+        var id_pesagem_saida = [];
+        var cont_pesagem_saida = 0;
+        var cont_pesagem_manual = 0;
+        var cont_pesagem_avulsa = 0;
+        console.log(response.data);
+        for (var i in response.data) {
+            //arr.push(response.data[i].status);  
+            if (response.data[i].status === "PESAGEM ENTRADA") {
+                cont_pesagem_entrada = cont_pesagem_entrada + 1;
+                id_pesagem_entrada = response.data[i].id_pesagem; // separando as pesagens de entrada
+            } else if (response.data[i].status === "PESAGEM MANUAL") {
+                cont_pesagem_manual = cont_pesagem_manual + 1;
+            } else if (response.data[i].status === "PESAGEM SAIDA") {
+                cont_pesagem_saida = cont_pesagem_saida + 1;
+            } else if (response.data[i].status === "PESAGEM AVULSA") {
+                cont_pesagem_avulsa = cont_pesagem_avulsa + 1;
+            }
+        }
+   
+        console.log("contador de eventos");
+        console.log("entrada");
+        console.log(cont_pesagem_entrada);
+        console.log("id Pesaagem");
+        console.log(id_pesagem_entrada);
+        console.log("manual");
+        console.log(cont_pesagem_manual);
+        console.log("saida");
+        console.log(cont_pesagem_saida);
+        console.log("avulsa");
+        console.log(cont_pesagem_avulsa);
+        // se pesagem de entrada for maior que pesagem de saida
+        // isso quer dizer que esse veiculo está no patio
+        // com pesagem de entrada em aberto. então o sistema limpa a placa
+        // se pesagem de saida  ==  a pesagem de entra 
+        // então o sistema pode registrar nova pesagem
+        // as pesagem avulsa e manual nao entraram no processo de
+        // de controle de entrada e saida
+        if (cont_pesagem_entrada === cont_pesagem_saida) {
+            console.log("permitido pesagem de entrada");
+        } else {
+            console.log("Pesagem de entrada em aberto");
+            console.log("entrada");
+            console.log(cont_pesagem_entrada);
+            console.log("ultimo id pesagem entrada");
+            console.log(id_pesagem_entrada);
+            $scope.pesagem.id_pesagem_entrada= id_pesagem_entrada;
+            // aqui depois de saber qual foi a ultima pesagem de entrada
+            // envio esse id para saber os dados da pesagem de entrada
+
+
+
+            var request = $http({
+        method: "post",
+        url: "php/pesagem/consultaplacapesagemsaida.php",
+        data: $scope.pesagem,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    });
+    console.log($scope.pesagem);
+    request.then(function(response) {
+        console.log("resposta da consulta da ultima pesagem de entrada");
+          console.log(response.data);
+        // aqui transfiro esses dados da ultima pesagem de entrada para
+        // o objeto pesagem na pagina pesagem de saida
+         $scope.pesagem.cliente = response.data[0].cliente;
+         $scope.pesagem.produto = response.data[0].produto;
+         $scope.pesagem.cpf_cnpj_cliente = response.data[0].cpf_cnpj_cliente;
+         $scope.pesagem.cpf_cnpj_fornecedor = response.data[0].cpf_cnpj_fornecedor;
+         $scope.pesagem.data_entrada = response.data[0].data;
+         $scope.pesagem.fornecedor = response.data[0].fornecedor;
+         $scope.pesagem.id_pesagem_entrada = response.data[0].id_pesagem;
+         $scope.pesagem.peso_1 = response.data[0].peso_1;
+          
+
+
+         
+    }, function(response) {
+        console.log("ERROR" + response);
+    });
+
+
+        }
+        //$scope.pesagem.tipo_pesagem = response.data[0].status;
+        //console.log($scope.pesagem.tipo_pesagem);
+    }, function(response) {
+        console.log("ERROR" + response);
+    });
+    // fim teste 
+}
+
+
+
      function selectedItemChange(item) {
         console.log("pesagemSaidaVeiculoController :selectedItemChange");
+
+        if(item!=null){
          console.log(item.id_veiculo);
-         console.log($scope.pesagem);
+         //console.log($scope.pesagem);
          // $log.info('Item changed to stenio' + JSON.stringify(item));
          $scope.pesagem.veiculo_id_veiculo = item.id_veiculo;
          $scope.pesagem.placa = item.placa;
          $scope.pesagem.tipo_veiculo = item.tipo;
          $scope.selected = item;
+         // regra de pesagem de saida
+         // deve pegar a pesagem de entrada mais recente
+
+         regraPesagemSaida(item);
+
+
+
+
          console.log($scope.selected);
+     }
      }
 
      function loadAll(text) {

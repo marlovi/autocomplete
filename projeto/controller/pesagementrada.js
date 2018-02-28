@@ -205,7 +205,10 @@
      // variável que é responsável pelo gerenciamento do compoenent auto complete
  }
 
- ///////
+ 
+
+
+
  angular
      .module('home')
      .controller('pesagemEntradaController', pesagemEntradaController);
@@ -621,17 +624,108 @@
          $log.info('pesquisando por: ' + text);
          loadAll(text);
      }
+// função que testa se existe mais registro de pesagem de entrada do que de saida
+
+ function regraPesagemEntrada(item) {
+    
+    // FUNÇÃO QUE CONSULTA AS PESAGENS RELACIONADAS POR ID VEICULO PLACA
+    // OBJETIVO RETORNAR 
+    // ok  consultar se a placa tem pesagem 
+    // contar quantas pesagem de entrada
+    // contar quantas pesagem de saida
+    var request = $http({
+        method: "post",
+        url: "php/pesagem/consultaplacapesagementrada.php",
+        data: $scope.pesagem,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    });
+    console.log($scope.pesagem);
+    request.then(function(response) {
+        //  console.log(response.data);
+        var arr = [];
+        var cont_pesagem_entrada = 0;
+        var cont_pesagem_saida = 0;
+        var cont_pesagem_manual = 0;
+        var cont_pesagem_avulsa = 0;
+        for (var i in response.data) {
+            //arr.push(response.data[i].status);  
+            if (response.data[i].status === "PESAGEM ENTRADA") {
+                cont_pesagem_entrada = cont_pesagem_entrada + 1;
+            } else if (response.data[i].status === "PESAGEM MANUAL") {
+                cont_pesagem_manual = cont_pesagem_manual + 1;
+            } else if (response.data[i].status === "PESAGEM SAIDA") {
+                cont_pesagem_saida = cont_pesagem_saida + 1;
+            } else if (response.data[i].status === "PESAGEM AVULSA") {
+                cont_pesagem_avulsa = cont_pesagem_avulsa + 1;
+            }
+        }
+        console.log("contador de eventos");
+        console.log("entrada");
+        console.log(cont_pesagem_entrada);
+        console.log("manual");
+        console.log(cont_pesagem_manual);
+        console.log("saida");
+        console.log(cont_pesagem_saida);
+        console.log("avulsa");
+        console.log(cont_pesagem_avulsa);
+        // se pesagem de entrada for maior que pesagem de saida
+        // isso quer dizer que esse veiculo está no patio
+        // com pesagem de entrada em aberto. então o sistema limpa a placa
+        // se pesagem de saida  ==  a pesagem de entra 
+        // então o sistema pode registrar nova pesagem
+        // as pesagem avulsa e manual nao entraram no processo de
+        // de controle de entrada e saida
+        if (cont_pesagem_entrada === cont_pesagem_saida) {
+            console.log("permitido pesagem de entrada");
+        } else {
+            console.log("Pesagem de entrada em aberto");
+            Materialize.toast('VEÍCULO INFORMADO JÁ ENCONTRA-SE DENTRO DO PÁTIO!', 2000, 'rounded', 'center');
+            Materialize.toast();
+            $scope.pesagem.veiculo_id_veiculo = null;
+            $scope.pesagem.placa = null;
+            $scope.pesagem.tipo_veiculo = null;
+            $scope.selected = null;
+        }
+        //$scope.pesagem.tipo_pesagem = response.data[0].status;
+        //console.log($scope.pesagem.tipo_pesagem);
+    }, function(response) {
+        console.log("ERROR" + response);
+    });
+    // fim teste 
+}
 
      function selectedItemChange(item) {
         console.log("pesagemEntradaVeiculoController :selectedItemChange");
-         console.log(item.id_veiculo);
-         console.log($scope.pesagem);
+       //  console.log(item.id_veiculo);
+         if(item!=null){ // tratamento do if quando apaga
+
+
+         //console.log($scope.pesagem);
          // $log.info('Item changed to stenio' + JSON.stringify(item));
          $scope.pesagem.veiculo_id_veiculo = item.id_veiculo;
          $scope.pesagem.placa = item.placa;
          $scope.pesagem.tipo_veiculo = item.tipo;
          $scope.selected = item;
-         console.log($scope.selected);
+    regraPesagemEntrada(item);
+
+        // console.log("o id da placa é:");
+        // console.log("    ");
+         //console.log($scope.pesagem.veiculo_id_veiculo);
+        // console.log($scope.selected);
+
+  }// tratamento do if quando apaga
+
+/////////////////////////////temporario sera criada uma função
+
+
+
+
+
+
+
+
      }
 
      function loadAll(text) {
@@ -679,7 +773,7 @@
                  //$scope.dicas = response.data;
                  $scope.teste_de_resultado_de_busca = response.data;
              } else {
-                 console.log("era pra rodar aqui");
+                 //console.log("era pra rodar aqui");
                  // colocar placa nao cadastrada.
                  Materialize.toast('PLACA NÃO CADASTRADA', 3000, 'rounded', 'center');
 

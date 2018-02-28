@@ -1,4 +1,22 @@
-  function cadastroProdutoController($scope, $http) {
+  function cadastroProdutoController($scope, $http, $mdDialog) {
+
+    $scope.openOffscreen = function() {
+         console.log("cadastroClienteController :openOffscreen");
+          $mdDialog.show(
+              $mdDialog.alert()
+              .clickOutsideToClose(true)
+              .title('Cadastro salvo')
+              .ok('OK')
+              .openFrom({
+                  top: -50,
+                  width: 30,
+                  height: 80
+              })
+              .closeTo({
+                  left: 1500
+              })
+          );
+      };
 
      $scope.verificarNomeProduto = function(nome) {
          console.log("cadastroProdutoController :verificarNomeProduto");
@@ -64,7 +82,7 @@
              // $scope.Cliente = response.data;
              // foi necessario atualizar o objeto cliente com os dados de id retornado do banco
              // isso faz a atualização do objeto que está na pagina.
-
+             $scope.openOffscreen();
              $scope.produto = response.data;
              $scope.produto = null;
 
