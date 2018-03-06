@@ -6,6 +6,7 @@
          // console.log(obj_impressao);
          $scope.pesagem.data = obj_impressao.data;
          $scope.pesagem.placa = obj_impressao.placa;
+         $scope.pesagem.data_entrada = obj_impressao.data_entrada;
          $scope.pesagem.cliente = obj_impressao.cliente;
          $scope.pesagem.cpf_cnpj_cliente = obj_impressao.cpf_cnpj_cliente;
          $scope.pesagem.id_pesagem = obj_impressao.id_pesagem;
@@ -62,7 +63,10 @@
 
      $scope.printDiv_saida = function() {
         console.log("impressaoController :printDiv_saida");
-         //console.log($scope.pesagem);
+        // na pesagem de saida tem esse item a mais '' data de entrada' 
+         
+          
+         console.log($scope.pesagem);
          // função que abre pop up para impressão.
          var divName = "printable_saida";
          var printContents = document.getElementById(divName).innerHTML;

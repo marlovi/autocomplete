@@ -18,7 +18,63 @@
 // SERÁ QUE ESSE DADO SENDO COMO STRING DA RUIM NA BUSCA POR DATA?
 				// ESSA FUNÇÃO SETA O BANCO DE DADOS PARA SAO PAULO
 			//date_default_timezone_set('America/Sao_Paulo');
-			 
+		    // SE PESAGEM FOR DE SAIDA ROTINA DIFERENTE TEMPORARIA
+if($pesagem->status == 1){
+
+if($con->connect_error){
+        $verificador = false;
+        die("Problema na conexão ".$con->connect_error);
+      }
+      try{
+
+      $sql = "INSERT INTO `Pesagem` (`status`,`data`,`motorista`,`fornecedor_id_fornecedor`,`empresa_id_empresa`,`produto_id_produto`,`cliente_id_cliente`,`veiculo_id_veiculo`,`tipo_veiculo`,`peso_1`,`peso_2`,`peso_descontos`,`peso_liquido`,`observacao` ) VALUES (?,now(),?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        $stament = $con->prepare($sql);
+
+        $stament->bind_param('isiiiiisiiiis' ,$status, $motorista ,$fornecedor_id_fornecedor, $empresa_id_empresa ,$produto_id_produto, $cliente_id_cliente ,$veiculo_id_veiculo, $tipo_veiculo ,$peso_1, $peso_2 ,$peso_descontos, $peso_liquido, $observacao);
+         
+
+        $status = $pesagem->status;
+         
+        //$data = $pesagem->data;
+        $motorista = $pesagem->motorista;
+        $fornecedor_id_fornecedor = $pesagem->fornecedor_id_fornecedor;
+        $empresa_id_empresa = $pesagem->empresa_id_empresa;
+        $produto_id_produto = $pesagem->produto_id_produto;
+        $cliente_id_cliente = $pesagem->cliente_id_cliente;
+        $veiculo_id_veiculo = $pesagem->veiculo_id_veiculo;
+        $tipo_veiculo = $pesagem->tipo_veiculo;
+        $peso_1 = $pesagem->peso_1;
+        $peso_2 = $pesagem->peso_2;
+        $peso_descontos = $pesagem->peso_descontos;
+        $peso_liquido = $pesagem->peso_liquido;
+        $observacao = $pesagem->observacao;
+
+         
+
+        $stament->execute();
+      }catch(Exception $e){
+        $verificador = false;
+        die("".$e->getMessage());
+      } 
+      // aqui estou buscando o ultimo id cadastrado para add 
+      // o veiculo nesse cadastro.
+      $last_id = 0;
+      $last_id = $con->insert_id;
+      $stament->close();
+      $con->close();
+      //return $verificador;
+      return $last_id;
+
+   
+
+}else{
+
+
+
+      /// FIM DO TESTE
+
+	 
 			if($con->connect_error){
 				$verificador = false;
 				die("Problema na conexão ".$con->connect_error);
@@ -63,7 +119,8 @@
 			$con->close();
 			//return $verificador;
 			return $last_id;
-		}
+} // fim do else do teste de pesagem de saida
+    }
 
 
 public function getPesagem($id_pesagem){
@@ -79,7 +136,7 @@ $banco = new Banco();
             die("Problema na conexão ".$conn->connect_error);
          }
 // preciso de buscar as informações da propria tabela pesagem
-   $sql = "SELECT DATE_FORMAT(p.`data`, '%d-%m-%Y %h:%i:%s') AS data , p.`status` , p.`motorista` , p.`observacao`, p.`id_pesagem`, p.`peso_1`, p.`peso_2`, p.`peso_descontos`, p.`peso_liquido`, c.`nome`AS `cliente` , c.`cpf`AS `cpf_cliente` , c.`cnpj`AS `cnpj_cliente`, f.`nome` AS `fornecedor` , f.`cpf` AS `cpf_fornecedor` , f.`cnpj` AS `cnpj_fornecedor`, v.`placa`, pro.`nome` AS `produto` , pro.`id_produto` AS `cod_prod`  FROM `pesagem` as `p`, `cliente` as `c`, `fornecedor` as `f`, `veiculo` as `v`, `produto` as `pro` WHERE p.`id_pesagem` = ".$id_pesagem." AND p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornecedor_id_fornecedor` AND v.`id_veiculo` = p.`veiculo_id_veiculo` AND pro.`id_produto` = p.`produto_id_produto`";
+   $sql = "SELECT DATE_FORMAT(p.`data`, '%d-%m-%Y %h:%i:%s') AS data , p.`status` , p.`cliente_id_cliente` , p.`fornecedor_id_fornecedor` , p.`produto_id_produto` , p.`motorista` , p.`observacao`, p.`id_pesagem`, p.`peso_1`, p.`peso_2`, p.`peso_descontos`, p.`peso_liquido`, c.`nome`AS `cliente` , c.`cpf`AS `cpf_cliente` , c.`cnpj`AS `cnpj_cliente`, f.`nome` AS `fornecedor` , f.`cpf` AS `cpf_fornecedor` , f.`cnpj` AS `cnpj_fornecedor`, v.`placa`, pro.`nome` AS `produto` , pro.`id_produto` AS `cod_prod`  FROM `pesagem` as `p`, `cliente` as `c`, `fornecedor` as `f`, `veiculo` as `v`, `produto` as `pro` WHERE p.`id_pesagem` = ".$id_pesagem." AND p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornecedor_id_fornecedor` AND v.`id_veiculo` = p.`veiculo_id_veiculo` AND pro.`id_produto` = p.`produto_id_produto`";
  
    $result = $conn->query($sql);
    if ($result->num_rows > 0) {
@@ -98,11 +155,18 @@ $banco = new Banco();
          if($row['status'] == 0){
           $consultaPesagem->status = "PESAGEM ENTRADA";
          }
+         if($row['status'] == 1){
+          $consultaPesagem->status = "PESAGEM SAIDA";
+         }
          if($row['status'] == 2){
           $consultaPesagem->status = "PESAGEM AVULSA";
          }
 
          $consultaPesagem->id_pesagem = $row['id_pesagem'];
+         $consultaPesagem->cliente_id_cliente = $row['cliente_id_cliente'];
+         $consultaPesagem->fornecedor_id_fornecedor = $row['fornecedor_id_fornecedor'];
+         $consultaPesagem->produto_id_produto = $row['produto_id_produto'];
+
          $consultaPesagem->peso_1 = $row['peso_1'];
          $consultaPesagem->peso_2 = $row['peso_2'];
          $consultaPesagem->peso_descontos = $row['peso_descontos'];
@@ -169,14 +233,18 @@ public function consultaPesagemPlaca($id_placa){
       $resultado = array();
       while($row = $result->fetch_assoc()) {
          $consultaPesagem = new ConsultaPesagem();  // tem que criar essa class ainda.
-         if($row['status'] == 3){
-          $consultaPesagem->status = "PESAGEM MANUAL";
-         }
+         
          if($row['status'] == 0){
           $consultaPesagem->status = "PESAGEM ENTRADA";
          }
+         if($row['status'] == 1){
+          $consultaPesagem->status = "PESAGEM SAIDA";
+         }
          if($row['status'] == 2){
           $consultaPesagem->status = "PESAGEM AVULSA";
+         }
+         if($row['status'] == 3){
+          $consultaPesagem->status = "PESAGEM MANUAL";
          }
          $consultaPesagem->id_pesagem = $row['id_pesagem'];
          $consultaPesagem->placa = $row['placa'];

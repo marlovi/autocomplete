@@ -10,10 +10,10 @@
          }).done(function(data) {
              if ($.isNumeric(data) == true) {
                  // console.log("teste funfou reconheceu digito"); 
-                 $scope.pesagem.peso_1 = data;
-                 document.querySelector("[name='primeira']").value = data;
+                 $scope.pesagem.peso_2 = data;
+                 document.querySelector("[name='segunda']").value = data;
                  $scope.$apply(function() {
-                     $scope.pesagem.peso_1 = data;
+                     $scope.pesagem.peso_2 = data;
                  });
                  // se chegou até aqui é pq todos os campos foram atendidos e o peso foi coletado 
                  // então pode liberar o envio da pesagem
@@ -25,6 +25,7 @@
                  Materialize.toast('PESO INSTÁVEL.', 3000, 'rounded', 'center');
                  Materialize.toast();
              }
+
          });
          
 
@@ -33,10 +34,14 @@
      $scope.autorizar_envio_pesagem_saida = function() {
         console.log("pesagemSaidaController :autorizar_envio_pesagem_saida");
          // fazer o teste de liberação do botao.
-         // teste para pesagem de entrada
-         var permite_pesagem_saida = $scope.pesagem.peso_1;
+         // teste para pesagem de saida
+         // status  = 0 pesagem entrada
+         // status  = 1 pesagem saida
+         // status  = 2 pesagem avulsa
+         // status  = 3 pesagem manual
+         var permite_pesagem_saida = $scope.pesagem.peso_2;
          if ($.isNumeric(permite_pesagem_saida) == true) {
-             $scope.pesagem.status = 2;
+             $scope.pesagem.status = 1;
          }
          $scope.modulo();
      }
@@ -98,12 +103,18 @@
 
      $scope.salvar = function() {
         console.log("pesagemSaidaController :salvar");
-         //console.log($scope.pesagem);
+         console.log($scope.pesagem);
+         var data_entrada = null;
          //console.log("aqui vai para o banco");
          // percebi ser interessante converter em int os dados antes de salvar no 
          // banco. por exemplo as chaves estrangeiras devem ser inteiro
          // e a leitura de peso tambem.
          //PARSEiNT = CONVERTE STRING EM INTEIRO
+         // status  = 0 pesagem entrada
+         // status  = 1 pesagem saida
+         // status  = 2 pesagem avulsa
+         // status  = 3 pesagem manual
+
          $scope.pesagem.cliente_id_cliente = parseInt($scope.pesagem.cliente_id_cliente);
          $scope.pesagem.fornecedor_id_fornecedor = parseInt($scope.pesagem.fornecedor_id_fornecedor);
          $scope.pesagem.peso_1 = parseInt($scope.pesagem.peso_1);
@@ -121,13 +132,22 @@
              $scope.pesagem.peso_liquido = parseInt($scope.pesagem.peso_liquido);
 
          }
+         if ($scope.pesagem.status == 1) {
+             $scope.pesagem.peso_1 = parseInt($scope.pesagem.peso_1);
+             $scope.pesagem.peso_2 = parseInt($scope.pesagem.peso_2);
+             $scope.pesagem.peso_descontos = parseInt($scope.pesagem.peso_descontos);
+             $scope.pesagem.peso_liquido = parseInt($scope.pesagem.peso_liquido);
+             data_entrada = $scope.pesagem.data_entrada;
+             //console.log(data_entrada);
+
+         }
          if ($scope.pesagem.status == 0) {
              $scope.pesagem.peso_1 = parseInt($scope.pesagem.peso_1);
 
 
          }
 
-         console.log($scope.pesagem);
+         //console.log($scope.pesagem);
          // duvidas nessa função com a informação do data
          var request = $http({
              method: "post",
@@ -138,15 +158,21 @@
              }
          });
          //    console.log($scope.pesagem );
+         //$scope.pesagem.data_entrada = data_entrada;
+         //console.log($scope.pesagem.data_entrada);
          request.then(function(response) {
-             console.log(response.data);
-             console.log("aqui volta do banco");
+             
+            // console.log(response.data);
+             console.log("Retorno banco de dados");
+             
              // $scope.Cliente = response.data;
              // foi necessario atualizar o objeto cliente com os dados de id retornado do banco
              // isso faz a atualização do objeto que está na pagina.
-             $scope.pesagem = response.data;
-             //console.log( response.data[0].cliente);
+             response.data[0].data_entrada = data_entrada;
+            $scope.pesagem = response.data;
+        
              $cookies.putObject('impressao', response.data[0]);
+         
              // $cookies.impressao = response.data[0];
          }, function(response) {
              console.log("ERROR" + response);
@@ -676,7 +702,7 @@ function regraPesagemSaida(item) {
         console.log("contador de eventos");
         console.log("entrada");
         console.log(cont_pesagem_entrada);
-        console.log("id Pesaagem");
+        console.log("id Pesagem");
         console.log(id_pesagem_entrada);
         console.log("manual");
         console.log(cont_pesagem_manual);
@@ -692,8 +718,16 @@ function regraPesagemSaida(item) {
         // as pesagem avulsa e manual nao entraram no processo de
         // de controle de entrada e saida
         if (cont_pesagem_entrada === cont_pesagem_saida) {
-            console.log("permitido pesagem de entrada");
+            console.log("NÃO EXISTE Pesagem em aberto");
+            Materialize.toast('VEÍCULO INFORMADO NÃO ENCONTRA-SE DENTRO DO PÁTIO!', 2000, 'rounded', 'center');
+            Materialize.toast();
+            $scope.pesagem.veiculo_id_veiculo = null;
+            $scope.pesagem.placa = null;
+            $scope.pesagem.tipo_veiculo = null;
+            $scope.selected = null;
         } else {
+            if (cont_pesagem_entrada >= cont_pesagem_saida) {
+            console.log("permitido pesagem de SAIDA");
             console.log("Pesagem de entrada em aberto");
             console.log("entrada");
             console.log(cont_pesagem_entrada);
@@ -702,8 +736,7 @@ function regraPesagemSaida(item) {
             $scope.pesagem.id_pesagem_entrada= id_pesagem_entrada;
             // aqui depois de saber qual foi a ultima pesagem de entrada
             // envio esse id para saber os dados da pesagem de entrada
-
-
+            
 
             var request = $http({
         method: "post",
@@ -720,13 +753,18 @@ function regraPesagemSaida(item) {
         // aqui transfiro esses dados da ultima pesagem de entrada para
         // o objeto pesagem na pagina pesagem de saida
          $scope.pesagem.cliente = response.data[0].cliente;
+         $scope.pesagem.cliente_id_cliente = response.data[0].cliente_id_cliente;
          $scope.pesagem.produto = response.data[0].produto;
+          $scope.pesagem.produto_id_produto = response.data[0].produto_id_produto;
          $scope.pesagem.cpf_cnpj_cliente = response.data[0].cpf_cnpj_cliente;
          $scope.pesagem.cpf_cnpj_fornecedor = response.data[0].cpf_cnpj_fornecedor;
          $scope.pesagem.data_entrada = response.data[0].data;
          $scope.pesagem.fornecedor = response.data[0].fornecedor;
+         $scope.pesagem.fornecedor_id_fornecedor = response.data[0].fornecedor_id_fornecedor;
          $scope.pesagem.id_pesagem_entrada = response.data[0].id_pesagem;
          $scope.pesagem.peso_1 = response.data[0].peso_1;
+         // ENQUANTO NAO APLICA FUNÇÃO DESCONTOS
+         $scope.pesagem.peso_descontos = 0;
           
 
 
@@ -734,6 +772,10 @@ function regraPesagemSaida(item) {
     }, function(response) {
         console.log("ERROR" + response);
     });
+        } 
+            
+
+
 
 
         }
