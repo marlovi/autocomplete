@@ -131,17 +131,33 @@ software.
 
 // aqui faço a pagina atualizar sozinha
 function fazerRequisicao(){
+  
       $.ajax({
         url: "http://192.168.25.177:80",
         dataType: 'jsonp', // IMPORTANTE
         crossDomain: true, // IMPORTANTE
         jsonp: false,
         jsonpCallback: 'dados', // IMPORTANTE
+
         success: function(data,status,xhr) {
 alterarStatus(data);
-        console.log(data);
-        }
+       // console.log(data);
+        //console.log(status);
+        },
+        error: function(xhr, status, error) {
+          
+                  
+                      Materialize.toast('VERIFIQUE CONEXÃO: CONTROLADOR REDE ' , 1000, 'rounded', 'center');
+                      Materialize.toast();
+                    
+ 
+                  
+                }
+
+
+         
       });
+
         return false;
     }
 setInterval(fazerRequisicao, 5000);
@@ -157,6 +173,7 @@ setInterval(fazerRequisicao, 5000);
                 <li class="divider"></li>
                 <li><a ui-sref="cadastroempresa" ng-click="$event.stopPropagation();">Cadastro da Empresa</a></li>
                 <li class="divider"></li>
+                <li class="divider"></li>
                 <li><a ui-sref="cadastrocliente">Cadastro de Clientes</a></li>
                 <li class="divider"></li>
                 <li><a ui-sref="cadastrofornecedor">Cadastro de Fornecedores</a></li>
@@ -171,11 +188,12 @@ setInterval(fazerRequisicao, 5000);
                 <li class="divider"></li>
                 <li><a ui-sref="pesquisaempresa">Pesquisar Empresa</a></li>
                 <li class="divider"></li>
+                <li class="divider"></li>
                 <li><a ui-sref="pesquisacliente">Pesquisar Clientes</a></li>
                 <li class="divider"></li>
                 <li><a ui-sref="pesquisafornecedor">Pesquisar Fornecedores</a></li>
                 <li class="divider"></li>
-                <li class="divider"></li>
+                
                 <li><a ui-sref="pesquisaproduto">Pesquisar Produtos</a></li>
                 <li class="divider"></li>
                 <li><a ui-sref="Pesquisadesconto">NÃO FEITO Pesquisar Descontos</a></li>
@@ -199,11 +217,12 @@ setInterval(fazerRequisicao, 5000);
                 <li class="divider"></li>
                 <li><a ui-sref="pesagemmanual">Pesagem Manual</a></li>
                 <li class="divider"></li>
+                <li class="divider"></li>
                 <li><a ui-sref="pesagementrada">Pesagem Entrada</a></li>
                 <li class="divider"></li>
                 <li><a ui-sref="pesagemsaida">Pesagem Saida </a></li>
                 <li class="divider"></li>
-                <li class="divider"></li>
+                
                 <li><a ui-sref="pesagemavulsa">Pesagem Avulsa</a></li>
                 <li class="divider"></li>
             </ul>
@@ -221,8 +240,12 @@ setInterval(fazerRequisicao, 5000);
             </nav>
         </div>
 <!-- OBJETIVO CRIAR MENU LATERAL PARA CONTROLE
-DA AUTOMAÇÃO  -->
-  <div class="row s12   card-panel">
+DA AUTOMAÇÃO 
+data-ng-controller="pesagemAvulsaVeiculoController as PVeiculo"  
+tentando colocar dentro do controle o menu de acessorio
+
+ -->
+  <div class="row s12   card-panel"    >
       <div class="col s9 push-s3 card-panel center">
          <ui-view></ui-view>
       </div>
@@ -232,6 +255,10 @@ DA AUTOMAÇÃO  -->
         <div class='col s5'>
                <label for='botao_semafaro_externo_A'>Entrada A <br> </label>
                <label for='botao_semafaro_externo_A'>Semáforo externo</label>
+
+
+
+
                <button class='waves-effect waves-light btn black ' id="botao_semafaro_externo_A" name='botao_semafaro_externo_A' ><i class='material-icons'>highlight</i></button>
             </div>
         <div class="row">
@@ -264,8 +291,9 @@ DA AUTOMAÇÃO  -->
                </div>
         </div>
         <div class='col s10 offset-s1 input-field'>
+          <label for="primeira" id="leiturapeso" class="active"> Peso Atual </label>
                   <input style='font-size: 25px' class='black-text ' disabled id='leiturapeso' type='text' name='leiturapeso' value="Calculando">
-                  <label for='leiturapeso'>Peso</label>
+                  <label for='leiturapeso'></label>
         </div>
     </div>
     <div class="row">

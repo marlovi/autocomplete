@@ -9,9 +9,9 @@ $cfgTimeOut = 10;
 $peso   = 0;
 $usenet = fsockopen($cfgServer, $cfgPort, $errno, $errstr, $cfgTimeOut);
 
-//var_dump($usenet);
 if (!$usenet) {
 	echo "Sem conexão com indicador ".$cfgServer.":".$cfgPort."\n";
+	
 	exit();
 } else {
 
@@ -23,8 +23,13 @@ if (!$usenet) {
 	$contador = 0;
 	while (!feof($usenet)) {
 		//fgets($usenet, 128);
-		//echo ". ".fgets($usenet, 128)."<BR>\n";
+		//echo fgets($usenet, 128)."SEM RESPOSTA\n";
 		$var = fgets($usenet, 128);
+		$tratamento_para_sem_conexao = fgets($usenet, 128)."SEM RESPOSTA\n";
+		if($tratamento_para_sem_conexao =="SEM RESPOSTA\n"){
+			echo "SEM RESPOSTA";
+
+		}
 		//$media =  (int) substr($var, -11, 6);
 
 		if ($contador == 1) {
@@ -45,7 +50,7 @@ if (!$usenet) {
 			echo "Aguardando";
 			break;
 			}
-			echo $var;
+			//echo $var;
 			
 			//echo $est;
 			break;
