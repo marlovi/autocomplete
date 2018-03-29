@@ -38,16 +38,20 @@ if (!$usenet) {
 			$var = fgets($usenet, 128);
 			//$peso = (int) substr($var, -11, 7);
 			
-			$marcador = substr($var, 8, 1);
+			$marcador = substr($var, 7, 1);
+			//echo $marcador;
 
 
 			if ($marcador == "E") {
-			$peso =  substr($var, 3, 5);
+				//$peso =  substr($var, 3, 5); tratanto o peso do 
+				// vem do indicador 010000EL QUANDO TEM 10MIL KG NA BALANÇA E ESTÁ ESTABILIZADO
+				$peso =  substr($var, 0, 7); // 6 digitos significativos começando da posição 0
 
 			echo $peso;
 			break;
 			} else {
 			echo "Aguardando";
+				//echo $peso;
 			break;
 			}
 			//echo $var;
