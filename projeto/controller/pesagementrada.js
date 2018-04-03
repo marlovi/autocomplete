@@ -8,12 +8,14 @@
              async: true,
              timeout: 1000,
          }).done(function(data) {
+            console.log(data);
              if ($.isNumeric(data) == true) {
                  // console.log("teste funfou reconheceu digito"); 
                  $scope.pesagem.peso_1 = data;
                  document.querySelector("[name='primeira']").value = data;
                  $scope.$apply(function() {
                      $scope.pesagem.peso_1 = data;
+                      console.log($scope.pesagem.peso_1);
                  });
                  // se chegou até aqui é pq todos os campos foram atendidos e o peso foi coletado 
                  // então pode liberar o envio da pesagem
@@ -30,7 +32,9 @@
         console.log("pesagemEntradaController :autorizar_envio_pesagem_entrada");
          // fazer o teste de liberação do botao.
          // teste para pesagem de entrada
+
          var permite_pesagem_entrada = $scope.pesagem.peso_1;
+          console.log(permite_pesagem_entrada);
          if ($.isNumeric(permite_pesagem_entrada) == true) {
              $scope.pesagem.status = 0;
          }

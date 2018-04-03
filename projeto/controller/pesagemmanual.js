@@ -60,12 +60,14 @@
            // banco. por exemplo as chaves estrangeiras devem ser inteiro
            // e a leitura de peso tambem.
            //PARSEiNT = CONVERTE STRING EM INTEIRO
+           
            $scope.pesagem.cliente_id_cliente = parseInt($scope.pesagem.cliente_id_cliente);
            $scope.pesagem.fornecedor_id_fornecedor = parseInt($scope.pesagem.fornecedor_id_fornecedor);
            $scope.pesagem.peso_1 = parseInt($scope.pesagem.peso_1);
            $scope.pesagem.peso_2 = parseInt($scope.pesagem.peso_2);
            $scope.pesagem.peso_descontos = parseInt($scope.pesagem.peso_descontos);
            $scope.pesagem.peso_liquido = parseInt($scope.pesagem.peso_liquido);
+           
            //console.log($scope.pesagem);
            // duvidas nessa função com a informação do data
            var request = $http({
@@ -80,6 +82,7 @@
            request.then(function(response) {
                console.log(response.data);
                console.log("aqui volta do banco");
+
                // $scope.Cliente = response.data;
                // foi necessario atualizar o objeto cliente com os dados de id retornado do banco
                // isso faz a atualização do objeto que está na pagina.
@@ -87,6 +90,8 @@
                //console.log( response.data[0].cliente);
                $cookies.putObject('impressao', response.data[0]);
                // $cookies.impressao = response.data[0];
+               // quero ao clicar em salvar quero ir para a pagina de impressao
+              
            }, function(response) {
                console.log("ERROR" + response);
            });

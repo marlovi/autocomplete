@@ -1,9 +1,13 @@
   function impressaoController($scope, $http, $log, $cookieStore, $mdDialog, $q, $timeout, meuServico, $cookies) {
 
+
      $scope.init = function() {
+      
         console.log("impressaoController :init");
          var obj_impressao = $cookies.getObject('impressao')
-         // console.log(obj_impressao);
+          //console.log($cookies);
+         // console.log($scope.pesagem);
+ 
          $scope.pesagem.data = obj_impressao.data;
          $scope.pesagem.placa = obj_impressao.placa;
          $scope.pesagem.data_entrada = obj_impressao.data_entrada;
@@ -24,7 +28,9 @@
      }
 
      $scope.printDiv = function() {
+
         console.log("impressaoController :printDiv");
+
          //console.log($scope.pesagem);
          // função que abre pop up para impressão.
          var divName = "printable";
@@ -33,7 +39,7 @@
          popupWin.document.open();
          popupWin.document.write('<html><head> <title>SPA  - Versão 2018 1.12</title>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1.0"/> </head> <style type="text/css" media="print"> body { **zoom:75%;}  </style><body onload="window.print()">  ' + printContents + ' </body></html>');
          popupWin.document.close();
-         $cookies.remove('impressao')
+         $cookies.remove('impressao');
      }
 
      $scope.printDiv_entrada = function() {

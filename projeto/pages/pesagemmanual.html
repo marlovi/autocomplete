@@ -112,7 +112,19 @@
       <div class="row">
          <div class="row s12 center">
             <!-- isso aqui é usado para sair da pagina atual ui-sref="home" -->
-            <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="pesagem.status != 3 " ng-click="salvar()" ui-sref="layoutMeiaPag" >Enviar</button>
+            <button class="btn waves-effect waves-light" id="enviar"  ng-Disabled="pesagem.status != 3 "  ng-click="salvar(); imprimir = true" ng-show="!imprimir"     >Enviar</button>
+         </div>
+         <div class="row s12 center">
+            <!-- isso aqui é usado para sair da pagina atual ui-sref="home" -->
+            <button class="btn waves-effect waves-light"  ng-show="imprimir" id="imprimir"  ui-sref="layoutMeiaPag"   >imprimir</button>
+
+ 
+<!--
+    <button ng-click="imprimir = false" ng-show="imprimir">Esconder imprimir</button>
+    <button ng-click="imprimir = true" ng-show="!imprimir">Mostrar imprimir</button>
+
+-->
+
          </div>
       </div>
    </div>
