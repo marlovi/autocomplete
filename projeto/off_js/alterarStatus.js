@@ -1,5 +1,5 @@
 var alterarStatus = function(objeto){
-        console.log(objeto);
+    //    console.log(objeto);
 
 
  

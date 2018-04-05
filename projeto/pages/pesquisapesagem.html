@@ -1,0 +1,45 @@
+<h2 class="center"> Pesquisar Pesagem </h2>
+<div class="row card-panel" ng-controller="pesquisaPesagemController">
+   <div class="row">
+      <div class="col s10  input-field" ng-keyup="pesquisarnome()">
+         <!--função ng-keyup assim que o teclado for precionado ele dispara uma ação no caso chama a função pesquisarnome() -->
+         <input id="nome" type="text" ng-model="pesquisa.nome">
+         <label for="nome">Cliente</label>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col s10  input-field" ng-keyup="pesquisarcpf()">
+         <!--função ng-keyup assim que o teclado for precionado ele dispara uma ação no caso chama a função pesquisarnome() -->
+         <input id="cpf" type="text" ng-model="pesquisa.cpf">
+         <label for="cpf">Fornecedor</label>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col s10  input-field" ng-keyup="pesquisarcnpj()">
+         <!--função ng-keyup assim que o teclado for precionado ele dispara uma ação no caso chama a função pesquisarnome() -->
+         <input id="cnpj" type="text" ng-model="pesquisa.cnpj">
+         <label for="cnpj">Produto</label>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col s10  input-field" ng-keyup="pesquisarcnpj()">
+         <!--função ng-keyup assim que o teclado for precionado ele dispara uma ação no caso chama a função pesquisarnome() -->
+         <input id="cnpj" type="text" ng-model="pesquisa.cnpj">
+         <label for="cnpj">Placa</label>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col s10  input-field" ng-keyup="pesquisarcnpj()">
+         <!--função ng-keyup assim que o teclado for precionado ele dispara uma ação no caso chama a função pesquisarnome() -->
+         <input id="cnpj" type="text" ng-model="pesquisa.cnpj">
+         <label for="cnpj">Numero da Pesagem</label>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col s12">
+         <!-- ONDE ESTA ESSA DIV? controller/pesquisacliente.js  função $scope.gerarcartaocpf
+            newDiv é essa parada dinamica. -->
+         <div id='divdinamica' otc-dynamic></div>
+      </div>
+   </div>
+</div>
