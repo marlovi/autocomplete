@@ -6,10 +6,12 @@
          var xhr = $.ajax({
              url: 'http://' + ipx + '/autocomplete/projeto/php/comandos/LER_PESO.php',
              async: true,
-             timeout: 1000,
+             timeout: 5000,
          }).done(function(data) {
+            console.log(data);
              if ($.isNumeric(data) == true) {
                  // console.log("teste funfou reconheceu digito"); 
+
                  $scope.pesagem.peso_1 = data;
                  document.querySelector("[name='primeira']").value = data;
                  $scope.$apply(function() {
@@ -19,6 +21,22 @@
                  // então pode liberar o envio da pesagem
                  $scope.autorizar_envio_pesagem_avulsa();
                  $scope.modulo( );
+                
+                 // criado esse if porque as vezes na primeira pesagem a tranferencia de
+                 // data para peso_1 o ultimo digito nao ia. Não sabendo o motivo 
+                 // Coloquei o if para refazer a coleta e ter redundancia na transferencia 
+
+                 if($scope.pesagem.peso_1 == data ){
+                  //  console.log("é igual data e peso_1");
+                 }else{
+
+                     $scope.pesagem.peso_1 = data;
+                 document.querySelector("[name='primeira']").value = data;
+                 $scope.$apply(function() {
+                     $scope.pesagem.peso_1 = data;
+                 });
+
+                 }
           
              } else {
                  // console.log("colocar alert e solicitar captura novamente");

@@ -91,7 +91,10 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
       <div class="row">
          <div class="row s12 center">
             <!-- isso aqui é usado para sair da pagina atual ui-sref="home" -->
-            <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="!pesagem.peso_liquido" ng-click="salvar()" ui-sref="layoutMeiaPag_saida" >Enviar</button>
+            <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="!pesagem.peso_liquido" ng-click="salvar(); imprimir = true" ng-show="!imprimir" >Enviar</button>
+            <button class="btn waves-effect waves-light"  ng-show="imprimir" id="imprimir"   ui-sref="layoutMeiaPag_saida" >imprimir</button>
+
+
             <button class="btn waves-effect waves-light" id="capturar_peso" ng-click="capturar_peso()  " ng-Disabled = " !pesagem.peso_1 " >capturar peso</button>
          </div>
       </div>

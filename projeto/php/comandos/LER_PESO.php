@@ -25,6 +25,7 @@ if (!$usenet) {
 		//fgets($usenet, 128);
 		//echo fgets($usenet, 128)."SEM RESPOSTA\n";
 		$var = fgets($usenet, 128);
+		//echo $var;
 		$tratamento_para_sem_conexao = fgets($usenet, 128)."SEM RESPOSTA\n";
 		if($tratamento_para_sem_conexao =="SEM RESPOSTA\n"){
 			echo "SEM RESPOSTA";
@@ -32,7 +33,7 @@ if (!$usenet) {
 		}
 		//$media =  (int) substr($var, -11, 6);
 
-		if ($contador == 1) {
+		if ($contador == 2) {
 			//usando o marcador E da saturno para
 			//certificar a estabilidade e imprimir o resultado
 			$var = fgets($usenet, 128);

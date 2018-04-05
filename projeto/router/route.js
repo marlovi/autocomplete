@@ -124,7 +124,7 @@
     
 ///////////////////////////////////////////////////////////////////////// 
 
-var pesagemmanual = {
+    var pesagemmanual = {
          name: 'pesagemmanual',
          url: '/pesagemmanual', // endereço visivel ao usuario
          templateUrl: "pages/pesagemmanual.html",
@@ -132,7 +132,7 @@ var pesagemmanual = {
          
      }
 
-var pesagementrada = {
+    var pesagementrada = {
          name: 'pesagementrada',
          url: '/pesagementrada', // endereço visivel ao usuario
          templateUrl: "pages/pesagementrada.html",
@@ -140,7 +140,7 @@ var pesagementrada = {
          
      }
 
-var pesagemavulsa = {
+    var pesagemavulsa = {
          name: 'pesagemavulsa',
          url: '/pesagemavulsa', // endereço visivel ao usuario
          templateUrl: "pages/pesagemavulsa.html",
@@ -154,6 +154,12 @@ var pesagemavulsa = {
          templateUrl: "pages/pesagemsaida.html",
          controller: "pesagemSaidaController"
          
+     }
+      var pesquisapesagem = {
+         name: 'pesquisapesagem',
+         url: '/pesquisapesagem',
+         templateUrl: "pages/pesquisapesagem.html",
+         controller: "pesquisaPesagemController"
      }
 
  
@@ -220,6 +226,7 @@ var pesagemavulsa = {
          .state(pesagementrada)
          .state(pesagemavulsa)
          .state(pesagemsaida)
+         .state(pesquisapesagem)
 
          .state(layoutMeiaPag)
          .state(layoutMeiaPag_entrada)
