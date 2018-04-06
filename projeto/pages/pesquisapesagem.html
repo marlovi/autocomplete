@@ -1,40 +1,78 @@
-<h2 class="center"> Pesquisar Pesagem </h2>
-<div class="row card-panel" ng-controller="pesquisaPesagemController">
-   <div class="row">
-      <div class="col s10  input-field" ng-keyup="pesquisarnome()">
-         <!--função ng-keyup assim que o teclado for precionado ele dispara uma ação no caso chama a função pesquisarnome() -->
-         <input id="nome" type="text" ng-model="pesquisa.nome">
-         <label for="nome">Cliente</label>
-      </div>
+<h2 class="center-align"> Pesquisar pesagem</h2>
+
+<div class="row card-panel " ng-controller="pesquisaPesagemController">
+
+<script type="text/javascript">
+
+</script>
+<div class="row left-align">
+   <div class="col s4 center-align">
+      <h6>Filtrar Registros Por:</h6> 
+ <td class="action-checkbox">
+    <input class="action-select" name="entrada" id="entrada" type="checkbox" ng-model="pesquisa.entrada" value="1">
+    <label for="entrada">&nbsp; Entrada</label>
+ </td>
+  <td class="action-checkbox">
+    <input type="checkbox" checked="checked" name="saida" id="saida"   ng-model="pesquisa.saida" value="1">
+    <label for="saida">&nbsp; saida</label>
+ </td>
    </div>
-   <div class="row">
-      <div class="col s10  input-field" ng-keyup="pesquisarcpf()">
-         <!--função ng-keyup assim que o teclado for precionado ele dispara uma ação no caso chama a função pesquisarnome() -->
-         <input id="cpf" type="text" ng-model="pesquisa.cpf">
-         <label for="cpf">Fornecedor</label>
-      </div>
+   <div class="col s8">
+                  <h6 class="center-align">Filtrar Registros Por Período:</h6> 
+                  <div class="col s1">
+                     <label for="data_inicio">Inicio:</label>
+                  </div>
+                  <div class="col s5" >
+                     <input id="data_inicio" type="text" ng-model="pesquisa.data_1"  mask="99/99/9999">
+                  </div>
+                  <div class="col s1">
+                     <label for="data_fim">Fim:</label>
+                  </div>
+                  <div class="col s5" >
+                     <input id="data_fim" type="text" ng-model="pesquisa.data_2"  mask="99/99/9999"> 
+                  </div>
    </div>
-   <div class="row">
-      <div class="col s10  input-field" ng-keyup="pesquisarcnpj()">
-         <!--função ng-keyup assim que o teclado for precionado ele dispara uma ação no caso chama a função pesquisarnome() -->
-         <input id="cnpj" type="text" ng-model="pesquisa.cnpj">
-         <label for="cnpj">Produto</label>
-      </div>
-   </div>
-   <div class="row">
-      <div class="col s10  input-field" ng-keyup="pesquisarcnpj()">
-         <!--função ng-keyup assim que o teclado for precionado ele dispara uma ação no caso chama a função pesquisarnome() -->
-         <input id="cnpj" type="text" ng-model="pesquisa.cnpj">
-         <label for="cnpj">Placa</label>
-      </div>
-   </div>
-   <div class="row">
-      <div class="col s10  input-field" ng-keyup="pesquisarcnpj()">
-         <!--função ng-keyup assim que o teclado for precionado ele dispara uma ação no caso chama a função pesquisarnome() -->
-         <input id="cnpj" type="text" ng-model="pesquisa.cnpj">
-         <label for="cnpj">Numero da Pesagem</label>
-      </div>
-   </div>
+
+</div>
+          <div class=" row  ">
+               <div class="col s4  input-field"  >
+                  <input id="fornecedor" type="text" ng-model="pesquisa.fornecedor">
+                  <label for="fornecedor">Fornecedor</label>
+               </div>
+               <div class="col s4  input-field"  >
+                  <input id="cliente" type="text" ng-model="pesquisa.cliente">
+                  <label for="cliente">Cliente</label>
+               </div>
+               <div class="col s4  input-field"  >
+                  <input id="produto" type="text" ng-model="pesquisa.produto">
+                  <label for="produto">Produto</label>
+               </div>
+         </div>
+          <div class=" row  ">
+
+               <div class="col s4  input-field"  >
+
+                  <input id="placa" type="text" ng-model="pesquisa.placa" mask="AAA-9999">
+                  <label for="placa">Placa</label>
+               </div>
+               
+               <div class="col s4  input-field"  >
+                  <input id="ticket" type="text" ng-model="pesquisa.ticket"mask="9999">
+                  <label for="ticket">Ticket</label>
+               </div>
+               <div class="col s4  input-field"  >
+                  <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="!pesquisa" ng-click="salvar()"   >PESQUISAR</button>
+                   
+               </div>
+                
+
+
+
+
+
+         </div>
+
+  
    <div class="row">
       <div class="col s12">
          <!-- ONDE ESTA ESSA DIV? controller/pesquisacliente.js  função $scope.gerarcartaocpf
@@ -42,4 +80,58 @@
          <div id='divdinamica' otc-dynamic></div>
       </div>
    </div>
+    {{pesquisa}}
+
+    <div class="row card-panel ">
+      <h6 class="center-align"> Resultado da Pesquisa:</h6>
+
+      
+      <table class="responsive-table highlight ">
+        <thead >
+          <tr>
+              <th>Ticket</th>
+              <th>Tipo de pesagem</th>
+              <th>Data Entrada</th>
+              <th>Data Saida</th>
+              <th>Placa</th>
+              <th>Cliente</th>
+              <th>Fornecedor</th>
+              <th>Produto</th>
+          </tr>
+        </thead>
+
+        <tbody >
+          <tr>
+            <td>0375</td>
+            <td>Entrada</td>
+            <td>03-05-2018 14:10:33</td>
+            <td></td>
+            <td>PQU-0001</td>
+            <td>Cliente 01</td>
+            <td>Fornecedor 02</td>
+            <td>Cavaco</td>
+          </tr>
+          <tr>
+            <td>0376</td>
+            <td>Saida</td>
+            <td></td>
+            <td>03-07-2018 14:26:00</td>
+            <td>PQU-0122</td>
+            <td>Cliente 02</td>
+            <td>Fornecedor 03</td>
+            <td>Cana</td>
+          </tr>
+          <tr>
+            <td>0377</td>
+            <td>Entrada</td>
+            <td>03-06-2018 16:16:33</td>
+            <td></td>
+            <td>PQU-2222</td>
+            <td>Cliente 01</td>
+            <td>Fornecedor 01</td>
+            <td>Cana</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 </div>
