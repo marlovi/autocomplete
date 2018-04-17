@@ -61,7 +61,7 @@
                   <label for="ticket">Ticket</label>
                </div>
                <div class="col s4  input-field"  >
-                  <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="!pesquisa" ng-click="salvar()"   >PESQUISAR</button>
+                  <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="pesquisa.entrada!=true && pesquisa.saida!=true" ng-click="pesquisarpesagem()"   >PESQUISAR</button>
                    
                </div>
                 
@@ -86,14 +86,14 @@
       <h6 class="center-align"> Resultado da Pesquisa:</h6>
 
       
-      <table class="responsive-table highlight ">
-        <thead >
+      <table class="highlight-table center-align ">
+        <thead>
           <tr>
               <th>Ticket</th>
               <th>Tipo de pesagem</th>
               <th>Data Entrada</th>
               <th>Data Saida</th>
-              <th>Placa</th>
+              <th   >Placa</th>
               <th>Cliente</th>
               <th>Fornecedor</th>
               <th>Produto</th>
@@ -106,7 +106,7 @@
             <td>Entrada</td>
             <td>03-05-2018 14:10:33</td>
             <td></td>
-            <td>PQU-0001</td>
+            <td >PQU-0001</td>
             <td>Cliente 01</td>
             <td>Fornecedor 02</td>
             <td>Cavaco</td>

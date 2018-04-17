@@ -2,8 +2,218 @@
 	require_once 'pesagem.class.php';
 	require_once '../banco/banco.class.php';
   require_once 'resposta_pesagem.class.php';
- 
+
 	class DaoPesagem{
+
+//////////////////////////////////////// pesquisa pesagem por tipo de entrada
+
+
+
+public function consultaPesagemOperacao($operacao){
+  // OBJETIVO 
+  //BUSCAR POR STATUS DE ENTRADA --E -- SAIDA SOLICITADOS JUNTOS
+  //BUSCAR POR STATUS DE ENTRADA --OU-- SAIDA SOLICITADOS INDIVIDUALMENTE
+  // PARA CONSULTAR TIPO DE ENTRADA AO MESMO TEMPO O CAMPO NOME FORNECEDOR
+  //AND f.`nome` LIKE '".$teste."%' 
+
+          $banco = new Banco();
+          $teste = $banco->serverName;
+          $conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
+           if($conn->connect_error){
+              $verificador = false;
+              die("Problema na conexão ".$conn->connect_error);
+           }
+// verifica se existe as duas solicitações ao mesmo tempo
+if(isset($operacao->saida) && isset($operacao->entrada)){
+  // se as duas solicitaçoes forem positivas entao
+  if($operacao->entrada === true && $operacao->saida === true){
+    $operacao = 0;
+    $sqlEntrada = " SELECT DATE_FORMAT(p.`data`, '%d-%m-%Y %h:%i:%s') AS data , p.`status` , p.`cliente_id_cliente` , p.`fornecedor_id_fornecedor` , p.`produto_id_produto` , p.`motorista` , p.`observacao`, p.`id_pesagem`, p.`peso_1`, p.`peso_2`, p.`peso_descontos`, p.`peso_liquido`, c.`nome`AS `cliente` , c.`cpf`AS `cpf_cliente` , c.`cnpj`AS `cnpj_cliente`, f.`nome` AS `fornecedor` , f.`cpf` AS `cpf_fornecedor` , f.`cnpj` AS `cnpj_fornecedor`, v.`placa`, pro.`nome` AS `produto` , pro.`id_produto` AS `cod_prod`  FROM `pesagem` as `p`, `cliente` as `c`, `fornecedor` as `f`, `veiculo` as `v`, `produto` as `pro` WHERE p.`status` = ".$operacao."  AND p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornecedor_id_fornecedor`  AND v.`id_veiculo` = p.`veiculo_id_veiculo` AND pro.`id_produto` = p.`produto_id_produto` ";
+   $resultEntrada = $conn->query($sqlEntrada);
+
+   
+   $operacao = 1;
+   $sqlSaida = " SELECT DATE_FORMAT(p.`data`, '%d-%m-%Y %h:%i:%s') AS data , p.`status` , p.`cliente_id_cliente` , p.`fornecedor_id_fornecedor` , p.`produto_id_produto` , p.`motorista` , p.`observacao`, p.`id_pesagem`, p.`peso_1`, p.`peso_2`, p.`peso_descontos`, p.`peso_liquido`, c.`nome`AS `cliente` , c.`cpf`AS `cpf_cliente` , c.`cnpj`AS `cnpj_cliente`, f.`nome` AS `fornecedor` , f.`cpf` AS `cpf_fornecedor` , f.`cnpj` AS `cnpj_fornecedor`, v.`placa`, pro.`nome` AS `produto` , pro.`id_produto` AS `cod_prod`  FROM `pesagem` as `p`, `cliente` as `c`, `fornecedor` as `f`, `veiculo` as `v`, `produto` as `pro` WHERE p.`status` = ".$operacao."  AND p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornecedor_id_fornecedor`  AND v.`id_veiculo` = p.`veiculo_id_veiculo` AND pro.`id_produto` = p.`produto_id_produto` ";
+
+$resultSaida = $conn->query($sqlSaida);
+
+  }
+}  // FIM CONDIÇÃO ENTRADA E SAIDA AO MESMO TEMPO 
+// condição que verifica se solicitação de entrada foi selecionada sozinha 
+  if(isset($operacao->entrada)){
+ 
+              if($operacao->entrada === true){
+                $operacao = 0;
+                $sqlEntrada = " SELECT DATE_FORMAT(p.`data`, '%d-%m-%Y %h:%i:%s') AS data , p.`status` , p.`cliente_id_cliente` , p.`fornecedor_id_fornecedor` , p.`produto_id_produto` , p.`motorista` , p.`observacao`, p.`id_pesagem`, p.`peso_1`, p.`peso_2`, p.`peso_descontos`, p.`peso_liquido`, c.`nome`AS `cliente` , c.`cpf`AS `cpf_cliente` , c.`cnpj`AS `cnpj_cliente`, f.`nome` AS `fornecedor` , f.`cpf` AS `cpf_fornecedor` , f.`cnpj` AS `cnpj_fornecedor`, v.`placa`, pro.`nome` AS `produto` , pro.`id_produto` AS `cod_prod`  FROM `pesagem` as `p`, `cliente` as `c`, `fornecedor` as `f`, `veiculo` as `v`, `produto` as `pro`  WHERE p.`status` = ".$operacao."  AND p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornecedor_id_fornecedor`  AND v.`id_veiculo` = p.`veiculo_id_veiculo` AND pro.`id_produto` = p.`produto_id_produto`  ";
+
+            
+               $resultEntrada = $conn->query($sqlEntrada);
+
+            } // SE SOLICITAÇÃO TIVER PARAMENTRO FORNECEDOR VALIDO -- E -- SOLICITAÇÃO DE OPERAÇÃO ENTRADA
+          
+
+  }
+  //// condição que verifica se solicitação de saida foi selecionada sozinha 
+if(isset($operacao->saida)){
+        if($operacao->saida === true){
+           $operacao = 1;
+           $sqlSaida = " SELECT DATE_FORMAT(p.`data`, '%d-%m-%Y %h:%i:%s') AS data , p.`status` , p.`cliente_id_cliente` , p.`fornecedor_id_fornecedor` , p.`produto_id_produto` , p.`motorista` , p.`observacao`, p.`id_pesagem`, p.`peso_1`, p.`peso_2`, p.`peso_descontos`, p.`peso_liquido`, c.`nome`AS `cliente` , c.`cpf`AS `cpf_cliente` , c.`cnpj`AS `cnpj_cliente`, f.`nome` AS `fornecedor` , f.`cpf` AS `cpf_fornecedor` , f.`cnpj` AS `cnpj_fornecedor`, v.`placa`, pro.`nome` AS `produto` , pro.`id_produto` AS `cod_prod`  FROM `pesagem` as `p`, `cliente` as `c`, `fornecedor` as `f`, `veiculo` as `v`, `produto` as `pro` WHERE p.`status` = ".$operacao."  AND p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornecedor_id_fornecedor`  AND v.`id_veiculo` = p.`veiculo_id_veiculo` AND pro.`id_produto` = p.`produto_id_produto` ";
+
+        $resultSaida = $conn->query($sqlSaida);
+
+          }
+}
+
+// ATÉ AQUI FOI FEITO UMA BUSCA GERAL ONDE SO TEVE RELEVANCIA ENTRADA E SAIDA
+// QUAL SERIA A MELHOR SAIDA?
+    // TRABALHAR EM CIMA DESSE ARRAY DE ENTRADA E SAIDA FAZENDO TRATAMENTO BUSCANDO NO ARRAY OU
+    //  EXECUTANDO ESSA IDEIAI  FAZER NOVAS CONSULTAS SQL COM OS PARAMENTROS MULTIPLOS DEPENDEOD DE IF
+
+
+
+
+
+// AQUI EMBALA O RESULTADO PARA ENVIAR PARA A PAGINA
+
+// cria array fazio para colocar os resultados 
+// foi a forma que encontrei para juntar tantos selects 
+   $resultado = array();
+   // se existe resultado de consulta por entrada e for maior de 0 entao
+   if (isset($resultEntrada) && $resultEntrada->num_rows > 0) {
+      while($row = $resultEntrada->fetch_assoc()) {
+         $consultaPesagem = new ConsultaPesagem();  // tem que criar essa class ainda.
+         // AQUI COMPARO SE A OPERAÇÃO E O NOME DO FORNECEDOR SÃO OS PROCURADOS
+         if($row['status'] == 3){
+          $consultaPesagem->status = "PESAGEM MANUAL";
+         }
+         if($row['status'] == 0){
+          $consultaPesagem->status = "PESAGEM ENTRADA";
+         }
+         if($row['status'] == 1){
+          $consultaPesagem->status = "PESAGEM SAIDA";
+         }
+         if($row['status'] == 2){
+          $consultaPesagem->status = "PESAGEM AVULSA";
+         }
+         $consultaPesagem->id_pesagem = $row['id_pesagem'];
+         $consultaPesagem->id_fornecedor = $row['fornecedor_id_fornecedor'];
+         $consultaPesagem->fornecedor = $row['fornecedor'];
+         $consultaPesagem->cliente_id_cliente = $row['cliente_id_cliente'];
+         $consultaPesagem->cliente = $row['cliente'];
+         $consultaPesagem->produto_id_produto = $row['produto_id_produto'];
+         $consultaPesagem->cod_prod = $row['cod_prod'];
+         $consultaPesagem->produto = $row['produto'];
+         $consultaPesagem->peso_1 = $row['peso_1'];
+         $consultaPesagem->peso_2 = $row['peso_2'];
+         $consultaPesagem->peso_descontos = $row['peso_descontos'];
+         $consultaPesagem->peso_liquido = $row['peso_liquido'];
+         $consultaPesagem->placa = $row['placa'];
+         $consultaPesagem->motorista = $row['motorista'];
+         $consultaPesagem->observacao = $row['observacao'];
+         $consultaPesagem->data = $row['data'];
+         
+
+         if($row['cpf_cliente'] != null){
+          $consultaPesagem->cpf_cnpj_cliente = $row['cpf_cliente'];
+         }
+         if($row['cnpj_cliente'] != null){
+          $consultaPesagem->cpf_cnpj_cliente = $row['cnpj_cliente'];
+         }
+         if($row['cpf_fornecedor'] != null){
+          $consultaPesagem->cpf_cnpj_fornecedor = $row['cpf_fornecedor'];
+         }
+         if($row['cnpj_fornecedor'] != null){
+          $consultaPesagem->cpf_cnpj_fornecedor = $row['cnpj_fornecedor'];
+         }
+         
+         array_push($resultado,$consultaPesagem);
+      }
+    } // SE EXISTE CAMPO ENTRA TRUE OU FALSE E A CONSULTA A ENTRADA TEVE RESULTADOS
+
+// se existe resultado de consulta por saida e for maior de 0 entao
+if (isset($resultSaida) && $resultSaida->num_rows > 0) {
+ // $resultado = array();
+      while($row = $resultSaida->fetch_assoc()) {
+         $consultaPesagem = new ConsultaPesagem();  // tem que criar essa class ainda.
+         // AQUI COMPARO SE A OPERAÇÃO E O NOME DO FORNECEDOR SÃO OS PROCURADOS
+         if($row['status'] == 3){
+          $consultaPesagem->status = "PESAGEM MANUAL";
+         }
+         if($row['status'] == 0){
+          $consultaPesagem->status = "PESAGEM ENTRADA";
+         }
+         if($row['status'] == 1){
+          $consultaPesagem->status = "PESAGEM SAIDA";
+         }
+         if($row['status'] == 2){
+          $consultaPesagem->status = "PESAGEM AVULSA";
+         }
+         $consultaPesagem->id_pesagem = $row['id_pesagem'];
+         $consultaPesagem->id_fornecedor = $row['fornecedor_id_fornecedor'];
+         $consultaPesagem->fornecedor = $row['fornecedor'];
+         $consultaPesagem->cliente_id_cliente = $row['cliente_id_cliente'];
+         $consultaPesagem->cliente = $row['cliente'];
+         $consultaPesagem->produto_id_produto = $row['produto_id_produto'];
+         $consultaPesagem->cod_prod = $row['cod_prod'];
+         $consultaPesagem->produto = $row['produto'];
+         $consultaPesagem->peso_1 = $row['peso_1'];
+         $consultaPesagem->peso_2 = $row['peso_2'];
+         $consultaPesagem->peso_descontos = $row['peso_descontos'];
+         $consultaPesagem->peso_liquido = $row['peso_liquido'];
+         $consultaPesagem->placa = $row['placa'];
+         $consultaPesagem->motorista = $row['motorista'];
+         $consultaPesagem->observacao = $row['observacao'];
+         $consultaPesagem->data = $row['data'];
+
+         if($row['cpf_cliente'] != null){
+          $consultaPesagem->cpf_cnpj_cliente = $row['cpf_cliente'];
+         }
+         if($row['cnpj_cliente'] != null){
+          $consultaPesagem->cpf_cnpj_cliente = $row['cnpj_cliente'];
+         }
+         if($row['cpf_fornecedor'] != null){
+          $consultaPesagem->cpf_cnpj_fornecedor = $row['cpf_fornecedor'];
+         }
+         if($row['cnpj_fornecedor'] != null){
+          $consultaPesagem->cpf_cnpj_fornecedor = $row['cnpj_fornecedor'];
+         }
+        
+         array_push($resultado,$consultaPesagem);
+
+      } // fim while
+
+   } // SE EXISTE CAMPO SAI TRUE OU FALSE E A CONSULTA A SAIDA TEVE RESULTADOS
+// caso o banco esteja vazio de operaçoes de entra e saida
+ if (isset($resultEntrada) && isset($resultSaida)) {
+   if($resultSaida->num_rows < 0 && $resultEntrada->num_rows < 0) {
+     $r = new Resposta_pesagem();
+     $r->status=0;  // se o cliente nao tiver pesagem
+      $resultado = $r;
+   }
+ }
+
+
+
+
+   $conn->close();
+   return $resultado;
+}
+
+
+
+
+////////////////////////////////////// fim testes pesquisa de pesagem por tipo de entrada
+
+
+
+
+
+
+
+
+
+
+
 
 	public function save($pesagem){
 			$verificador = true;
@@ -124,7 +334,7 @@ if($con->connect_error){
 
 
 public function getPesagem($id_pesagem){
-
+// pesquisa pesagem por numero do ticket
 $banco = new Banco();
    $teste = $banco->serverName;
          
@@ -149,9 +359,7 @@ $banco = new Banco();
          $consultaPesagem->data = $row['data'];
          //$consultaPesagem->data = date_format(p.`data`, 'd/m/Y H:i:s'); 
           
-         if($row['status'] == 3){
-         	$consultaPesagem->status = "PESAGEM MANUAL";
-         }
+         
          if($row['status'] == 0){
           $consultaPesagem->status = "PESAGEM ENTRADA";
          }
@@ -160,6 +368,9 @@ $banco = new Banco();
          }
          if($row['status'] == 2){
           $consultaPesagem->status = "PESAGEM AVULSA";
+         }
+         if($row['status'] == 3){
+          $consultaPesagem->status = "PESAGEM MANUAL";
          }
 
          $consultaPesagem->id_pesagem = $row['id_pesagem'];
