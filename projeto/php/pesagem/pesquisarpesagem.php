@@ -9,7 +9,8 @@
 		$objetoPesagem = new Pesagem();
 		// aplicando pesquisa por tipo de pesagem entrada saida
 
-		$objetoPesagem = $dao->consultaPesagemOperacao($request);	
+		//$objetoPesagem = $dao->consultaPesagemOperacao($request);	
+		$objetoPesagem = $dao->consultaPesagemIf($request);	
 
  		//var_dump($objetoPesagem);
 

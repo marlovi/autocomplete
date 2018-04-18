@@ -23,28 +23,28 @@
                      <label for="data_inicio">Inicio:</label>
                   </div>
                   <div class="col s5" >
-                     <input id="data_inicio" type="text" ng-model="pesquisa.data_1"  mask="99/99/9999">
+                     <input id="data_inicio" type="text" ng-model="pesquisa.data_1"  mask="99/99/9999" ng-Disabled="pesquisa.ticket">
                   </div>
                   <div class="col s1">
                      <label for="data_fim">Fim:</label>
                   </div>
                   <div class="col s5" >
-                     <input id="data_fim" type="text" ng-model="pesquisa.data_2"  mask="99/99/9999"> 
+                     <input id="data_fim" type="text" ng-model="pesquisa.data_2"  mask="99/99/9999" ng-Disabled="pesquisa.ticket"> 
                   </div>
    </div>
 
 </div>
           <div class=" row  ">
                <div class="col s4  input-field"  >
-                  <input id="fornecedor" type="text" ng-model="pesquisa.fornecedor">
+                  <input id="fornecedor" type="text" ng-model="pesquisa.fornecedor" ng-Disabled="pesquisa.ticket">
                   <label for="fornecedor">Fornecedor</label>
                </div>
                <div class="col s4  input-field"  >
-                  <input id="cliente" type="text" ng-model="pesquisa.cliente">
+                  <input id="cliente" type="text" ng-model="pesquisa.cliente" ng-Disabled="pesquisa.ticket">
                   <label for="cliente">Cliente</label>
                </div>
                <div class="col s4  input-field"  >
-                  <input id="produto" type="text" ng-model="pesquisa.produto">
+                  <input id="produto" type="text" ng-model="pesquisa.produto" ng-Disabled="pesquisa.ticket">
                   <label for="produto">Produto</label>
                </div>
          </div>
@@ -52,7 +52,7 @@
 
                <div class="col s4  input-field"  >
 
-                  <input id="placa" type="text" ng-model="pesquisa.placa" mask="AAA-9999">
+                  <input id="placa" type="text" ng-model="pesquisa.placa" mask="AAA-9999" ng-Disabled="pesquisa.ticket">
                   <label for="placa">Placa</label>
                </div>
                
