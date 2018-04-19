@@ -10,7 +10,7 @@
 		// aplicando pesquisa por tipo de pesagem entrada saida
 
 		//$objetoPesagem = $dao->consultaPesagemOperacao($request);	
-		$objetoPesagem = $dao->consultaPesagemIf($request);	
+		$objetoPesagem = $dao->consultaPesagemOperacao($request);	
 
  		//var_dump($objetoPesagem);
 
