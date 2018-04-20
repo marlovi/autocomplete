@@ -719,17 +719,7 @@ $tipo_operacao = 1;
     }
   }
 
-
-
-
-
-
-
-
-
 ///////////////////// FIM SQL ENTRADA E SAIDA
-
-
 
 // AQUI EMBALA O RESULTADO PARA ENVIAR PARA A PAGINA
 
@@ -742,16 +732,16 @@ $tipo_operacao = 1;
          $consultaPesagem = new ConsultaPesagem();  // tem que criar essa class ainda.
          // AQUI COMPARO SE A OPERAÇÃO E O NOME DO FORNECEDOR SÃO OS PROCURADOS
          if($row['status'] == 3){
-          $consultaPesagem->status = "PESAGEM MANUAL";
+          $consultaPesagem->status = "MANUAL";
          }
          if($row['status'] == 0){
-          $consultaPesagem->status = "PESAGEM ENTRADA";
+          $consultaPesagem->status = "ENTRADA";
          }
          if($row['status'] == 1){
-          $consultaPesagem->status = "PESAGEM SAIDA";
+          $consultaPesagem->status = "SAIDA";
          }
          if($row['status'] == 2){
-          $consultaPesagem->status = "PESAGEM AVULSA";
+          $consultaPesagem->status = "AVULSA";
          }
          $consultaPesagem->id_pesagem = $row['id_pesagem'];
          $consultaPesagem->id_fornecedor = $row['fornecedor_id_fornecedor'];
