@@ -192,10 +192,12 @@ $scope.pesquisarpesagem = function() {
                }
            });
                request.then(function(response) {
+
                    $scope.myText = "";
                    var filhoScope = $scope.$new();
                    $scope.consulta = response.data;
-                   console.log($scope.consulta[0]);
+                   //console.log($scope.consulta);
+                   //console.log($scope.consulta[0]);
                     $scope.consulta.resultado =   Object.getOwnPropertyNames(response.data).length - 1;
                    if ($scope.consulta.resultado == 0) {
                        console.log(" if sem resposta");

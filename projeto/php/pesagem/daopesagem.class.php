@@ -73,6 +73,8 @@ public function consultaPesagemIf($operacao){
 //OK se existe entrada e saida e produto e placa                          recebe 315  
 //OK se existe entrada e saida e placa                                    recebe 316
 
+// pesquisa por periodo                                                   recebe =500
+
 //OK se existe entrada e ticket                           recebe   considerando que ser  estiver fazio nao vale 
 //OK se existe saida e ticket                             recebe   considerando que ser  estiver fazio nao vale 
 //OK se existe entrada e saida e ticket                   recebe   considerando que ser  estiver fazio nao vale 
@@ -307,6 +309,16 @@ if(isset($operacao->saida) === true && $operacao->saida === true && isset($opera
       }
 }
 /// final entrada e saida
+
+// TESTE DE PESAGEM POR CONSULTA PERIODO
+if (isset($operacao->data_1) === true && $operacao->data_1!="") {
+    if (isset($operacao->data_2) === true && $operacao->data_2!="") {
+      $resultado =500;
+
+    }
+  # code...
+}
+
 return $resultado;
 }
 ///// será???
@@ -341,10 +353,35 @@ if(isset($operacao->entrada) === true && $operacao->entrada === true){
 if(isset($operacao->saida) === true && $operacao->saida === true){
   $tipo_operacao = 1; 
 }
- if (isset($operacao->ticket) === true && $operacao->ticket != "") {
-   $tipo_operacao = 10; // consulta por ticket
-   $solicitadoPagina = 100; // consulta por ticket
-  $sql = "SELECT DATE_FORMAT(p.`data`, '%d-%m-%Y %h:%i:%s') AS data , p.`status` , p.`cliente_id_cliente` , p.`fornecedor_id_fornecedor` , p.`produto_id_produto` , p.`motorista` , p.`observacao`, p.`id_pesagem`, p.`peso_1`, p.`peso_2`, p.`peso_descontos`, p.`peso_liquido`, c.`nome`AS `cliente` , c.`cpf`AS `cpf_cliente` , c.`cnpj`AS `cnpj_cliente`, f.`nome` AS `fornecedor` , f.`cpf` AS `cpf_fornecedor` , f.`cnpj` AS `cnpj_fornecedor`, v.`placa`, pro.`nome` AS `produto` , pro.`id_produto` AS `cod_prod`  FROM `pesagem` as `p`, `cliente` as `c`, `fornecedor` as `f`, `veiculo` as `v`, `produto` as `pro` WHERE p.`id_pesagem` = ".$operacao->ticket." AND p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornecedor_id_fornecedor` AND v.`id_veiculo` = p.`veiculo_id_veiculo` AND pro.`id_produto` = p.`produto_id_produto`";
+
+if (isset($operacao->ticket) === true && $operacao->ticket != "") {
+   $tipo_operacao = 500; // consulta por periodo
+   
+ $sql = "SELECT DATE_FORMAT(p.`data`, '%d-%m-%Y %h:%i:%s') AS data , p.`status` , p.`cliente_id_cliente` , p.`fornecedor_id_fornecedor` , p.`produto_id_produto` , p.`motorista` , p.`observacao`, p.`id_pesagem`, p.`peso_1`, p.`peso_2`, p.`peso_descontos`, p.`peso_liquido`, c.`nome`AS `cliente` , c.`cpf`AS `cpf_cliente` , c.`cnpj`AS `cnpj_cliente`, f.`nome` AS `fornecedor` , f.`cpf` AS `cpf_fornecedor` , f.`cnpj` AS `cnpj_fornecedor`, v.`placa`, pro.`nome` AS `produto` , pro.`id_produto` AS `cod_prod`  FROM `pesagem` as `p`, `cliente` as `c`, `fornecedor` as `f`, `veiculo` as `v`, `produto` as `pro` WHERE p.`id_pesagem` = ".$operacao->ticket." AND p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornecedor_id_fornecedor` AND v.`id_veiculo` = p.`veiculo_id_veiculo` AND pro.`id_produto` = p.`produto_id_produto`";
+ $result = $conn->query($sql);
+ }
+
+ if (isset($operacao->data_1) === true) {
+  // tratar a string
+
+    $dia = substr($operacao->data_1,0,2); // dia
+    $mes = substr($operacao->data_1,3,2); // mes
+    $ano = substr($operacao->data_1,6,4); // ano
+    $dataInicial = $ano."-".$mes."-".$dia;
+
+    $dia = substr($operacao->data_2,0,2); // dia
+    $dia = $dia + 1;  //  motivo: o limite superio da data de pesquisa nao estava <= estava < isso 
+                      // impedia que o retorno da busca considerasse a data superior limite.
+    $mes = substr($operacao->data_2,3,2); // mes
+    $ano = substr($operacao->data_2,6,4); // ano
+    $dataFinal = $ano."-".$mes."-".$dia;
+   
+   $tipo_operacao = 500; // consulta por PERIODO
+   $solicitadoPagina = 500; // consulta por PERIODO
+  $sql = "SELECT DATE_FORMAT(p.`data`, '%d-%m-%Y') AS data , p.`status` , p.`cliente_id_cliente` , p.`fornecedor_id_fornecedor` , p.`produto_id_produto` , p.`motorista` , p.`observacao`, p.`id_pesagem`, p.`peso_1`, p.`peso_2`, p.`peso_descontos`, p.`peso_liquido`, c.`nome`AS `cliente` , c.`cpf`AS `cpf_cliente` , c.`cnpj`AS `cnpj_cliente`, f.`nome` AS `fornecedor` , f.`cpf` AS `cpf_fornecedor` , f.`cnpj` AS `cnpj_fornecedor`, v.`placa`, pro.`nome` AS `produto` , pro.`id_produto` AS `cod_prod` 
+FROM   `pesagem` as `p`, `cliente` as `c`, `fornecedor` as `f`, `veiculo` as `v`, `produto` as `pro` 
+WHERE p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornecedor_id_fornecedor` AND v.`id_veiculo` = p.`veiculo_id_veiculo` AND pro.`id_produto` = p.`produto_id_produto` AND (data between '$dataInicial'   and '$dataFinal')";
+ 
  $result = $conn->query($sql);
  }
 
@@ -1014,6 +1051,8 @@ if($con->connect_error){
 			return $last_id;
 } // fim do else do teste de pesagem de saida
     }
+
+
 
 
 public function getPesagem($id_pesagem){
