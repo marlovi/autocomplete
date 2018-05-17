@@ -122,13 +122,13 @@ public function buscar(){
 			$verificador = true;
 			$banco = new Banco();
 			$teste = $banco->serverName;
-			$con = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
+			$conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
 			if($conn->connect_error){
 				$verificador = false;
 				die("Problema na conexão ".$con->connect_error);
 			}
 
-$sql = "SELECT `id_veiculo`, `placa`,`descricao`,`tipo`,`fornecedor`,`cliente` FROM `veiculo` ";
+$sql = "SELECT `id_veiculo`, `placa`,`descricao`,`tipo`,`fornecedor_id_fornecedor`,`cliente_id_cliente` FROM `veiculo` ";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -140,12 +140,14 @@ if ($result->num_rows > 0) {
        $veiculo->placa = $row['placa'];
        $veiculo->descricao = $row['descricao'];
        $veiculo->tipo = $row['tipo'];
+      if($row['fornecedor_id_fornecedor'] != null){
+         	$veiculo->fornecedor_id_fornecedor = $row['fornecedor_id_fornecedor'];
+         }
+       if($row['cliente_id_cliente'] != null){
+         	$veiculo->cliente_id_cliente = $row['cliente_id_cliente'];
+         }
+        
       
-       // quando coloca endereco da treta
-       $veiculo->fornecedor = $row['fornecedor'];
-       $veiculo->cliente = $row['cliente'];
-       $veiculo->empresa = $row['empresa'];
-
        array_push($resultado,$veiculo);
 
     }

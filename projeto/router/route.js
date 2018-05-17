@@ -161,8 +161,13 @@
          templateUrl: "pages/pesquisapesagem.html",
          controller: "pesquisaPesagemController"
      }
-
- 
+/////////////////////////////////////////////////////////////////////////
+ var relatorioincompletas = {
+         name: 'relatorioincompletas',
+         url: '/relatorioincompletas',
+         templateUrl: "pages/relatorioincompletas.html",
+         controller: "relatorioincompletasController"
+     }
 
 /////////////////////////////////////////////////////////////////////////
 
@@ -227,6 +232,8 @@
          .state(pesagemavulsa)
          .state(pesagemsaida)
          .state(pesquisapesagem)
+
+         .state(relatorioincompletas)
 
          .state(layoutMeiaPag)
          .state(layoutMeiaPag_entrada)
