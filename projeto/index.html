@@ -6,6 +6,12 @@
     <!--
     NESSA VERSAO FAZ-SE A INTEGRAÇÃO DOS DOIS SISTEMAS
     CONTROLDE DE ACESSORIOS E O CONTROLE DE PESAGEM.
+
+    Single Page Applications (aplicação que não faz refresh no navegador ao mudar de página)
+    As SPAs são aplicações completas, desenvolvidas em JavaScript, que funcionam quase como se estivessem sendo executadas nativamente no desktop. O Google foi pioneiro nesta tecnologia e o mundo o seguiu. Atualmente, a maior parte das aplicações “web 2.0” usam este modelo: o Gmail, a busca do Google, o Google Drive, Facebook, o Twitter, o FourSquare, o Instagram, blogs, sites corporativos, dentre outros.
+    O framework utilizado é o Angular.js. Ele provê o modelo parecido com Model-View-ViewModel
+
+
     -->
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
     <link type="text/css" rel="stylesheet" href="css/input.css" />
@@ -179,7 +185,8 @@ setInterval(fazerRequisicao, 5000);
                 <li><a ui-sref="cadastrocliente">Cadastro Clientes</a></li>
                 <li class="divider"></li>
                 <li><a ui-sref="cadastrofornecedor">Cadastro Fornecedores</a></li>
-                <li class="divider"></li>
+                 <li class="divider"></li>
+                  <li class="divider"></li>
                 <li><a ui-sref="cadastroproduto">Cadastro Produtos</a></li>
                 <li class="divider"></li>
                 <li><a ui-sref="cadastrodesconto">Cadastro Descontos DESENVOLVER</a></li>
@@ -207,9 +214,7 @@ setInterval(fazerRequisicao, 5000);
             </ul>
             <ul id="dropdown3" class="dropdown-content ">
                 <li class="divider"></li>
-                <li><a ui-sref="pesquisacliente">Relatório por Produto DESENVOLVER</a></li>
-                <li class="divider"></li>
-                <li><a ui-sref="relatoriomovimentacao">Relatório por Período </a></li>
+                <li><a ui-sref="relatoriomovimentacao">Relatório de Movimentação </a></li>
                 <li class="divider"></li>
                 <li><a ui-sref="relatorioincompletas">Relatório de Operações Incompletas</a></li>
                 <li class="divider"></li>
@@ -219,9 +224,9 @@ setInterval(fazerRequisicao, 5000);
                 <li><a ui-sref="pesagemmanual">Pesagem Manual</a></li>
                 <li class="divider"></li>
                 <li class="divider"></li>
-                <li><a ui-sref="pesagementrada">Pesagem Entrada</a></li>
+                <li><a ui-sref="pesagementrada">Pesagem Inicial</a></li>
                 <li class="divider"></li>
-                <li><a ui-sref="pesagemsaida">Pesagem Saida </a></li>
+                <li><a ui-sref="pesagemsaida">Pesagem Final </a></li>
                 <li class="divider"></li>
                 <li><a ui-sref="pesagemavulsa">Pesagem Avulsa</a></li>
                 <li class="divider"></li>
@@ -230,10 +235,10 @@ setInterval(fazerRequisicao, 5000);
                 <div class="nav-wrapper center teal light-green darken-4 ">
                     <ul class="center  hide-on-med-and-down">
  <!-- Aqui tenho que colocar aquela tela de automação das cancelas e semaforos-->
-                        <li><a ui-sref="home">Controle Balança</a></li>
-                        <li><a class="dropdown-button " href="#!" data-activates="dropdown4">Pesagem<i class="material-icons right">arrow_drop_down</i></a></li>
-                        <li><a class="dropdown-button " href="#!" data-activates="dropdown1">Cadastro<i class="material-icons right">arrow_drop_down</i></a></li>
-                        <li><a class="dropdown-button " href="#!" data-activates="dropdown2">Pesquisa<i class="material-icons right">arrow_drop_down</i></a></li>
+                        <li><a ui-sref="home">Balanças Rio Verde</a></li>
+                        <li><a class="dropdown-button " href="#!" data-activates="dropdown4">Pesagens<i class="material-icons right">arrow_drop_down</i></a></li>
+                        <li><a class="dropdown-button " href="#!" data-activates="dropdown1">Cadastros<i class="material-icons right">arrow_drop_down</i></a></li>
+                        <li><a class="dropdown-button " href="#!" data-activates="dropdown2">Pesquisas<i class="material-icons right">arrow_drop_down</i></a></li>
                         <li><a class="dropdown-button " href="#!" data-activates="dropdown3">Relatórios<i class="material-icons right">arrow_drop_down</i></a></li>
                     </ul>
                 </div>

@@ -33,7 +33,7 @@ if (!$usenet) {
 		}
 		//$media =  (int) substr($var, -11, 6);
 
-		if ($contador == 2) {
+		if ($contador == 1) {
 			//usando o marcador E da saturno para
 			//certificar a estabilidade e imprimir o resultado
 			$var = fgets($usenet, 128);
