@@ -11,8 +11,9 @@ var ipx = window.location.hostname;
                                     var teste = parseInt(data)
                                     //console.log(data);
                                     if(data ==="SEM RESPOSTA"){
-                                    Materialize.toast('VERIFIQUE CONEXÃO CONVERSOR BALANCA ', 1000,  'rounded');
-                                    Materialize.toast();
+                                        // TIRANDO OS ALERTAS
+                                   // Materialize.toast('VERIFIQUE CONEXÃO CONVERSOR BALANCA ', 1000,  'rounded');
+                                   // Materialize.toast();
                                     }
 
  
@@ -43,17 +44,17 @@ var ipx = window.location.hostname;
                                     
                                     console.log(status);
 
-                                Materialize.toast('VERIFIQUE CONEXÃO CONVERSOR REDE ', 1000,  'rounded');
+                                //Materialize.toast('VERIFIQUE CONEXÃO CONVERSOR REDE ', 1000,  'rounded');
                                  
-                                    Materialize.toast();
+                                    //Materialize.toast();
                                     }
  
                              }).done(function(data) {
                               var str = data
                                     var res = str.substr(0, 6);
                                     if(res ==="<br />"){
-                                    Materialize.toast('VERIFIQUE CONEXÃO ', 1000,  'rounded');
-                                    Materialize.toast();
+                                   // Materialize.toast('VERIFIQUE CONEXÃO ', 1000,  'rounded');
+                                    //Materialize.toast();
 
                                     }else{
                                       document.querySelector("[name='leiturapeso']").value = data;

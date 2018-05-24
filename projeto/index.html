@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SPA  - Versão 2018 1.12</title>
+    <title>SPA  - Versão 2018 1.19</title>
     <!--
     NESSA VERSAO FAZ-SE A INTEGRAÇÃO DOS DOIS SISTEMAS
     CONTROLDE DE ACESSORIOS E O CONTROLE DE PESAGEM.
@@ -146,9 +146,9 @@ alterarStatus(data);
         },
         error: function(xhr, status, error) {
           
-                  
-                      Materialize.toast('VERIFIQUE CONEXÃO: CONTROLADOR REDE ' , 1000, 'rounded', 'center');
-                      Materialize.toast();
+                  // AQUI INFORMA PROBLEMAS NA REDE
+                    //  Materialize.toast('VERIFIQUE CONEXÃO: CONTROLADOR REDE ' , 1000, 'rounded', 'center');
+                    //  Materialize.toast();
                     
  
                   
@@ -171,23 +171,28 @@ setInterval(fazerRequisicao, 5000);
             <!-- Menu Cadastro -->
             <ul id="dropdown1" class="dropdown-content ">
                 <li class="divider"></li>
+                <!--
                 <li><a ui-sref="cadastroempresa" ng-click="$event.stopPropagation();">Cadastro da Empresa</a></li>
                 <li class="divider"></li>
                 <li class="divider"></li>
-                <li><a ui-sref="cadastrocliente">Cadastro de Clientes</a></li>
+              -->
+                <li><a ui-sref="cadastrocliente">Cadastro Clientes</a></li>
                 <li class="divider"></li>
-                <li><a ui-sref="cadastrofornecedor">Cadastro de Fornecedores</a></li>
+                <li><a ui-sref="cadastrofornecedor">Cadastro Fornecedores</a></li>
                 <li class="divider"></li>
-                <li><a ui-sref="cadastroproduto">Cadastro de Produtos</a></li>
+                <li><a ui-sref="cadastroproduto">Cadastro Produtos</a></li>
                 <li class="divider"></li>
-                <li><a ui-sref="cadastrodesconto">Cadastro de Descontos DESENVOLVER</a></li>
+                <li><a ui-sref="cadastrodesconto">Cadastro Descontos DESENVOLVER</a></li>
                 <li class="divider"></li>
             </ul>
             <!-- Menu pesquisa -->
             <ul id="dropdown2" class="dropdown-content ">
                 <li class="divider"></li>
+              <!--  
                 <li><a ui-sref="pesquisaempresa">Pesquisar Empresa</a></li>
                 <li class="divider"></li>
+
+              -->
                 <li class="divider"></li>
                 <li><a ui-sref="pesquisacliente">Pesquisar Clientes</a></li>
                 <li class="divider"></li>
@@ -202,11 +207,9 @@ setInterval(fazerRequisicao, 5000);
             </ul>
             <ul id="dropdown3" class="dropdown-content ">
                 <li class="divider"></li>
-                <li><a ui-sref="pesquisaempresa">Relatório por Cliente DESENVOLVER</a></li>
-                <li class="divider"></li>
                 <li><a ui-sref="pesquisacliente">Relatório por Produto DESENVOLVER</a></li>
                 <li class="divider"></li>
-                <li><a ui-sref="pesquisafornecedor">Relatório por Movimentação DESENVOLVER</a></li>
+                <li><a ui-sref="relatoriomovimentacao">Relatório por Período </a></li>
                 <li class="divider"></li>
                 <li><a ui-sref="relatorioincompletas">Relatório de Operações Incompletas</a></li>
                 <li class="divider"></li>
@@ -344,6 +347,7 @@ tentando colocar dentro do controle o menu de acessorio
             <script type="text/javascript" src="controller/pesquisapesagem.js"></script>
 
             <script type="text/javascript" src="controller/relatorioincompletas.js"></script>
+            <script type="text/javascript" src="controller/relatoriomovimentacao.js"></script>
 
             <script type="text/javascript" src="controller/impressao.js"></script>
         </div>
