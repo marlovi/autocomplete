@@ -168,6 +168,13 @@
          templateUrl: "pages/relatorioincompletas.html",
          controller: "relatorioincompletasController"
      }
+ var relatoriomovimentacao = {
+         name: 'relatoriomovimentacao',
+         url: '/relatoriomovimentacao',
+         templateUrl: "pages/relatoriomovimentacao.html",
+         controller: "relatoriomovimentacaoController"
+     }
+     relatoriomovimentacao
 
 /////////////////////////////////////////////////////////////////////////
 
@@ -234,6 +241,7 @@
          .state(pesquisapesagem)
 
          .state(relatorioincompletas)
+         .state(relatoriomovimentacao)
 
          .state(layoutMeiaPag)
          .state(layoutMeiaPag_entrada)
