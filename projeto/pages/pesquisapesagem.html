@@ -6,11 +6,11 @@
    <div class="col s4 center-align">
       <h6>Filtrar Registros Por:</h6> 
  <td class="action-checkbox">
-    <input class="action-select" name="entrada" id="entrada" type="checkbox" ng-model="pesquisa.entrada" value="1" ng-Disabled="pesquisa.ticket">
+    <input class="action-select" name="entrada" id="entrada" type="checkbox" ng-model="pesquisa.entrada" value="1" ng-Disabled="pesquisa.ticket || pesquisa.data_1">
     <label for="entrada">&nbsp; Entrada</label>
  </td>
   <td class="action-checkbox">
-    <input type="checkbox" checked="checked" name="saida" id="saida"   ng-model="pesquisa.saida" value="1" ng-Disabled="pesquisa.ticket">
+    <input type="checkbox" checked="checked" name="saida" id="saida"   ng-model="pesquisa.saida" value="1" ng-Disabled="pesquisa.ticket || pesquisa.data_1">
     <label for="saida">&nbsp; saida</label>
  </td>
    </div>
