@@ -124,6 +124,36 @@
     
 ///////////////////////////////////////////////////////////////////////// 
 
+     var cadastrodesconto = {
+         name: 'cadastrodesconto',
+         url: '/desconto', // endereço visivel ao usuario
+         templateUrl: "pages/cadastrodesconto.html",
+         controller: "cadastroDescontoController"
+     }
+
+     var pesquisadesconto = {
+         name: 'pesquisadesconto',
+         url: '/pesquisadesconto',
+         templateUrl: "pages/pesquisadesconto.html",
+         controller: "pesquisaDescontoController"
+     }
+
+     var editardesconto = {
+         name: 'editardesconto',
+         url: '/editardesconto', // endereço visivel ao usuario
+         templateUrl: "pages/editardesconto.html",
+         controller: "editarDescontoController"
+     }
+
+     var deletedesconto = {
+         name: 'deletedesconto',
+         url: '/deletedesconto', // endereço visivel ao usuario
+         templateUrl: "pages/deletedesconto.html",
+         controller: "deleteDescontoController"
+     }
+    
+///////////////////////////////////////////////////////////////////////// 
+
     var pesagemmanual = {
          name: 'pesagemmanual',
          url: '/pesagemmanual', // endereço visivel ao usuario
@@ -174,7 +204,7 @@
          templateUrl: "pages/relatoriomovimentacao.html",
          controller: "relatoriomovimentacaoController"
      }
-     relatoriomovimentacao
+     
 
 /////////////////////////////////////////////////////////////////////////
 
@@ -233,6 +263,11 @@
          .state(pesquisacliente)
          .state(editarcliente)
          .state(deletecliente)
+
+         .state(cadastrodesconto)
+         .state(pesquisadesconto)
+         .state(editardesconto)
+         .state(deletedesconto)
           
          .state(pesagemmanual)
          .state(pesagementrada)

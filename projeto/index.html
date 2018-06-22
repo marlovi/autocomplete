@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br" >
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
     <title>SPA  - Versão 2018 1.19</title>
     <!--
     NESSA VERSAO FAZ-SE A INTEGRAÇÃO DOS DOIS SISTEMAS
     CONTROLDE DE ACESSORIOS E O CONTROLE DE PESAGEM.
-
     Single Page Applications (aplicação que não faz refresh no navegador ao mudar de página)
     As SPAs são aplicações completas, desenvolvidas em JavaScript, que funcionam quase como se estivessem sendo executadas nativamente no desktop. O Google foi pioneiro nesta tecnologia e o mundo o seguiu. Atualmente, a maior parte das aplicações “web 2.0” usam este modelo: o Gmail, a busca do Google, o Google Drive, Facebook, o Twitter, o FourSquare, o Instagram, blogs, sites corporativos, dentre outros.
     O framework utilizado é o Angular.js. Ele provê o modelo parecido com Model-View-ViewModel
-
-
     -->
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
     <link type="text/css" rel="stylesheet" href="css/input.css" />
@@ -37,7 +34,7 @@
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <script src="off_js/bower-material-master/angular-material.js"></script>
     <script type="text/javascript" src="js/autocomplete.min.js"></script>
-    <meta charset="utf-8" />
+    <meta name="description" content="Balanças Rio Verde - Parceria de peso.">
 </head>
 <!-- passar esses script para algum controler -->
 <script type="text/javascript">
@@ -189,7 +186,7 @@ setInterval(fazerRequisicao, 5000);
                   <li class="divider"></li>
                 <li><a ui-sref="cadastroproduto">Cadastro Produtos</a></li>
                 <li class="divider"></li>
-                <li><a ui-sref="cadastrodesconto">Cadastro Descontos DESENVOLVER</a></li>
+                <li><a ui-sref="cadastrodesconto">Cadastro Descontos</a></li>
                 <li class="divider"></li>
             </ul>
             <!-- Menu pesquisa -->
@@ -344,6 +341,11 @@ tentando colocar dentro do controle o menu de acessorio
             <script type="text/javascript" src="controller/pesquisafornecedor.js"></script>
             <script type="text/javascript" src="controller/editarfornecedor.js"></script>
             <script type="text/javascript" src="controller/deletefornecedor.js"></script>
+
+            <script type="text/javascript" src="controller/cadastrodesconto.js"></script>
+            <script type="text/javascript" src="controller/pesquisadesconto.js"></script>
+            <script type="text/javascript" src="controller/editardesconto.js"></script>
+            <script type="text/javascript" src="controller/deletedesconto.js"></script>
 
             <script type="text/javascript" src="controller/pesagemmanual.js"></script>
             <script type="text/javascript" src="controller/pesagementrada.js"></script>
