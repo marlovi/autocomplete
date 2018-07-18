@@ -1,0 +1,19 @@
+<div class="row center s12 ">
+   <div class="col s12 ">
+      <div class="col s12 card-panel">
+         <h2 class="center">Deletar Desconto</h2>
+         <div class="row">
+            <div class="col s5 input-field">
+               <input id="nome" type="text" ng-model="desconto.nome" event-focus-id="nome" readonly="readonly">
+               <label for="nome">Nome</label>
+            </div>
+         </div>
+         <div class="row">
+            <div class="row s12 center">
+               <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="!desconto.nome" ng-click="deletar()">Deletar Registro</button>
+               <button class="waves-effect waves-teal btn-flat" id="voltar" ui-sref="home">Voltar</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

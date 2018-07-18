@@ -1,35 +1,17 @@
   function editarDescontoController($scope, $http, $cookieStore, focus, $timeout, meuServico) {
 
-     $scope.openOffscreen = function() {
-        console.log("editarFornecedorController :openOffscreen");
-         $mdDialog.show(
-             $mdDialog.alert()
-             .clickOutsideToClose(true)
-             .title('Cadastro salvo')
-             .ok('OK')
-             .openFrom({
-                 top: -50,
-                 width: 30,
-                 height: 80
-             })
-             .closeTo({
-                 left: 1500
-             })
-         );
-     };
-
      $scope.editar = function() {
-        console.log("editarFornecedorController :editar");
+        console.log("editarDescontoController :editar");
          // cria um vetor vazio para armazenar o cliente e veiculos.
-         var listaFornecedorVeiculo = [];
-         listaFornecedorVeiculo.push($scope.fornecedor);
-         listaFornecedorVeiculo.push($scope.lines);
-         console.log(listaFornecedorVeiculo);
+         var listaDesconto = [];
+         listaDesconto.push($scope.desconto);
+
+         console.log($scope.desconto);
 
          var request = $http({
              method: "post",
-             url: "php/fornecedor/editarfornecedor.php",
-             data: listaFornecedorVeiculo,
+             url: "php/desconto/editardesconto.php",
+             data: listaDesconto,
              headers: {
                  'Content-Type': 'application/x-www-form-urlencoded'
              }
@@ -38,14 +20,12 @@
          request.then(function(response) {
              var $resposta = response.data;
              console.log($resposta);
-             $scope.fornecedor = null;
-             $scope.lines = [];
+             $scope.desconto = null;
              if ($resposta.status === true) {
-                 //alert('Fornecedor  Atualizado com sucesso!');
+                 // alert('Produto  Atualizado com sucesso!');
                  meuServico.mostrar('Alteração', 'Registro alterado com Sucesso!!!');
                  //Mandar para outra página.
                  clickOnUpload();
-
              }
          }, function(response) {
              console.log("ERROR" + response);
@@ -53,23 +33,15 @@
      }
 
      $scope.doSomething = function() {
-        console.log("editarFornecedorController :doSomething");
+        console.log("editarDescontoController :doSomething");
          // do something awesome
          focus('nome');
-         focus("cpf");
-         focus("cnpj");
-         focus("endereco");
-         focus("cidade");
-         focus("estado");
-         focus("telefone");
-         focus("email");
-
      };
 
      var request = $http({
          method: "post",
-         url: "php/fornecedor/pesquisarfornecedorid.php",
-         data: $cookieStore.get('editarfornecedor'),
+         url: "php/desconto/pesquisardescontoid.php",
+         data: $cookieStore.get('editardesconto'),
          headers: {
              'Content-Type': 'application/x-www-form-urlencoded'
          }
@@ -80,24 +52,24 @@
          //console.log(response.data[0]);
          $timeout(function() {
              $scope.$apply(function() {
-                 $scope.buscarVeiculos();
-                 $scope.lines = [];
-                 $scope.fornecedor = response.data[0];
+
+                 $scope.desconto = response.data[0];
                  $scope.doSomething();
              });
          }, 0);
          // console.log(response.data[0].nome);
+
      }, function(response) {
          console.log("ERROR" + response);
      });
 
      $scope.teste = function() {
-        console.log("editarFornecedorController :teste");
-         console.log($cookieStore.get('editarfornecedor'));
+        console.log("editarDescontoController :teste");
+         console.log($cookieStore.get('editardesconto'));
      }
- 
+
      function clickOnUpload() {
-        console.log("editarFornecedorController :clickOnUpload");
+        console.log("editarDescontoController :clickOnUpload");
          $timeout(function() {
              angular.element('#voltar').triggerHandler('click');
          });
@@ -108,6 +80,7 @@
      });
      // OR Using scope directly
      $scope.clickOnUpload = clickOnUpload;
+
  }
 
  angular

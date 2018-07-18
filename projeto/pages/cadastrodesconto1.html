@@ -1,0 +1,87 @@
+ <div class="row center s12 ">
+   <div class="col s12 ">
+      <div class="col s12 card-panel">
+         <h2 class="center">Cadastro de Desconto</h2>
+         <div class="col s12 center-align">
+            <h6>Desconto tipo:</h6>
+            <td class="action-checkbox">
+               <input class="action-select" name="individual" id="individual" type="checkbox" ng-model="desconto.individual" value="1" ng-Disabled="desconto.tabela">
+               <label for="individual">&nbsp; Individual</label>
+            </td>
+            <td class="action-checkbox">
+               <input class="action-select" name="tabela" id="tabela" type="checkbox" ng-model="desconto.tabela" value="1" ng-Disabled="desconto.individual">
+               <label for="tabela">&nbsp; Tabela</label>
+            </td>
+         </div>
+         <div class="row">
+            <div class="col s12 input-field">
+               <input id="nome" type="text" ng-model="desconto.nome">
+               <label for="nome">Nome</label>
+            </div>
+            <div class="col s12 center-align">
+               <h6>Desconto tipo:</h6>
+               <td class="action-checkbox">
+                  <input class="action-select" name="percentual" id="percentual" type="checkbox" ng-model="desconto.percentual" value="1" ng-Disabled="desconto.kilograma">
+                  <label for="percentual">&nbsp; Percentual - %</label>
+               </td>
+               <td class="action-checkbox">
+                  <input class="action-select" name="kilograma" id="kilograma" type="checkbox" ng-model="desconto.kilograma" value="1" ng-Disabled="desconto.percentual   ">
+                  <label for="kilograma">&nbsp; Kilograma - kg</label>
+               </td>
+            </div>
+            <div class="col s12 input-field center-align">
+               <input id="descontotara" type="text" ng-model="desconto.descontotara"  ng-Disabled="desconto.percentual" mask="999999" >
+               <label for="descontotara">Tara - kg</label>
+            </div>
+            <div class="col s12 center-align">
+               <h6>Habilitar Tolêrancia:</h6>
+               <td class="action-checkbox">
+                  <input class="action-select" name="tolerancia" id="tolerancia" type="checkbox" ng-model="desconto.tolerancia" value="1" ng-Disabled="desconto.kilograma || desconto.naotolerancia">
+                  <label for="tolerancia">&nbsp; Sim  </label>
+               </td>
+               <td class="action-checkbox">
+                  <input class="action-select" name="naotolerancia" id="naotolerancia" type="checkbox" ng-model="desconto.naotolerancia" value="1" ng-Disabled="desconto.kilograma || desconto.tolerancia">
+                  <label for="naotolerancia">&nbsp; Não</label>
+               </td>
+            </div>
+            <div id="percentualtolerancia" class="col s6">
+               <div class="col s12 input-field">
+                  <input id="percentualtolerancia" type="text" ng-model="desconto.percentualtolerancia" mask="99.99" ng-Disabled="desconto.kilograma || desconto.naotolerancia"  >
+                  <label for="percentualtolerancia">Valor tolêrancia até: - %</label>
+               </div>
+            </div>
+            <div id="percentualquebra" class="col s6">
+               <div class="col s12 input-field">
+                  <input id="percentualquebra" type="text" ng-model="desconto.percentualquebra" mask="99.99" ng-Disabled="desconto.kilograma "  >
+                  <label for="cnpj">Percentual de quebra: - %</label>
+               </div>
+            </div>
+         </div>
+         <div class="row s12 center">
+            <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="!desconto.nome" ng-click="salvar()">Enviar</button>
+            <button class="waves-effect waves-teal btn-flat" id="voltar" ng-click="voltar()">Voltar</button>
+         </div>
+         {{desconto}}
+      </div>
+   </div>
+</div>
+<script type="text/javascript">
+   $(document).ready(function() {
+       $('.modal').modal({
+           dismissible: true, // Modal can be dismissed by clicking outside of the modal
+           opacity: .9, // Opacity of modal background
+           inDuration: 900, // Transition in duration
+           outDuration: 200, // Transition out duration
+           startingTop: '4%', // Starting top style attribute
+           endingTop: '4%', // Ending top style attribute
+           ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+               console.log(modal, trigger);
+           },
+           complete: function() {
+           } // Callback for Modal close
+       });
+   });
+   var adicionarVeiculo = function() {
+       $('#modal1').modal('open');
+   }
+</script>
