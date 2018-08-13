@@ -1,7 +1,7 @@
  <div class="row center s12 ">
    <div class="col s12 ">
       <div class="col s12 card-panel">
-         <h2 class="center">Cadastro de Desconto</h2>
+         <h2 class="center">Cadastro de Descontos</h2>
          <div class="col s12 center-align">
             <h6>Desconto tipo:</h6>
             <td class="action-checkbox">
@@ -19,7 +19,6 @@
                <label for="nome">Nome</label>
             </div>
  
- 
          </div>
          <div class="row s12 center">
             <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="!desconto.nome" ng-click="salvar()">Enviar</button>
@@ -27,6 +26,52 @@
          </div>
          {{desconto}}
       </div>
+
+      <div class="col s12 card-panel">
+         <h2 class="center">Cadastro de Desconto aplicado</h2>
+         <div class="row">
+            <div class="col s12 input-field">
+               <input id="classificado" type="text" ng-model="desconto_aplicado.classificado" mask="9?9.99">
+               <label for="classificado">classificado %</label>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col s12 input-field">
+               <input id="percentual" type="text" ng-model="desconto_aplicado.percentual" mask="9?9.99">
+               <label for="percentual">percentual descontado %</label>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col s12 input-field">
+               <input id="absoluto" type="text" ng-model="desconto_aplicado.absoluto" mask="999999">
+               <label for="absoluto">absoluto descontado kg</label>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col s12 input-field">
+               <input id="peso_descontado" type="text" ng-model="desconto_aplicado.peso_descontado" mask="999999">
+               <label for="peso_descontado">peso_descontado kg</label>
+            </div>
+         </div>
+         <div class="row s12 center">
+            <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="!desconto.nome" ng-click="salvar_desconto_aplicado()">Enviar desconto aplicado</button>
+            <button class="waves-effect waves-teal btn-flat" id="voltar" ng-click="voltar()">Voltar</button>
+         </div>
+         
+         {{desconto_aplicado}}
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
    </div>
 </div>
 <script type="text/javascript">
@@ -45,7 +90,5 @@
            } // Callback for Modal close
        });
    });
-   var adicionarVeiculo = function() {
-       $('#modal1').modal('open');
-   }
+ 
 </script>

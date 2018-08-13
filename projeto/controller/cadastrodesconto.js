@@ -113,6 +113,42 @@
              console.log("fail");
          });
      }
+
+// FUNÇOES DESCONTO APLICADO
+// OBJETIVO CRIAR TAREFAS QUE PERMITAM 
+// O TESTE DE CADASTRO, PESQUISA DO ULTIMO,PESQUISA POR ID E APAGAR NO BANCO DE DADOS 
+// SERÁ CRIADO A ESTRUTURA NO FRONT END PARA TESTE DAS FUNÇOES EM PHP
+
+ $scope.salvar_desconto_aplicado = function() {
+        console.log("cadastroDescontoController :salvar_desconto_aplicado");
+         var request = $http({
+             method: "post",
+             url: "php/desconto_aplicado/salvardesconto_aplicado.php",
+             data: $scope.desconto_aplicado,
+             headers: {
+                 'Content-Type': 'application/x-www-form-urlencoded'
+             }
+         });
+         request.then(function(response) {
+             console.log(response.data);
+             // $scope.Cliente = response.data;
+             // foi necessario atualizar o objeto cliente com os dados de id retornado do banco
+             // isso faz a atualização do objeto que está na pagina.
+             $scope.openOffscreen();
+             $scope.desconto = response.data;
+             $scope.desconto = null;
+
+         }, function(response) {
+             console.log("ERROR" + response);
+         });
+     }
+
+
+// FIM FUNÇOES DESCONTO APLICADO 
+
+
+
+
  }
  angular
      .module('home')
