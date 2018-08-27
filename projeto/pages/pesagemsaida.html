@@ -77,6 +77,9 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
             <input id="liquido" type="number" name="liquido" ng-model="pesagem.peso_liquido" disabled="disabled">
            
          </div>
+         <div class="col s6 input-field">
+            <button class="btn waves-effect waves-light" onclick="adicionarListaDesconto()"  > ADICIONAR DESCONTO </button>
+         </div>
       </div>
       <div class="row">
          <div class="input-field col s12   ">
@@ -86,6 +89,31 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
          </div>
       </div>
       <div class="row">
+          <th>LISTA DE DESCONTOS APLICADOS </th>
+               <div class="row s12 center">
+                  <table>
+                     <thead>
+                        <tr>
+                           <th>DESCONTO</th>
+                           <th>CLASSIFICADO (%) </th>
+                           <th>DESCONTADO (%)</th>
+                           <th>ABSOLUTO (kg)</th>
+                           <th>PESO DESCONTO (kg)</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr ng-repeat="linha in lines">
+                           <td>{{linha.nomedesconto}}</td>
+                           <td>{{linha.classificado}}</td>
+                           <td>{{linha.percentual}}</td>
+                           <td>{{linha.absoluto}}</td>
+                           <td>{{linha.peso_descontado}}</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+
+ 
          <div class="row s12 center">
             <!-- isso aqui é usado para sair da pagina atual ui-sref="home" -->
             <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="!pesagem.peso_liquido" ng-click="salvar(); imprimir = true" ng-show="!imprimir" >Enviar</button>
@@ -93,6 +121,71 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
 
 
             <button class="btn waves-effect waves-light" id="capturar_peso" ng-click="capturar_peso()  " ng-Disabled = " !pesagem.peso_1 " >capturar peso</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- até aqui é a pagina ADICIONAR DESCONTO daqui pra baixo é a tela ADICIONAR DESCONTO-->
+<!-- até aqui é a pagina cadastro cliente daqui pra baixo é a tela cadastro veiculo-->
+<script type="text/javascript">
+   $(document).ready(function() {
+
+       $('.modal').modal({
+           dismissible: true, // Modal can be dismissed by clicking outside of the modal
+           opacity: .9, // Opacity of modal background
+           inDuration: 900, // Transition in duration
+           outDuration: 200, // Transition out duration
+           startingTop: '4%', // Starting top style attribute
+           endingTop: '4%', // Ending top style attribute
+           ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+   
+               console.log(modal, trigger);
+           },
+           complete: function() {
+   
+           } // Callback for Modal close
+       });
+   });
+   
+   var adicionarListaDesconto = function() {
+       //console.log('aqui ');
+       $('#modal2').modal('open');
+   }
+</script>
+<div id="modal2" class="modal">
+   <div class="modal-content">
+      <div class="col s12 card-panel">
+         <h2 class="center">DESCONTO </h2>
+         <div class="row">
+            <div class="col s3 input-field">
+               <input id="nomedesconto" type="text"   ng-model="desconto.nomedesconto" mask="AAAAAAAAAAAAAA"  >
+               <label for="nomedesconto">Nome</label>
+            </div>
+                           <td>{{linha.peso_descontado}}</td>
+ 
+            <div class="col    s4 input-field">
+               <input id="classificado" type="text" ng-model="desconto.classificado" mask="9?9.99" >
+               <label for="classificado">Classificado (%)</label>
+            </div>
+            <div class="col s4 input-field">
+               <input id="percentual" type="text" ng-model="desconto.percentual" mask="9?9.99" >
+               <label for="percentual">Percentual Descontado (%)</label>
+            </div>
+            <div class="col    s4 input-field">
+               <input id="absoluto" type="text" ng-model="desconto.absoluto" mask="999999"  >
+               <label for="absoluto">Absoluto (kg)</label>
+            </div>
+            <div class="col s4 input-field">
+               <input id="peso_descontado" type="text" ng-model="desconto.peso_descontado" mask="999999"  >
+               <label for="peso_descontado">Peso Desconto (kg)</label>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col s12 center">
+               <button href="#!" class="btn waves-effect waves-light modal-action modal-close" id="enviar" ng-click="salvarListaDesconto()"  ">CONCLUIDO</button>
+               <button href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="voltar">Voltar</button>
+            </div>
          </div>
       </div>
    </div>

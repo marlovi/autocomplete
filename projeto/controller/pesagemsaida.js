@@ -1,4 +1,55 @@
   function pesagemSaidaController($scope, $http, $log, $cookieStore, $mdDialog, $q, $timeout, meuServico, $cookies) {
+     
+/// ADICIONANDO DESCONTO NA PESAGEM SAIDA
+  $scope.lines = [];
+      $scope.cont = 1;
+
+      $scope.salvarListaDesconto = function() {
+        console.log("cadastroClienteController :salvarListaDesconto");
+          // CRIAR CONDIÇÃO QUE VERIFICA SE OS CAMPOS PLACAS SÃO DIFERENTES
+          var i = 0;
+          var listaRepetida = 0;
+          if (!$scope.lines) {
+              //SE É A PRIMEIRA DA LISTA
+              $scope.cont = $scope.desconto;
+              $scope.lines.push($scope.cont);
+              console.log("PRIMEIRA DA LISTA");
+              $scope.desconto = null;
+          } else {
+              //TRANSFIRO A INFO E LIMPO  VARIAVEL
+              $scope.cont = $scope.desconto;
+              $scope.lines.push($scope.cont);
+              $scope.desconto = null;
+              do {
+                  var n = $scope.lines[i].nomedesconto.localeCompare($scope.cont.nomedesconto);
+                  // TESTO TODAS AS POSIÇOES DA LISTA
+                  // SE DER MAIOR QUE 1 VEZ NA LISTA ENTÃO PAGADA
+                  // E TIRA DA LISTA.
+                  if (n == 0) {
+                      listaRepetida += 1;
+                      //console.log(" é igual " + listaRepetida);
+                      if (n == 0 && listaRepetida > 1) {
+                          // SE A STRING FOR IGUAL  E TIVER MAIS DE UMA VEZ 
+                          // NA LISTA ENTÃO PARA O TESTE E SAI DO WHILE
+                          // E TIRA PLACA DA LISTA.
+                          i = $scope.lines.length
+                          var meuPeixePop = $scope.lines.pop();
+                      }
+                  }
+                  i += 1;
+              } while (i < $scope.lines.length);
+          }
+
+      }
+
+
+
+/// FIMM DESCONTO NA PESAGEM SAIDA
+
+
+
+
+
      $scope.capturar_peso = function() {
         console.log("pesagemAvulsaController :capturar_peso");
          console.log("Coleta de peso");
