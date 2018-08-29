@@ -10,7 +10,7 @@
 		$dao = new DaoDesconto();	// cria a variavel dao com as caracteristicas do daocliente	
 	    $postdata = file_get_contents("php://input");  // recupera os dados presentes na pagina 
 		$request = json_decode($postdata);  // decodifica os dados de json para php
-		//$request->nome;
+		//$request->nome = "AVA";
 
 		$pesquisa = $dao->buscarnome($request->nome);	 // cria uma variavel pesquisa 
 														// chama a função buscarnome passando 

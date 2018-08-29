@@ -1,8 +1,8 @@
   function pesagemSaidaController($scope, $http, $log, $cookieStore, $mdDialog, $q, $timeout, meuServico, $cookies) {
      
 /// ADICIONANDO DESCONTO NA PESAGEM SAIDA
-  $scope.lines = [];
-      $scope.cont = 1;
+        $scope.lines = [];
+        $scope.cont = 1;
 
       $scope.salvarListaDesconto = function() {
         console.log("cadastroClienteController :salvarListaDesconto");
@@ -39,16 +39,80 @@
                   i += 1;
               } while (i < $scope.lines.length);
           }
+ 
+ 
+      }
+
+ $scope.apagarListaDesconto = function() {
+        console.log("cadastroClienteController :apagarListaDesconto");
+          // CRIAR CONDIÇÃO QUE VERIFICA SE OS CAMPOS PLACAS SÃO DIFERENTES
+
+ console.log($scope.lines.pop()); // remove o ultimo desconto
 
       }
 
+       $scope.consulta_nome_desconto = function() {
+        console.log("cadastroFornecedorController :consulta_nome_desconto");
+         var teste_tamanho_string = "";
+         teste_tamanho_string = $scope.desconto.nomedesconto; // RETIREI A STRING DA PLACA
+         var teste_tamanho_digitado = teste_tamanho_string.length; // DESCOBRI O TAMANHO
+         //console.log($scope.veiculo);
+         console.log(teste_tamanho_digitado); // FAÇO O TESTE DE APROVAÇÃO DE ENVIO
+         console.log($scope.desconto.nomedesconto);
+         if (teste_tamanho_digitado >= 1) {
+             var request = $http({
+                 method: "post",
+                 url: "php/desconto/pesquisardescontonome_saida.php",
+                 data: $scope.desconto,
+                 // data: $scope.veiculo.placa,
+                 headers: {
+                     'Content-Type': 'application/x-www-form-urlencoded'
+                 }
+             });
+             request.then(function(response) {
+                 console.log(response.data);
+                 // SE RETORNAR ALGUM REGISTRO DO BANCO O ELSE RODA
+                 // SE NAO RETORNAR NENHUM REGISTRO DO BANCO O IF RODA
+                 ///
+                 // colocar status 1 se existir 
+                 // colcoar status 0 se nao tiver cadastro
+                 if (!angular.isUndefined(response.data.status)) {
+                     Materialize.toast('DESCONTO NAO   CADASTRADO', 3000, 'rounded', 'center');
+                     $scope.desconto.nomedesconto = null;
+                     Materialize.toast();
+                     
+                 } else {
+                    if (response.data.status!== 0) {
+                         
+                        if($scope.desconto.nomedesconto == response.data[0].nome){
+                         $scope.desconto.nomedesconto = response.data[0].nome;
+                        $scope.desconto.id_desconto = response.data[0].id_desconto;
+
+                        }else{
+                            Materialize.toast('DESCONTO DIGITADO INCOMPLETO', 3000, 'rounded', 'center');
+                     $scope.desconto.nomedesconto = null;
+                     Materialize.toast();
+
+                        }
+
+                        
+
+                    }else{
+                        Materialize.toast('DESCONTO NAO   CADASTRADO', 3000, 'rounded', 'center');
+                        $scope.desconto.nomedesconto = null;
+                        Materialize.toast();
 
 
-/// FIMM DESCONTO NA PESAGEM SAIDA
+                    }
+                   
+                     
+                 }
+             }, function(response) {
+                 console.log("ERROR" + response);
+             });
+         }
 
-
-
-
+     }
 
      $scope.capturar_peso = function() {
         console.log("pesagemAvulsaController :capturar_peso");
@@ -284,6 +348,7 @@
              $scope.pesagem.status = null;
          }
      }
+
      // aqui faz com que o resultado das pesagem
      // aponte peso liquido positivo se o desconto não for
      // maior que o peso liquido
@@ -307,6 +372,7 @@
          }
          return true;
      }
+
      $scope.data = [" "];
      // variável que é responsável pelo gerenciamento do compoenent auto complete
  }
@@ -316,6 +382,151 @@
      .module('home')
      .controller('pesagemSaidaController', pesagemSaidaController);
  /////
+///// teste auto complete nome desconto pagina principal
+
+// AUTO COMPLETE DESCONTO
+ 
+ function pesagemSaidaDescontoController($scope, $http, $cookieStore, $mdDialog, $q, $timeout, meuServico, $log) {
+     //VERSÃO NOVA
+     var self = this;
+     self.simulateQuery = false;
+     self.isDisabled = false;
+     self.repos = loadAll('');
+     self.querySearch = querySearch;
+     self.selectedItemChange = selectedItemChange;
+     self.searchTextChange = searchTextChange;
+
+     function querySearch(query) {
+        console.log("pesagemSaidaDescontoController :querySearch");
+         var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
+             deferred;
+         if (self.simulateQuery) {
+             deferred = $q.defer();
+             $timeout(function() {
+                 deferred.resolve(results);
+             }, Math.random() * 1000, false);
+             return deferred.promise;
+         } else {
+             return results;
+         }
+     }
+
+     function searchTextChange(text) {
+        console.log("pesagemSaidaDescontoController :searchTextChange");
+         $log.info('pesquisando por: ' + text);
+        
+             
+         loadAll(text);
+
+     }
+
+     function selectedItemChange(item) {
+        console.log("pesagemSaidaDescontoController :selectedItemChange");
+          // aqui tenho que colocar na logica do linha
+           if (!item) {
+            console.log(item);
+                     console.log("SELECIONADO e depois apagado");
+                     Materialize.toast('ITEM SELECIONADO APAGADO', 1000, 'rounded', 'center');
+                     Materialize.toast();
+                     $scope.desconto.id_desconto = null;
+                     $scope.selected = null;
+                     
+                 }else{
+
+                    $scope.desconto.id_desconto = item.id_desconto;
+                    $scope.desconto.nomedesconto = item.nome;
+                    $scope.selected = item;
+                 
+                 }
+                  
+     }
+
+
+     function loadAll(text) {
+        console.log("pesagemSaidaDescontoController :loadAll");
+         var repos = [{
+             'nome': 'AngularJS',
+             'url': 'https://github.com/angular/angular.js',
+             'watchers': '3,623',
+             'forks': '16,175'
+         }];
+         console.log(text);
+         // TRATAMENTO SE SELECIONAR E DEPOIS APAGAR A SELEÇÃO DEVE APAGAR DO
+         // OBJETO O QUE FOI SELECIONADO
+        
+
+         var request = $http({
+             method: "post",
+             url: "php/desconto/manualpesquisanomedesconto.php",
+             data: text,
+             headers: {
+                 'Content-Type': 'application/x-www-form-urlencoded'
+             }
+         });
+         request.then(function(response) {
+             repos = response.data;
+             console.log("retorno " + response.data.length);
+             console.log(response.data.status);
+             if (angular.isUndefined(response.data.status)) {
+                 exibir = false;
+                 //$scope.dicas = response.data;
+                 $scope.teste_de_resultado_de_busca = response.data;
+             } else {
+                 Materialize.toast('REGISTRO NAO ENCONTRADO', 1000, 'rounded', 'center');
+                 Materialize.toast();
+                 // console.log("Nenhum produto retornado");
+                 exibir = true;
+             }
+         }, function(response) {
+             console.log("ERROR" + response);
+         });
+         if (!angular.isUndefined($scope.teste_de_resultado_de_busca)) {
+             repos = $scope.teste_de_resultado_de_busca;
+             self.repos = repos;
+             return repos.map(function(repo) {
+                 repo.value = repo.nome.toLowerCase();
+                 return repo;
+             });
+         } else {
+             repos = [{
+                 'nome': 'AngularJS',
+                 'url': 'https://github.com/angular/angular.js',
+                 'watchers': '3,623',
+                 'forks': '16,175'
+             }];
+             return repos.map(function(repo) {
+                 repo.value = repo.nome.toLowerCase();
+                 return repo;
+             });
+         }
+     }
+
+     function createFilterFor(query) {
+          console.log("pesagemSaidaDescontoController :createFilterFor");
+         var lowercaseQuery = angular.lowercase(query);
+         return function filterFn(item) {
+
+             return (item.value.indexOf(lowercaseQuery) === 0);
+         };
+     }
+
+ }
+ angular
+     .module('home')
+     .controller('pesagemSaidaDescontoController', pesagemSaidaDescontoController);
+
+/// FIMM DESCONTO NA PESAGEM SAIDA
+
+
+
+
+//// fim desconto pagina principal
+
+
+
+
+
+
 
  //////////////////////////////////////////////////////////////////////////////////
 

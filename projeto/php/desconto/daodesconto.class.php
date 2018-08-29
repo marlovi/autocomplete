@@ -3,6 +3,53 @@
 	require_once '../banco/banco.class.php';
   require_once 'resposta.class.php';
 	class DaoDesconto{
+
+public function buscarnomedesconto_saida($nome){
+   $resultado = null;
+      $verificador = true;
+      $banco = new Banco();
+   $teste = $banco->serverName;
+
+      $nome = strtoupper($nome);
+      $conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
+ 
+      if($conn->connect_error){
+        $verificador = false;
+        die("Problema na conexão ".$conn->connect_error);
+      }
+   
+ 
+
+
+   $sql = "SELECT `nome`,`id_desconto`  FROM `desconto` WHERE `nome` LIKE '".$nome."%' LIMIT 30";
+   $result = $conn->query($sql);
+   
+   if ($result->num_rows > 0) {
+      // output data of each row
+      $resultado = array();
+      while($row = $result->fetch_assoc()) {
+        $desconto = new Desconto();
+         $desconto->id_desconto = $row['id_desconto'];
+         $desconto->nome = $row['nome'];
+
+         array_push($resultado,$desconto);
+   
+      }
+   } else {
+      $r = new Resposta();
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $r->status=0;
+      $resultado = $r;
+   }
+   $conn->close();
+   
+   return $resultado;
+   
+   }
+
+
+
  
 		public function save($desconto){
 			$verificador = true;

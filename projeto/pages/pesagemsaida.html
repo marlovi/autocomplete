@@ -25,7 +25,7 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
          </div>
          <div class="col s4 left-align ">
             <label for="veiculo" class="active "> Pesquisar placa </label>
-            <div data-ng-controller="pesagemSaidaVeiculoController as PVeiculo"  >
+            <div data-ng-controller="pesagemSaidaVeiculoController as PVeiculo"   >
                <md-autocomplete  ng-Disabled="!pesagem.motorista" id="placa" ngb-disabled="PVeiculo.isDisabled " md-no-cache="PVeiculo.noCache" md-selected-item="selected" md-search-text-change="PVeiculo.searchTextChange(PVeiculo.searchText)" md-search-text="PVeiculo.searchText "
                   md-selected-item-change="PVeiculo.selectedItemChange(item)" md-items="item in PVeiculo.querySearch(PVeiculo.searchText) " md-item-text="item.placa " md-min-length="3" placeholder="Pesquise um Veiculo" md-menu-class="autocomplete-custom-template ">
                   <md-item-template>
@@ -80,6 +80,12 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
          <div class="col s6 input-field">
             <button class="btn waves-effect waves-light" onclick="adicionarListaDesconto()"  > ADICIONAR DESCONTO </button>
          </div>
+
+         <div class="col s6 input-field">
+            <button class="btn-flat waves-effect waves-light" ng-click="apagarListaDesconto()" > APAGAR DESCONTO </button>
+         </div>
+ 
+          
       </div>
       <div class="row">
          <div class="input-field col s12   ">
@@ -94,6 +100,7 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
                   <table>
                      <thead>
                         <tr>
+                           <th>CODIGO</th>
                            <th>DESCONTO</th>
                            <th>CLASSIFICADO (%) </th>
                            <th>DESCONTADO (%)</th>
@@ -103,6 +110,7 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
                      </thead>
                      <tbody>
                         <tr ng-repeat="linha in lines">
+                           <td>{{linha.id_desconto}}</td>
                            <td>{{linha.nomedesconto}}</td>
                            <td>{{linha.classificado}}</td>
                            <td>{{linha.percentual}}</td>
@@ -123,6 +131,7 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
             <button class="btn waves-effect waves-light" id="capturar_peso" ng-click="capturar_peso()  " ng-Disabled = " !pesagem.peso_1 " >capturar peso</button>
          </div>
       </div>
+
    </div>
 </div>
 
@@ -130,7 +139,6 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
 <!-- até aqui é a pagina cadastro cliente daqui pra baixo é a tela cadastro veiculo-->
 <script type="text/javascript">
    $(document).ready(function() {
-
        $('.modal').modal({
            dismissible: true, // Modal can be dismissed by clicking outside of the modal
            opacity: .9, // Opacity of modal background
@@ -138,12 +146,10 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
            outDuration: 200, // Transition out duration
            startingTop: '4%', // Starting top style attribute
            endingTop: '4%', // Ending top style attribute
-           ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-   
+           ready: function(modal, trigger) { 
                console.log(modal, trigger);
            },
            complete: function() {
-   
            } // Callback for Modal close
        });
    });
@@ -152,14 +158,18 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
        //console.log('aqui ');
        $('#modal2').modal('open');
    }
+
 </script>
-<div id="modal2" class="modal">
+<div id="modal2" class="modal" >
    <div class="modal-content">
       <div class="col s12 card-panel">
          <h2 class="center">DESCONTO </h2>
          <div class="row">
+<!--aqui começa o teste de auto complete de nome do desconto -->
+  
+<!-- OBJETIVO CAPTURAR O ID DO NOME DO DESCONTO E COLOCAR ISSO NUM OBJETO  -->
             <div class="col s3 input-field">
-               <input id="nomedesconto" type="text"   ng-model="desconto.nomedesconto" mask="AAAAAAAAAAAAAA"  >
+   <input id="nomedesconto" type="text"  ng-blur="consulta_nome_desconto(desconto.nomedesconto)"  ng-model="desconto.nomedesconto" mask="AAAAAAAAAAAAAA"  >
                <label for="nomedesconto">Nome</label>
             </div>
                            <td>{{linha.peso_descontado}}</td>
@@ -183,10 +193,11 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
          </div>
          <div class="row">
             <div class="col s12 center">
-               <button href="#!" class="btn waves-effect waves-light modal-action modal-close" id="enviar" ng-click="salvarListaDesconto()"  ">CONCLUIDO</button>
+               <button href="#!" class="btn waves-effect waves-light modal-action modal-close" id="enviar" ng-click="salvarListaDesconto() ">CONCLUIDO</button>
                <button href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="voltar">Voltar</button>
             </div>
          </div>
       </div>
+ 
    </div>
 </div>

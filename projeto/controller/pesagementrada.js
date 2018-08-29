@@ -445,6 +445,7 @@
          request.then(function(response) {
              repos = response.data;
              console.log("retorno " + response.data.length);
+              console.log(response.data);
              console.log(response.data.status);
              if (angular.isUndefined(response.data.status)) {
                  exibir = false;
