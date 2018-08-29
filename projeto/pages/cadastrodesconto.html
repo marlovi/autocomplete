@@ -59,6 +59,65 @@
       </div>
 -->
 
+      <div class="col s12 card-panel">
+         <h2 class="center">Cadastro de ITENS Desconto </h2>
+          
+          Na página de pesagem de saída ao adicionar um desconto iniciamos selecionando um nome de desconto cadastrado. 
+          Nessa etapa faz-se o teste se o nome digitado está disponível na tabela "desconto" se existir o nome, então retorna para o objeto (lista de descontos que será registrada na pesagem) o id_desconto da tabela "desconto". 
+          Os campos: classificado, percentual, absoluto e peso_descontado são preenchidos pelo usuário.
+          Os campos absoluto e peso descontado devem ser preenchidos baseado no peso liquido calculado da diferença entre peso de entrada e peso de saída.  Será implementado em etapas futuras.
+          Na etapa de desenvolvimento da tabela "itens de desconto" todos os campos da tabela "desconto aplicado " estarão disponíveis para edição, para facilitar a simulação.
+          Depois de capturar o id do nome do desconto e preencher os dados da tabela "desconto_aplicados" termina a adição de um itens_desconto a pesagem de saída.  
+          Nessa etapa temos as seguintes informações:
+          Id_desconto, e nome da tabela desconto. 
+          Classificado, percentual, absoluto, peso_descontado da tabela desconto aplicado.
+          Não temos o id_desconto_aplicado pois ainda não salvamos essa operação. 
+          Os dados que serão lançados na tabela desconto aplicado está em um objeto "lines" apontado em formato de tabela para o usuário.
+          Cada posição desse objeto tem os dados do desconto aplicado, o id e nome da tabela desconto.
+          Ao concluir a lista de descontos que será aplicado a pesagem de saída. Soma-se todos os pesos descontado (itens digitados pelo usuário na fase de desenvolvimento) e subtrai do peso liquido.
+          
+
+
+
+Ao enviar pesagem de saída deve-se executar nessa ordem
+1-  Salva a pesagem;
+2-  Retornar o id da pesagem de saída.
+3-  Salva o primeiro desconto aplicado. (Dados digitados pelo usuário)  
+4-  Retornar o id_desconto aplicado.
+5-  Salva na tabela itens_desconto (os itens do objeto "lines.)  com:
+a.  Id_desconto_aplicado;
+b.  Id_desconto (id do nome desconto da tabela desconto);
+c.  Id da pesagem de saída;
+d.  Repete a sequência até concluir todos as posições do objeto.
+
+
+ 
+         <div class="row">
+            <div class="col s12 input-field">
+               <input id="pesagem_id_pesagem" type="text" ng-model="itens_desconto.pesagem_id_pesagem" mask="9999">
+               <label for="pesagem_id_pesagem">pesagem_id_pesagem </label>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col s12 input-field">
+               <input id="desconto_id_desconto" type="text" ng-model="itens_desconto.desconto_id_desconto" mask="9999">
+               <label for="desconto_id_desconto">desconto_id_desconto </label>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col s12 input-field">
+               <input id="desconto_aplicado_id_desconto_aplicado" type="text" ng-model="itens_desconto.desconto_aplicado_id_desconto_aplicado" mask="9999">
+               <label for="desconto_aplicado_id_desconto_aplicado">desconto_aplicado_id_desconto_aplicado </label>
+            </div>
+         </div>  
+       
+         <div class="row s12 center">
+            <button class="btn waves-effect waves-light" id="enviar" ng-Disabled="!desconto.nome" ng-click="salvar_desconto_aplicado()">Enviar desconto aplicado</button>
+            <button class="waves-effect waves-teal btn-flat" id="voltar" ng-click="voltar()">Voltar</button>
+         </div>
+         
+         {{itens_desconto}}
+      </div>
 
 
 
