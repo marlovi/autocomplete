@@ -95,7 +95,7 @@
         console.log("cadastroDescontoController :enviar");
          var req = {
              method: 'post',
-             url: "php/desconto/salvarproduto.php",
+             url: "php/desconto/salvardesconto.php",
              headers: {
                  'Content-Type': 'application/x-www-form-urlencoded'
              },
@@ -123,8 +123,8 @@
         console.log("cadastroDescontoController :salvar_desconto_aplicado");
          var request = $http({
              method: "post",
-             url: "php/desconto_aplicado/salvardesconto_aplicado.php",
-             data: $scope.desconto_aplicado,
+             url: "php/itens_desconto/salvaritens_desconto.php",
+             data: $scope.itens_desconto,
              headers: {
                  'Content-Type': 'application/x-www-form-urlencoded'
              }

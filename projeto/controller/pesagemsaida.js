@@ -20,6 +20,7 @@
               $scope.cont = $scope.desconto;
               $scope.lines.push($scope.cont);
               $scope.desconto = null;
+
               do {
                   var n = $scope.lines[i].nomedesconto.localeCompare($scope.cont.nomedesconto);
                   // TESTO TODAS AS POSIÇOES DA LISTA
@@ -34,19 +35,23 @@
                           // E TIRA PLACA DA LISTA.
                           i = $scope.lines.length
                           var meuPeixePop = $scope.lines.pop();
+                         
                       }
                   }
                   i += 1;
               } while (i < $scope.lines.length);
           }
- 
+ console.log($scope.lines);
+        //parseInt($scope.pesagem.peso_descontos)
+ $scope.pesagem.peso_descontos +=  parseInt( $scope.lines[$scope.lines.length - 1].peso_descontado);
+ console.log($scope.pesagem.peso_descontos);
  
       }
 
  $scope.apagarListaDesconto = function() {
         console.log("cadastroClienteController :apagarListaDesconto");
           // CRIAR CONDIÇÃO QUE VERIFICA SE OS CAMPOS PLACAS SÃO DIFERENTES
-
+$scope.pesagem.peso_descontos -=  parseInt( $scope.lines[$scope.lines.length - 1].peso_descontado);
  console.log($scope.lines.pop()); // remove o ultimo desconto
 
       }
