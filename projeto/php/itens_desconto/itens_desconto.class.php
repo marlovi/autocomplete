@@ -46,7 +46,7 @@
 		public function getDesconto_aplicado_id_desconto_aplicado(){
 			return $this->desconto_aplicado_id_desconto_aplicado; 
 		}
-		public function setDesconto_aplicado_id_desconto_aplicado($absoluto){
+		public function setDesconto_aplicado_id_desconto_aplicado($desconto_aplicado_id_desconto_aplicado){
 			$this->desconto_aplicado_id_desconto_aplicado = $desconto_aplicado_id_desconto_aplicado;
 		}
 		 

@@ -12,20 +12,18 @@ require_once 'daodesconto_aplicado.class.php';
 //$desconto_aplicado->preencher($request);
 //$last_id = $dao->save_aplicado($desconto_aplicado);
 //$desconto_aplicado->id_desconto_aplicado = $last_id;
+// AQUI RODA UM UNICO SIMULADO NA PAGINA
 
-// TENTATIVA DE SALVAR A LISTA DE DESCONTOS APLICADO
-		//   objetivo
-		/* pegar a informação da posição zero da listaDescontosAplicado
-e enviar para a função save_aplicado e  retornar com o id em que foi salvo
-
-		  */
 $listaDescontosAplicados = $request;
+$resultado = array();
+
 foreach ($listaDescontosAplicados as $key => $value) {
-	# code...
-$desconto_aplicado->preencher($listaDescontosAplicados);
+$desconto_aplicado = new Desconto_aplicado();
+$desconto_aplicado->preencher($value);
 $last_id = $dao->save_aplicado($desconto_aplicado);
 $desconto_aplicado->id_desconto_aplicado = $last_id;
-
+$desconto_aplicado->id_desconto = $value->id_desconto;
+array_push($resultado,$desconto_aplicado);
 }
 // FIM TENTATIVA SALVAR DESCOTNOS APLICADOS
 
@@ -34,6 +32,6 @@ $desconto_aplicado->id_desconto_aplicado = $last_id;
 
  */
 
-echo json_encode($desconto_aplicado,true);
+echo json_encode($resultado,true);
 
 ?>

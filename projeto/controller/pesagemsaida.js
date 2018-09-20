@@ -320,7 +320,7 @@ $scope.pesagem.peso_descontos -=  parseInt( $scope.lines[$scope.lines.length - 1
          // CHAMAR FUNÇÃO DE SALVAR INTENS DESCONTO
 
 //$scope.salvar_desconto_aplicado( );
-$scope.organizar();
+//$scope.organizar();
 
          // FIM CHAMADA FUNÇÃO SALVAR ITENS DESCONTO.
      }
@@ -336,15 +336,16 @@ $scope.organizar = function() {
          console.log($scope.lines)
          console.log("----------");
          //testando salvar lista de descontos aplicados
-         $scope.salvar_desconto_aplicado();
+         //$scope.salvar_desconto_aplicado();
+         
 
 
 
          // ROTINA PARA SALVAR DESCONTOS
-         // SALVA A PESAGEM DE SAIDA 
-         // RETORNA O ID PESAGEM SAIDA.
-         // SALVA A LISTA DE DESCONTO APLICADOS
-         // RETORNA A LISTA DOS ID  DESCONTOS APLICADOS
+         // OK SALVA A PESAGEM DE SAIDA 
+         // OK RETORNA O ID PESAGEM SAIDA.
+         // OK SALVA A LISTA DE DESCONTO APLICADOS
+         // OK RETORNA A LISTA DOS ID  DESCONTOS APLICADOS
          // SALVA PARA CADA ID DESCONTO APLICADO UM REGISTRO NO ITENS DESCONTO.
 
          
@@ -356,29 +357,51 @@ $scope.salvar_desconto_aplicado = function() {
         console.log("cadastroDescontoController :salvar_desconto_aplicado");
          var request = $http({
              method: "post",
-             url: "php/desconto_aplicado/salvar_desconto_aplicado.php",
+             url: "php/desconto_aplicado/salvardesconto_aplicado.php",
              data: $scope.lines,
              headers: {
                  'Content-Type': 'application/x-www-form-urlencoded'
              }
          });
          request.then(function(response) {
-             console.log(response.data);
+            console.log("FUNÇÃO salvar_desconto_aplicado");
+            // console.log(response.data);
              // $scope.Cliente = response.data;
              // foi necessario atualizar o objeto cliente com os dados de id retornado do banco
              // isso faz a atualização do objeto que está na pagina.
              $scope.openOffscreen();
+            
              $scope.lines = response.data;
-             $scope.lines = null;
+             console.log($scope.lines);
 
          }, function(response) {
              console.log("ERROR" + response);
          });
+        // $scope.salvar_itens_desconto(); PODE SER QUE NÃO TEM SINCRONISMO OU UM ATRAZO NA HORA DE SALVAR
+
      }
 // FIM FUNÇÃO ITENS DESCONTOS APLICADOS NA PESAGEM SAIDA.
-
+// FUNÇAO ITENS DESCONTO
+ $scope.salvar_itens_desconto = function() {
+        console.log("cadastroDescontoController :salvar_itens_desconto");
+         var request = $http({
+             method: "post",
+             url: "php/itens_desconto/salvaritens_desconto.php",
+             data: $scope.lines,
+             headers: {
+                 'Content-Type': 'application/x-www-form-urlencoded'
+             }
+         });
+         request.then(function(response) {
+            console.log("FUNÇÃO salvar_itens_desconto");
+             console.log(response.data);
  
-
+         }, function(response) {
+             console.log("ERROR" + response);
+         });
+     }
+ 
+// FIM FUNÇAO ITENS DESCONTO
 
 
      var exibir = false;
