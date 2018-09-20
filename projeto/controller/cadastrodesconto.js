@@ -123,8 +123,8 @@
         console.log("cadastroDescontoController :salvar_desconto_aplicado");
          var request = $http({
              method: "post",
-             url: "php/itens_desconto/salvaritens_desconto.php",
-             data: $scope.itens_desconto,
+             url: "php/desconto_aplicado/salvar_desconto_aplicado.php",
+             data: $scope.desconto_aplicado,
              headers: {
                  'Content-Type': 'application/x-www-form-urlencoded'
              }
@@ -145,8 +145,30 @@
 
 
 // FIM FUNÇOES DESCONTO APLICADO 
+// FUNÇAO ITENS DESCONTO
+ $scope.salvar_itens_desconto = function() {
+        console.log("cadastroDescontoController :salvar_itens_desconto");
+         var request = $http({
+             method: "post",
+             url: "php/itens_desconto/salvaritens_desconto.php",
+             data: $scope.itens_desconto,
+             headers: {
+                 'Content-Type': 'application/x-www-form-urlencoded'
+             }
+         });
+         request.then(function(response) {
+             console.log(response.data);
+             // $scope.Cliente = response.data;
+             // foi necessario atualizar o objeto cliente com os dados de id retornado do banco
+             // isso faz a atualização do objeto que está na pagina.
+             $scope.openOffscreen();
+             $scope.desconto = response.data;
+             $scope.desconto = null;
 
-
+         }, function(response) {
+             console.log("ERROR" + response);
+         });
+     }
 
 
  }

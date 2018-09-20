@@ -44,7 +44,8 @@
  console.log($scope.lines);
         //parseInt($scope.pesagem.peso_descontos)
  $scope.pesagem.peso_descontos +=  parseInt( $scope.lines[$scope.lines.length - 1].peso_descontado);
- console.log($scope.pesagem.peso_descontos);
+console.log("$scope.pesagem.peso_descontos");
+console.log($scope.pesagem.peso_descontos);
  
       }
 
@@ -314,7 +315,71 @@ $scope.pesagem.peso_descontos -=  parseInt( $scope.lines[$scope.lines.length - 1
          }, function(response) {
              console.log("ERROR" + response);
          });
+
+         //////////////////////////////////// 
+         // CHAMAR FUNÇÃO DE SALVAR INTENS DESCONTO
+
+//$scope.salvar_desconto_aplicado( );
+$scope.organizar();
+
+         // FIM CHAMADA FUNÇÃO SALVAR ITENS DESCONTO.
      }
+
+
+$scope.organizar = function() {
+    // mostra os objetos da pagina pesagem saida.
+        console.log("pesagemSaidaController :organizar");
+        console.log("Objeto pesagem");
+         console.log($scope.pesagem)
+         console.log("----------");
+         console.log("Objeto lista dos descontos APLICADOS");
+         console.log($scope.lines)
+         console.log("----------");
+         //testando salvar lista de descontos aplicados
+         $scope.salvar_desconto_aplicado();
+
+
+
+         // ROTINA PARA SALVAR DESCONTOS
+         // SALVA A PESAGEM DE SAIDA 
+         // RETORNA O ID PESAGEM SAIDA.
+         // SALVA A LISTA DE DESCONTO APLICADOS
+         // RETORNA A LISTA DOS ID  DESCONTOS APLICADOS
+         // SALVA PARA CADA ID DESCONTO APLICADO UM REGISTRO NO ITENS DESCONTO.
+
+         
+     };
+
+////////////////////
+// FUNÇÃO SALVAR ITENS DESCONTO APLICADOS NA PESAGEM SAIDA
+$scope.salvar_desconto_aplicado = function() {
+        console.log("cadastroDescontoController :salvar_desconto_aplicado");
+         var request = $http({
+             method: "post",
+             url: "php/desconto_aplicado/salvar_desconto_aplicado.php",
+             data: $scope.lines,
+             headers: {
+                 'Content-Type': 'application/x-www-form-urlencoded'
+             }
+         });
+         request.then(function(response) {
+             console.log(response.data);
+             // $scope.Cliente = response.data;
+             // foi necessario atualizar o objeto cliente com os dados de id retornado do banco
+             // isso faz a atualização do objeto que está na pagina.
+             $scope.openOffscreen();
+             $scope.lines = response.data;
+             $scope.lines = null;
+
+         }, function(response) {
+             console.log("ERROR" + response);
+         });
+     }
+// FIM FUNÇÃO ITENS DESCONTOS APLICADOS NA PESAGEM SAIDA.
+
+ 
+
+
 
      var exibir = false;
      //para mostrar a mensagem que não houve resultados
