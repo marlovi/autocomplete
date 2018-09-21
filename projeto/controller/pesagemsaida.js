@@ -41,11 +41,11 @@
                   i += 1;
               } while (i < $scope.lines.length);
           }
- console.log($scope.lines);
+ //console.log($scope.lines);
         //parseInt($scope.pesagem.peso_descontos)
  $scope.pesagem.peso_descontos +=  parseInt( $scope.lines[$scope.lines.length - 1].peso_descontado);
-console.log("$scope.pesagem.peso_descontos");
-console.log($scope.pesagem.peso_descontos);
+//console.log("$scope.pesagem.peso_descontos");
+//console.log($scope.pesagem.peso_descontos);
  
       }
 
@@ -63,8 +63,8 @@ $scope.pesagem.peso_descontos -=  parseInt( $scope.lines[$scope.lines.length - 1
          teste_tamanho_string = $scope.desconto.nomedesconto; // RETIREI A STRING DA PLACA
          var teste_tamanho_digitado = teste_tamanho_string.length; // DESCOBRI O TAMANHO
          //console.log($scope.veiculo);
-         console.log(teste_tamanho_digitado); // FAÇO O TESTE DE APROVAÇÃO DE ENVIO
-         console.log($scope.desconto.nomedesconto);
+       //  console.log(teste_tamanho_digitado); // FAÇO O TESTE DE APROVAÇÃO DE ENVIO
+        // console.log($scope.desconto.nomedesconto);
          if (teste_tamanho_digitado >= 1) {
              var request = $http({
                  method: "post",
@@ -76,7 +76,7 @@ $scope.pesagem.peso_descontos -=  parseInt( $scope.lines[$scope.lines.length - 1
                  }
              });
              request.then(function(response) {
-                 console.log(response.data);
+               //  console.log(response.data);
                  // SE RETORNAR ALGUM REGISTRO DO BANCO O ELSE RODA
                  // SE NAO RETORNAR NENHUM REGISTRO DO BANCO O IF RODA
                  ///
@@ -241,7 +241,7 @@ $scope.pesagem.peso_descontos -=  parseInt( $scope.lines[$scope.lines.length - 1
 
      $scope.salvar = function() {
         console.log("pesagemSaidaController :salvar");
-         console.log($scope.pesagem);
+        // console.log($scope.pesagem);
          var data_entrada = null;
          //console.log("aqui vai para o banco");
          // percebi ser interessante converter em int os dados antes de salvar no 
@@ -301,7 +301,7 @@ $scope.pesagem.peso_descontos -=  parseInt( $scope.lines[$scope.lines.length - 1
          request.then(function(response) {
              
             // console.log(response.data);
-             console.log("Retorno banco de dados salvar pesagem");
+           //  console.log("Retorno banco de dados salvar pesagem");
              
              // $scope.Cliente = response.data;
              // foi necessario atualizar o objeto cliente com os dados de id retornado do banco
@@ -310,12 +310,15 @@ $scope.pesagem.peso_descontos -=  parseInt( $scope.lines[$scope.lines.length - 1
             $scope.pesagem = response.data;
 
             //USAR O RETORNO DA PESAGEM PARA PEGAR O ID PESAGEM
- 
-            $scope.salvar_desconto_aplicado();
-            
+ /*
+NOTA: DEPOIS DE SALVAR A PESAGEM INICIA O PROCESSO DE SALVAR OS DESCONTOS
+salvar_desconto_aplicado
+1 SALVA A LISTA DE DESCONTOS APLICADOS; NESSA ETAPA SALVA OS VALORES ADICIONADOS
+PELO USUARIO COMO CLASSIFICAÇÃO, PERCENTUAL DESCONTADO ENTRE OUTROS
 
-            //////////////
-            /////////////
+
+ */
+            $scope.salvar_desconto_aplicado();
 
         
              $cookies.putObject('impressao', response.data[0]);
@@ -356,10 +359,9 @@ $scope.organizar = function() {
 
          
      };
-
-////////////////////
-// FUNÇÃO SALVAR ITENS DESCONTO APLICADOS NA PESAGEM SAIDA
+ 
 $scope.salvar_desconto_aplicado = function() {
+
         console.log("cadastroDescontoController :salvar_desconto_aplicado");
          var request = $http({
              method: "post",
@@ -370,7 +372,7 @@ $scope.salvar_desconto_aplicado = function() {
              }
          });
          request.then(function(response) {
-            console.log("FUNÇÃO salvar_desconto_aplicado");
+           // console.log("FUNÇÃO salvar_desconto_aplicado");
             // console.log(response.data);
              // $scope.Cliente = response.data;
              // foi necessario atualizar o objeto cliente com os dados de id retornado do banco
@@ -378,9 +380,19 @@ $scope.salvar_desconto_aplicado = function() {
              //$scope.openOffscreen();
             
              $scope.lines = response.data;
-             console.log($scope.lines);
-             console.log($scope.pesagem);
+             //console.log($scope.lines);
+            // console.log($scope.pesagem);
              $scope.lines[0].pesagem_id_pesagem = $scope.pesagem[0].id_pesagem
+
+/*
+NOTA: DEPOIS DE SALVAR A PESAGEM INICIA O PROCESSO DE SALVAR OS DESCONTOS
+salvar_desconto_aplicado
+1 SALVA A LISTA DE DESCONTOS APLICADOS; NESSA ETAPA SALVA OS VALORES ADICIONADOS
+PELO USUARIO COMO CLASSIFICAÇÃO, PERCENTUAL DESCONTADO ENTRE OUTROS
+salvar_itens_desconto
+2 SALVA OS ITENS DE DESCONTO ASSOCIADO A PESAGEM 
+
+ */
              $scope.salvar_itens_desconto(); // DEPOIS DE SALVAR OS DESCONTOS APLICADOS
                                             // SALVA OS ITENS DESCONTO
 
@@ -403,8 +415,8 @@ $scope.salvar_desconto_aplicado = function() {
              }
          });
          request.then(function(response) {
-            console.log("FUNÇÃO salvar_itens_desconto");
-             console.log(response.data);
+            //console.log("FUNÇÃO salvar_itens_desconto");
+            // console.log(response.data);
  
          }, function(response) {
              console.log("ERROR" + response);
