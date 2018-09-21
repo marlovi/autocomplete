@@ -301,13 +301,22 @@ $scope.pesagem.peso_descontos -=  parseInt( $scope.lines[$scope.lines.length - 1
          request.then(function(response) {
              
             // console.log(response.data);
-             console.log("Retorno banco de dados");
+             console.log("Retorno banco de dados salvar pesagem");
              
              // $scope.Cliente = response.data;
              // foi necessario atualizar o objeto cliente com os dados de id retornado do banco
              // isso faz a atualização do objeto que está na pagina.
              response.data[0].data_entrada = data_entrada;
             $scope.pesagem = response.data;
+
+            //USAR O RETORNO DA PESAGEM PARA PEGAR O ID PESAGEM
+ 
+            $scope.salvar_desconto_aplicado();
+            
+
+            //////////////
+            /////////////
+
         
              $cookies.putObject('impressao', response.data[0]);
          
@@ -337,9 +346,6 @@ $scope.organizar = function() {
          console.log("----------");
          //testando salvar lista de descontos aplicados
          //$scope.salvar_desconto_aplicado();
-         
-
-
 
          // ROTINA PARA SALVAR DESCONTOS
          // OK SALVA A PESAGEM DE SAIDA 
@@ -369,10 +375,14 @@ $scope.salvar_desconto_aplicado = function() {
              // $scope.Cliente = response.data;
              // foi necessario atualizar o objeto cliente com os dados de id retornado do banco
              // isso faz a atualização do objeto que está na pagina.
-             $scope.openOffscreen();
+             //$scope.openOffscreen();
             
              $scope.lines = response.data;
              console.log($scope.lines);
+             console.log($scope.pesagem);
+             $scope.lines[0].pesagem_id_pesagem = $scope.pesagem[0].id_pesagem
+             $scope.salvar_itens_desconto(); // DEPOIS DE SALVAR OS DESCONTOS APLICADOS
+                                            // SALVA OS ITENS DESCONTO
 
          }, function(response) {
              console.log("ERROR" + response);
