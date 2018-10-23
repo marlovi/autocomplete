@@ -129,8 +129,8 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
 
 
             <button class="btn waves-effect waves-light" id="capturar_peso" ng-click="capturar_peso()  " ng-Disabled = " !pesagem.peso_1 " >capturar peso</button>
-            <button class="btn waves-effect waves-light" id="enviar" ng-click="organizar()"  >OBJETOS PAGINA</button>
- 
+            <button class="btn waves-effect waves-light" id="organizar" ng-click="organizar()">organizar</button>
+
          </div>
       </div>
 
@@ -175,35 +175,25 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
                <label for="nomedesconto">Nome</label>
             </div>
 
-                           <td>{{linha.peso_descontado}}</td>
- 
             <div class="col    s4 input-field">
-               <input id="classificado" type="text" ng-model="desconto.classificado" mask="9?9.99" >
+               <input id="classificado" type="text" ng-Disabled="!desconto.nomedesconto" ng-model="desconto.classificado" mask="9?9.99" >
                <label for="classificado">Classificado (%)</label>
             </div>
             <div class="col s4 input-field">
-               <input id="percentual" type="text" ng-Disabled="desconto.percentual" ng-blur=" Pdescondado=true;" ng-model="desconto.percentual "  mask="9?9.99" >
+               <input id="percentual" md-min-length="3" type="text" ng-keyup="calculo_peso_descontado()" ng-Disabled="desconto.absoluto || !desconto.nomedesconto" ng-model="desconto.percentual"  mask="9?9.99" >
                <label for="percentual">Percentual Descontado (%)</label>
             </div>
             <div class="col s4 input-field">
               <!-- ng-Disabled="!pesagem.classificado" -->
-               <input id="absoluto" type="text" ng-Disabled="desconto.percentual" ng-model=" desconto.absoluto"  mask="999999"  >
+               <input id="absoluto" md-min-length="3" type="text" ng-keyup="calculo_peso_descontado()" ng-Disabled="desconto.percentual || !desconto.nomedesconto" ng-model=" desconto.absoluto"  mask="999999">
                <label for="absoluto">Absoluto (kg)</label>
             </div>
-            <div ng-bind="quantity= desconto.percentual; cost= pesagem.peso_liquido/100; ; desconto.peso_descontado = desconto.absoluto; ">
-              
-            </div>
-
             <div class="col s4 input-field" >
-              <div ng-app="" ng-init="quantity=1;cost=1">
-
+              <div ng-app="" ng-init="quantity=1;cost=1;impor=1;">
                 <div> <label for="liquido" class="active">Peso Desconto (kg)</label></div>
-
-              <p><span ng-show="Pdescondado; " id="Pdescondado" ng-bind="desconto.peso_descontado = quantity * cost"></span></p>
-
+              <p><span  id="Pdescondado" ng-bind="desconto.peso_descontado"></span></p>
               </div>
             </div>
-
          </div>
          <div class="row">
             <div class="col s12 center">

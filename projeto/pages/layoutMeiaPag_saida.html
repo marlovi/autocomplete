@@ -75,6 +75,33 @@
                </tr>
                </thead>
             </table>
+             <th>LISTA DE DESCONTOS APLICADOS </th>
+               <div class="row s12 center">
+                  <table>
+                     <thead>
+                        <tr>
+                           <th>CODIGO</th>
+                           <th>DESCONTO</th>
+                           <th>CLASSIFICADO (%) </th>
+                           <th>DESCONTADO (%)</th>
+                           <th>ABSOLUTO (kg)</th>
+                           <th>PESO DESCONTO (kg)</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr ng-repeat="linha in lines">
+                           <td>{{linha.id_desconto}}</td>
+                           <td>{{linha.nomedesconto}}</td>
+                           <td>{{linha.classificado}}</td>
+                           <td>{{linha.percentual}}</td>
+                           <td>{{linha.absoluto}}</td>
+                           <td>{{linha.peso_descontado}}</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+
+
             <table class="striped">
                <tbody>
                   <tr>

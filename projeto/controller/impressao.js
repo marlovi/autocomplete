@@ -1,13 +1,18 @@
   function impressaoController($scope, $http, $log, $cookieStore, $mdDialog, $q, $timeout, meuServico, $cookies) {
-
+/// ADICIONANDO DESCONTO NA PESAGEM SAIDA
+        // $scope.lines = [];
+        //  $scope.cont = 1;
 
      $scope.init = function() {
       
         console.log("impressaoController :init");
-         var obj_impressao = $cookies.getObject('impressao')
-          //console.log($cookies);
+         var obj_impressao = $cookies.getObject('impressao');
+         var obj_impressaoDescontos = $cookies.getObject('impressaoDescontos');
+
+          console.log($cookies);
          // console.log($scope.pesagem);
- 
+            $scope.lines = obj_impressaoDescontos;
+            console.log($scope.lines);
          $scope.pesagem.data = obj_impressao.data;
          $scope.pesagem.placa = obj_impressao.placa;
          $scope.pesagem.data_entrada = obj_impressao.data_entrada;
@@ -70,9 +75,11 @@
      $scope.printDiv_saida = function() {
         console.log("impressaoController :printDiv_saida");
         // na pesagem de saida tem esse item a mais '' data de entrada' 
-         
-          
+
          console.log($scope.pesagem);
+         console.log($scope.lines);
+         console.log($scope.linha);
+
          // função que abre pop up para impressão.
          var divName = "printable_saida";
          var printContents = document.getElementById(divName).innerHTML;

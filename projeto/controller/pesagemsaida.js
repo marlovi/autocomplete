@@ -4,6 +4,25 @@
         $scope.lines = [];
         $scope.cont = 1;
 
+        /////////////////////////////////////////
+    $scope.calculo_peso_descontado = function() {
+        console.log("pesagemSaidaController :calculo_peso_descontado");
+       
+
+        if (!$scope.desconto.percentual) {
+            console.log("$scope.desconto.absoluto");
+            $scope.desconto.peso_descontado = $scope.desconto.absoluto;
+        }  
+
+        if (!$scope.desconto.absoluto) {
+            console.log("$scope.desconto.percentual");
+            $scope.desconto.peso_descontado = $scope.pesagem.peso_liquido * ($scope.desconto.percentual/100);
+        }  
+
+    }
+
+     /////////////////////////////////////////////
+
       $scope.salvarListaDesconto = function() {
         console.log("cadastroClienteController :salvarListaDesconto");
           // CRIAR CONDIÇÃO QUE VERIFICA SE OS CAMPOS PLACAS SÃO DIFERENTES
@@ -320,8 +339,9 @@ PELO USUARIO COMO CLASSIFICAÇÃO, PERCENTUAL DESCONTADO ENTRE OUTROS
  */
             $scope.salvar_desconto_aplicado();
 
-        
+        console.log($scope.lines);
              $cookies.putObject('impressao', response.data[0]);
+             $cookies.putObject('impressaoDescontos', $scope.lines);// passando lista de descontos
          
              // $cookies.impressao = response.data[0];
          }, function(response) {
