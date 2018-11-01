@@ -32,8 +32,7 @@ $scope.gerarCorpoTabelaIncompletas = function(consulta) {
             '<td >'+consulta.placa + '</td>'+
           '</tr>'+
         '</tbody>'+
-      '</table>' +
-      '<button class="btn waves-effect waves-light"  id="pesagememtrada"  ui-sref="layoutMeiaPag_entrada"   >Reimprimir Ticket ENTRADA</button>');
+      '</table>');
            $injector.invoke(function($compile) {
                var div = $compile($newDiv);
                var content = div($scope);

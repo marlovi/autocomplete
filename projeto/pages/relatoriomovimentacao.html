@@ -20,7 +20,7 @@
    </div>
   
                <div class="col s12  input-field"  >
-                  <button class="btn waves-effect waves-light" id="enviar"  ng-click="relatoriomovimentacao()  "  ng-Disabled="!movimentacao.data_1 || !movimentacao.data_2 "  >PESQUISAR</button> 
+                  <button class="btn waves-effect waves-light" id="enviar"   ng-click="relatoriomovimentacao(); movimentacao.click  = movimentacao.click +1;  "  ng-Disabled="!movimentacao.data_1 || !movimentacao.data_2 "  >PESQUISAR</button> 
 
 <button class="btn waves-effect waves-light" id="imprimir_relat" ng-click="printDiv_relatorio('divdinamica')" ng-Disabled="!consulta" >imprimir relatório</button> 
                </div >
