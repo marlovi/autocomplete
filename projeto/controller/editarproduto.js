@@ -1,5 +1,49 @@
   function editarProdutoController($scope, $http, $cookieStore, focus, $timeout, meuServico) {
 
+ $scope.verificarNomeProduto = function(nome) {
+         console.log("cadastroProdutoController :verificarNomeProduto");
+         //// estou passando o nome só pra 
+         // evitar o erro quando apaga totalmente
+         // o campo de cadastro. 
+         if ($scope.produto.nome.length === 0) {
+             console.log("considerou nome length 0");
+         } else {
+             var request = $http({
+                 method: "post",
+                 url: "php/produto/pesquisarprodutonome.php",
+                 data: $scope.produto,
+                 headers: {
+                     'Content-Type': 'application/x-www-form-urlencoded'
+                 }
+             });
+             request.then(function(response) {
+                 if (response.data.status == 0) {
+                     $scope.produto.status = response.data.status;
+                     //console.log( "não existe no bancos"); 
+                     // console.log("dentro do status   " + $scope.produto.status);
+                     // console.log("dentro do  produto.nome " + $scope.produto.nome);
+                 } else {
+                     nome = nome.toUpperCase(); // colocando em maiusculo pq do banco so vem maiusculo.
+                     // console.log(nome);
+                     // console.log( response.data[0].nome)
+                     if (response.data[0].nome == nome) {
+                         Materialize.toast('PRODUTO JÁ CADASTRADO', 3000, 'rounded', 'center');
+                         Materialize.toast();
+                         $scope.produto.status = 1;
+                         $scope.produto.nome = null;
+                     } else {
+                         $scope.produto.status = 0;
+                     }
+
+                 }
+             }, function(response) {
+                 console.log("ERROR" + response);
+             });
+
+         } // fim do else
+     }
+    
+
      $scope.editar = function() {
         console.log("editarProdutoController :editar");
          // cria um vetor vazio para armazenar o cliente e veiculos.
