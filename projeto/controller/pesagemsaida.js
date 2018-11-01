@@ -66,6 +66,10 @@
 //console.log("$scope.pesagem.peso_descontos");
 //console.log($scope.pesagem.peso_descontos);
  
+$scope.pesagem.peso_liquido_final = ($scope.pesagem.peso_liquido - $scope.pesagem.peso_descontos);
+                
+
+
       }
 
  $scope.apagarListaDesconto = function() {
@@ -73,6 +77,8 @@
           // CRIAR CONDIÇÃO QUE VERIFICA SE OS CAMPOS PLACAS SÃO DIFERENTES
 $scope.pesagem.peso_descontos -=  parseInt( $scope.lines[$scope.lines.length - 1].peso_descontado);
  console.log($scope.lines.pop()); // remove o ultimo desconto
+ $scope.pesagem.peso_liquido_final = ($scope.pesagem.peso_liquido - $scope.pesagem.peso_descontos);
+   
 
       }
 
@@ -141,31 +147,34 @@ $scope.pesagem.peso_descontos -=  parseInt( $scope.lines[$scope.lines.length - 1
 
      $scope.capturar_peso = function() {
         console.log("pesagemAvulsaController :capturar_peso");
-         console.log("Coleta de peso");
+        // console.log("Coleta de peso");
          var ipx = window.location.hostname;
          var xhr = $.ajax({
              url: 'http://' + ipx + '/autocomplete/projeto/php/comandos/LER_PESO.php',
              async: true,
              timeout: 5000,
          }).done(function(data) {
-            console.log(data);
+           // console.log(data);
              if ($.isNumeric(data) == true) {
                  // console.log("teste funfou reconheceu digito"); 
 
                  $scope.pesagem.peso_2 = data;
                  document.querySelector("[name='segunda']").value = data;
                  $scope.$apply(function() {
-                     $scope.pesagem.peso_2 = data;
+                   // console.log([data]);
+                     $scope.pesagem.peso_2 = parseInt(data);
+                   //  console.log([$scope.pesagem.peso_2]);
+
                  });
                  // se chegou até aqui é pq todos os campos foram atendidos e o peso foi coletado 
                  // então pode liberar o envio da pesagem
-                 $scope.autorizar_envio_pesagem_saida();
-                 $scope.modulo( );
+                // $scope.autorizar_envio_pesagem_saida();
+                // $scope.modulo( );
                 
                  // criado esse if porque as vezes na primeira pesagem a tranferencia de
                  // data para peso_1 o ultimo digito nao ia. Não sabendo o motivo 
                  // Coloquei o if para refazer a coleta e ter redundancia na transferencia 
-
+                 /*
                  if($scope.pesagem.peso_2 == data ){
                   //  console.log("é igual data e peso_1");
                  }else{
@@ -177,7 +186,13 @@ $scope.pesagem.peso_descontos -=  parseInt( $scope.lines[$scope.lines.length - 1
                  });
 
                  }
+                 */
+
+                 $scope.autorizar_envio_pesagem_saida();
           
+             
+
+
              } else {
                  // console.log("colocar alert e solicitar captura novamente");
                  Materialize.toast('PESO INSTÁVEL.', 3000, 'rounded', 'center');
@@ -489,13 +504,37 @@ salvar_itens_desconto
      // maior que o peso liquido
      $scope.modulo = function() {
         console.log("pesagemSaidaController :modulo");
-         $scope.pesagem.peso_liquido = ($scope.pesagem.peso_1 - $scope.pesagem.peso_2);
-         if ($scope.pesagem.peso_liquido < 0) {
-             $scope.pesagem.peso_liquido = ($scope.pesagem.peso_liquido * -1);
-         }
-         if ($scope.pesagem.peso_descontos > 0) {
-             $scope.pesagem.peso_liquido = ($scope.pesagem.peso_liquido - $scope.pesagem.peso_descontos);
-         }
+       // console.log("pesagem.peso_2",[$scope.pesagem.peso_2]);
+       // console.log("pesagem.peso_2", $scope.pesagem.peso_2);
+        // por problemas com sincronismos deve se testar antes
+
+        if ($.isNumeric($scope.pesagem.peso_2) == true && $scope.pesagem.status == 1) {
+
+          //  document.querySelector("[name='liquido']").value = data;
+                 $scope.$apply(function() {
+                     $scope.pesagem.peso_liquido = ($scope.pesagem.peso_1 - $scope.pesagem.peso_2);
+
+                     if ($scope.pesagem.peso_liquido < 0) {
+                         $scope.pesagem.peso_liquido = ($scope.pesagem.peso_liquido * -1);
+                     }
+                     if ($scope.pesagem.peso_descontos > 0) {
+                         $scope.pesagem.peso_liquido_final = ($scope.pesagem.peso_liquido - $scope.pesagem.peso_descontos);
+                     }
+                      $scope.pesagem.peso_liquido_final = ($scope.pesagem.peso_liquido - $scope.pesagem.peso_descontos);
+ 
+                 });
+
+
+
+          //  $scope.pesagem.peso_liquido = ($scope.pesagem.peso_1 - $scope.pesagem.peso_2);
+        } else{
+            console.log("deu ruim na coleta tentar de novo");
+            $scope.capturar_peso();
+
+
+        }
+
+         
          return $scope.pesagem.peso_liquido;
      }
 

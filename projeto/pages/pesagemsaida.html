@@ -69,13 +69,15 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
          
          <div class="col s3 input-field">
             <div> <label for="primeira" id="primeira" class="active"> Segunda Pesagem</label></div>
-            <input style='font-size: 25px' class='black-text ' disabled id="segunda" id="segunda" name="segunda" type="text" ng-model="pesagem.peso_2" mask="999999"       >
+            <input style='font-size: 25px' class='black-text ' disabled   id="segunda" name="segunda" type="text" ng-model="pesagem.peso_2" mask="999999"       >
          </div>
          <div class="col s3 input-field">
-            <div> <label for="liquido" id="label_liquido" class="active"> Liquido </label></div>
-             
+            <div> <label for="liquido" id="label_liquido" name="label_liquido" class="active"> Liquido </label></div>
             <input id="liquido" type="number" name="liquido" ng-model="pesagem.peso_liquido" disabled="disabled">
-           
+         </div>
+         <div class="col s3 input-field">
+            <div> <label for="liquido_final" id="label_liquido_final" name="label_liquido_final" class="active"> Liquido Final </label></div>
+            <input id="liquido_final" type="number" name="liquido_final" ng-model="pesagem.peso_liquido_final" disabled="disabled">
          </div>
          <div class="col s6 input-field">
             <button class="btn waves-effect waves-light" onclick="adicionarListaDesconto()" ng-Disabled="!pesagem.peso_2" > ADICIONAR DESCONTO </button>
@@ -129,8 +131,9 @@ então informar alert:" Veículo informado já encontra-se dentro do pátio! "
 
 
             <button class="btn waves-effect waves-light" id="capturar_peso" ng-click="capturar_peso()  " ng-Disabled = " !pesagem.peso_1 " >capturar peso</button>
+            <!--
             <button class="btn waves-effect waves-light" id="organizar" ng-click="organizar()">organizar</button>
-
+            -->
          </div>
       </div>
 
