@@ -23,23 +23,23 @@
  		//
  		// devo consultar itens_desconto e nao consulta_pesagem
  		//
- 		//$lista_consulta_pesagem_desconto = $daopesagem->consultaPesagemProduto($request[0]->id_produto);
+ 		$lista_consulta_pesagem_desconto = $daopesagem->consultaPesagemDesconto($request[0]->id_desconto);
 
- 		//if(isset($lista_consulta_pesagem_produto->status)){// SE O CLIENTE NAO TIVER  PESAGEM
-         // var_dump("NAO TEM PESAGEM PRODUTO");
-         	$teste_cliente = 0;  
+ 		if(isset($lista_consulta_pesagem_desconto->status)){// SE O CLIENTE NAO TIVER  PESAGEM
+          var_dump("NAO TEM PESAGEM PRODUTO");
+         	$teste_desconto = 0;  
          	$dao->delete($desconto);
 	    	$resposta->status = true;
         	echo json_encode($resposta,true);  
-     	//}else{                                         // SE O CLIENTE TIVER PESAGEM
-	       //   foreach($lista_consulta_pesagem_produto as $key => $value) {
-	         //   array_push($resposta->status_pesagem, $lista_consulta_pesagem_produto[$key]->id_pesagem);
-          	 //  }
+     	}else{                                         // SE O CLIENTE TIVER PESAGEM
+	          foreach($lista_consulta_pesagem_desconto as $key => $value) {
+	            array_push($resposta->status_pesagem, $lista_consulta_pesagem_desconto[$key]->id_pesagem);
+          	   }
         
-	      //  $teste_cliente = 1;
+	        $teste_cliente = 1;
 	      //  var_dump("TEM PESAGEM PRODUTO");
-	      //  $resposta->status = false;
-	       // echo json_encode($resposta,true);
-         // }
+	        $resposta->status = false;
+	        echo json_encode($resposta,true);
+          }
 
 ?>

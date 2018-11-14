@@ -6,6 +6,8 @@ require_once '../banco/banco.class.php';
 
 require_once 'resposta_pesagem.class.php';
 
+require_once '../itens_desconto/itens_desconto.class.php'; // para buscar descontos associados
+
 class DaoPesagem
 
 {
@@ -1628,8 +1630,7 @@ WHERE p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornece
 
     public
 
-    function consultaPesagemProduto($id_pro)
-    {
+    function consultaPesagemProduto($id_pro){
 
         // se nao retornar status = 0;
 
@@ -1677,6 +1678,66 @@ WHERE p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornece
     }
 
     // ///////////FIM CONSULTA PESAGEM PRODUTO /////////////////////////////
+
+///////// consulta descontos associados a pesagens //////////
+
+ function consultaPesagemDesconto($id_pro){
+
+        $banco = new Banco();
+        $teste = $banco->serverName;
+        $conn = new mysqli($banco->serverName, $banco->user, $banco->password, $banco->dataBase);
+        if ($conn->connect_error) {
+            $verificador = false;
+            die("Problema na conexão " . $conn->connect_error);
+        }
+
+$sql = "SELECT `pesagem_id_pesagem` FROM `itens_desconto` WHERE `desconto_id_desconto` = " .$id_pro."";
+
+  //      $sql = "SELECT p.`status` ,  p.`id_pesagem` , p.`produto_id_produto`   FROM `pesagem` as `p`, `produto` as `pro` WHERE p.`produto_id_produto` = " . $id_pro . " AND pro.`id_produto` = p.`produto_id_produto`";
+
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $resultado = array();
+            while ($row = $result->fetch_assoc()) {
+                $consultaPesagem = new ConsultaPesagem(); // tem que criar essa class ainda.
+                /*
+                if ($row['status'] == 3) {
+                    $consultaPesagem->status = "PESAGEM MANUAL";
+                }
+
+                if ($row['status'] == 0) {
+                    $consultaPesagem->status = "PESAGEM ENTRADA";
+                }
+
+                if ($row['status'] == 2) {
+                    $consultaPesagem->status = "PESAGEM AVULSA";
+                }
+
+                $consultaPesagem->id_pesagem = $row['id_pesagem'];
+                */
+                // $consultaPesagem->id_produto = $row['produto_id_produto'];
+                 $consultaPesagem->id_pesagem = $row['pesagem_id_pesagem'];
+                $consultaPesagem->status = "TEM PESAGEM";
+                array_push($resultado, $consultaPesagem);
+            }
+        }
+        else {
+            $r = new Resposta_pesagem();
+            $r->status = 0; // se o cliente nao tiver pesagem
+            $resultado = $r;
+        }
+
+        $conn->close();
+        return $resultado;
+    }
+
+
+
+////////////// fim consulta desconto pesagem ///////////
+
+
+
+
 
 }
 
