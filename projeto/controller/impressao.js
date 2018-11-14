@@ -30,6 +30,8 @@
          $scope.pesagem.peso_2 = obj_impressao.peso_2;
          $scope.pesagem.peso_liquido = obj_impressao.peso_liquido;
          $scope.pesagem.observacao = obj_impressao.observacao;
+
+         $scope.pesagem.peso_liquido_final = obj_impressao.peso_liquido - obj_impressao.peso_descontos;
      }
 
      $scope.printDiv = function() {
@@ -78,7 +80,7 @@
 
          console.log($scope.pesagem);
          console.log($scope.lines);
-         console.log($scope.linha);
+         //console.log($scope.linha);
 
          // função que abre pop up para impressão.
          var divName = "printable_saida";

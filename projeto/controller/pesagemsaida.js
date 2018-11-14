@@ -309,6 +309,7 @@ $scope.pesagem.peso_descontos -=  parseInt( $scope.lines[$scope.lines.length - 1
              $scope.pesagem.peso_2 = parseInt($scope.pesagem.peso_2);
              $scope.pesagem.peso_descontos = parseInt($scope.pesagem.peso_descontos);
              $scope.pesagem.peso_liquido = parseInt($scope.pesagem.peso_liquido);
+             $scope.pesagem.peso_liquido_final = parseInt($scope.pesagem.peso_liquido_final);
              data_entrada = $scope.pesagem.data_entrada;
              //console.log(data_entrada);
 
