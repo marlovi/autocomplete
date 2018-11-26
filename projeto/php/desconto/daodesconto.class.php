@@ -4,6 +4,51 @@
   require_once 'resposta.class.php';
 	class DaoDesconto{
 
+
+    
+public function buscarnomedesconto_saida_impressao($id_desc_pesquisa){
+  //var_dump($id_desc_pesquisa);
+   $resultado = null;
+      $verificador = true;
+      $banco = new Banco();
+   $teste = $banco->serverName;
+     //$id_int = intval($id_desc_pesquisa); // converte string em int
+   $id_int = $id_desc_pesquisa;
+
+      $conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
+ 
+      if($conn->connect_error){
+        $verificador = false;
+        die("Problema na conexão ".$conn->connect_error);
+      }
+   
+   $sql = "SELECT `nome` FROM `desconto` WHERE `id_desconto` = $id_int ";
+   $result = $conn->query($sql);
+   
+   if ($result->num_rows > 0) {
+      // output data of each row
+      $resultado = array();
+      while($row = $result->fetch_assoc()) {
+        $desconto = new Desconto();
+         $desconto->nome = $row['nome'];
+        // $desconto->id_desconto = $row['id_desconto'];
+
+         array_push($resultado,$desconto);
+   
+      }
+   } else {
+      $r = new Resposta();
+     // padronizado retorno vazio
+     // se 0 não encontrado o registro
+     $r->status=0;
+      $resultado = $r;
+   }
+   $conn->close();
+   
+   return $resultado;
+   
+   }
+
 public function buscarnomedesconto_saida($nome){
    $resultado = null;
       $verificador = true;

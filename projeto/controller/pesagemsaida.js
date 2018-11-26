@@ -101,7 +101,7 @@ $scope.pesagem.peso_descontos -=  parseInt( $scope.lines[$scope.lines.length - 1
                  }
              });
              request.then(function(response) {
-               //  console.log(response.data);
+                 console.log(response.data);
                  // SE RETORNAR ALGUM REGISTRO DO BANCO O ELSE RODA
                  // SE NAO RETORNAR NENHUM REGISTRO DO BANCO O IF RODA
                  ///

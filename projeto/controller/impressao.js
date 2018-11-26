@@ -2,6 +2,134 @@
 /// ADICIONANDO DESCONTO NA PESAGEM SAIDA
         // $scope.lines = [];
         //  $scope.cont = 1;
+          // objetivo consultar lista de descontos associados a pesagem de saida.
+        // 1 retornar lista de id_itens_itens descontos associados a essa pesagem
+        // função temporaria para testar rotina
+
+     $scope.consultarIdItensDescontos = function() {
+        // ORDEM DE CONSULTA
+        // 1 CONSULTA OS ITENS_DESCONTO consultarIdItensDescontos
+        //2 CONSULTA O NOME DO DESCONTO E ADD NO OBJETO consultarNomeDescontos
+        //3 CONSULTA OS DESCONTOS APLICADOS E ADD NO OBJETO consultarDescontosAplicados
+       console.log("impressaoController :consultarIdItensDescontos"); 
+     //  console.log("Obj.pesagem",$scope.pesagem.id_pesagem);
+        var listaDesconto = [];
+        
+         // console.log($scope.produto); 
+         var request = $http({
+             method: "post",
+             url: "php/itens_desconto/pesquisarid_pesagem_itens_desconto.php",
+             data: $scope.pesagem.id_pesagem,
+             headers: {
+                 'Content-Type': 'application/x-www-form-urlencoded'
+             }
+         });
+         request.then(function(response) {
+            if(!angular.isUndefined(response.data.status)){
+                console.log("SEM DESCONTOS");
+            }else{
+                console.log("OPA QUE FASE");
+
+            
+         $scope.Lista_descontos =response.data; // colocando os resultados da 
+
+          
+          // console.log("Obj.:Lista_descontos", $scope.Lista_descontos);  
+        $scope.consultarNomeDescontos();    
+         } // FIM ELSE
+         }, function(response) {
+             console.log("ERROR" + response);
+         });
+
+
+
+// TENTANDO ADICIONAR SEQUENCIA DE CONSULTAS
+
+     }
+//função busca o nome do desconto e coloca no lugar do desconto_id_desconto
+$scope.consultarNomeDescontos = function() {
+       console.log("impressaoController :consultarIdItensDescontos"); 
+       var i = 0; /// variavel usada no do while
+      // var listaDesconto = []; // variavel temporaria com a lista de id desconto
+       var listaNomeDesconto = []; // variavel que armazena lista de id desconto
+       var listaRepetida = 0; // varialve que conta as vezes que o id desconto tem no objeto
+       // IF CRIADO POR SEGURANÇA
+       // VAI QUE ESSA MERDA SOLICITA A CONSULTA DO NOME ANTES DO
+       // SERVIDOR RESPONDER A CONSULTA DOS ITENS DE DESCONTO.
+         if ($scope.Lista_descontos == "") {
+              //SE É A PRIMEIRA DA LISTA
+              console.log("Lista_descontos vazio");
+          }else{
+            console.log("Lista_descontos com informação"); 
+            console.log("$scope.Lista_descontos",$scope.Lista_descontos);
+// PASSANDO A LISTA DE DESCONTOS APLICADOS 
+// PARA BUSCAR O NOME DE CADA DESCONTO NO BANCO
+// DEVE COLOCAR O NOME DO DESCONTO NA MESMA POSIÇÃO DO ID DESCONTO
+var request = $http({
+             method: "post",
+             url: "php/desconto/pesquisardescontonome_saida_impressao.php",
+             data: $scope.Lista_descontos,
+             headers: {
+                 'Content-Type': 'application/x-www-form-urlencoded'
+             }
+         });
+         request.then(function(response) {
+         //$scope.Lista_descontos =response.data; // colocando os resultados da 
+            listaNomeDesconto =response.data;
+            //console.log("Obj.:Lista_descontos", listaNomeDesconto);  
+            $scope.Lista_descontos = listaNomeDesconto;
+            console.log("Obj.:$scope.Lista_descontos", $scope.Lista_descontos); 
+
+          $scope.consultarDescontosAplicados();
+         }, function(response) {
+             console.log("ERROR" + response);
+         });
+          } // fim else
+}
+//fim função busca o nome do desconto e coloca no lugar do desconto_id_desconto
+// FUNÇÃO QUE BUSCA OS DESCONTOS APLICADOS 
+$scope.consultarDescontosAplicados = function() {
+       console.log("impressaoController :consultarDescontosAplicados"); 
+       var i = 0; /// variavel usada no do while
+      // var listaDesconto = []; // variavel temporaria com a lista de id desconto
+       var listaNomeDesconto = []; // variavel que armazena lista de id desconto
+       var listaRepetida = 0; // varialve que conta as vezes que o id desconto tem no objeto
+       // IF CRIADO POR SEGURANÇA
+       // VAI QUE ESSA MERDA SOLICITA A CONSULTA DO NOME ANTES DO
+       // SERVIDOR RESPONDER A CONSULTA DOS ITENS DE DESCONTO.
+         if ($scope.Lista_descontos == "") {
+              //SE É A PRIMEIRA DA LISTA
+              console.log("Lista_descontos vazio");
+          }else{
+          //  console.log("Lista_descontos com informação");    
+// PASSANDO A LISTA DE DESCONTOS APLICADOS 
+// PARA BUSCAR O NOME DE CADA DESCONTO NO BANCO
+// DEVE COLOCAR O NOME DO DESCONTO NA MESMA POSIÇÃO DO ID DESCONTO
+var request = $http({
+             method: "post",
+             url: "php/desconto_aplicado/pesquisardescontoaplicado_saida.php",
+             data: $scope.Lista_descontos,
+             headers: {
+                 'Content-Type': 'application/x-www-form-urlencoded'
+             }
+         });
+         request.then(function(response) {
+           // console.log("enviado objeto enviado",$scope.Lista_descontos);
+         //$scope.Lista_descontos =response.data; // colocando os resultados da 
+            listaNomeDesconto =response.data;
+           // console.log("Obj.:Lista_descontos", listaNomeDesconto);  
+            $scope.Lista_descontos = listaNomeDesconto;
+            console.log("Obj.:$scope.Lista_descontos", $scope.Lista_descontos); 
+           // $cookies.putObject('impressao', response.data[0]);
+            $cookies.putObject('impressaoDescontos', $scope.Lista_descontos);
+
+         }, function(response) {
+             console.log("ERROR" + response);
+         });
+          } // fim else
+}
+
+// FIM FUNÇÃO QUE BUSCA DESCONTOS APLICADOS
 
      $scope.init = function() {
       
@@ -9,7 +137,7 @@
          var obj_impressao = $cookies.getObject('impressao');
          var obj_impressaoDescontos = $cookies.getObject('impressaoDescontos');
 
-          console.log($cookies);
+          //console.log(obj_impressaoDescontos);
          // console.log($scope.pesagem);
             $scope.lines = obj_impressaoDescontos;
             console.log($scope.lines);
@@ -78,8 +206,8 @@
         console.log("impressaoController :printDiv_saida");
         // na pesagem de saida tem esse item a mais '' data de entrada' 
 
-         console.log($scope.pesagem);
-         console.log($scope.lines);
+         //console.log($scope.pesagem);
+       //  console.log($scope.lines);
          //console.log($scope.linha);
 
          // função que abre pop up para impressão.

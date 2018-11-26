@@ -4,6 +4,58 @@
   require_once 'resposta.class.php';
 	class DaoItens_desconto{
 
+// função que busca uma lista com id_itens_desconto com id_pesagem em comum
+  // buscarid_pesagem_itens_desconto
+// função que busca lista de itens descontos associados a uma pesagem
+public function buscarid_pesagem_itens_desconto($id_pesagem_consulta){
+          $resultado = null;
+                $verificador = true;
+                $banco = new Banco();
+                $teste = $banco->serverName;
+                $conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
+                if($conn->connect_error){
+                  $verificador = false;
+                  die("Problema na conexão ".$con->connect_error);
+                }
+
+ 
+  
+ 
+     $sql = "SELECT `id_itens_desconto`, `pesagem_id_pesagem`, `desconto_id_desconto`, `desconto_aplicado_id_desconto_aplicado` FROM `itens_desconto` WHERE `pesagem_id_pesagem` ='.$id_pesagem_consulta.' ";
+
+  $result = $conn->query($sql);
+         if ($result->num_rows > 0) {
+            $resultado = array();
+            while($row = $result->fetch_assoc()) {
+                   $itens_desconto = new Itens_desconto();
+                   $itens_desconto->id_itens_desconto = $row['id_itens_desconto'];
+                   $itens_desconto->pesagem_id_pesagem = $row['pesagem_id_pesagem'];
+                   $itens_desconto->desconto_id_desconto = $row['desconto_id_desconto'];
+                   $itens_desconto->desconto_aplicado_id_desconto_aplicado = $row['desconto_aplicado_id_desconto_aplicado'];
+                   array_push($resultado,$itens_desconto);
+                }
+         } else {
+          $r = new Resposta();
+           // padronizado retorno vazio
+           // se 0 não encontrado o registro
+           $r->status=0;
+            $resultado = $r;
+         }
+       $conn->close();
+       return $resultado;
+  }
+/*
+    
+
+
+
+
+     
+
+*/
+// fim função busca lista de itens  descontos
+
+
   public function buscarid_itens_desconto($id){
           $resultado = null;
           $id2 = $id->id_itens_desconto;

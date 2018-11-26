@@ -4,6 +4,44 @@
   require_once 'resposta.class.php';
 	class DaoDesconto_aplicado{
 
+  public function buscarid_aplicado_saida($id){
+    //var_dump("caralho: ",$id);
+          $resultado = null;
+          $id2 = $id;
+         // var_dump($id2);
+          $verificador = true;
+          $banco = new Banco();
+          $teste = $banco->serverName;
+          $conn = new mysqli($banco->serverName,$banco->user,$banco->password,$banco->dataBase);
+          if($conn->connect_error){
+            $verificador = false;
+            die("Problema na conexão ".$conn->connect_error);
+          }
+
+  $sql = "SELECT `classificado`, `percentual`, `absoluto`, `peso_descontado`   FROM `desconto_aplicado` WHERE `id_desconto_aplicado` = 194";
+
+       $result = $conn->query($sql);
+         if ($result->num_rows > 0) {
+            $resultado = array();
+            while($row = $result->fetch_assoc()) {
+                   $desconto_aplicado = new Desconto_aplicado();
+                   $desconto_aplicado->classificado = $row['classificado'];
+                   $desconto_aplicado->percentual = $row['percentual'];
+                   $desconto_aplicado->absoluto = $row['absoluto'];
+                   $desconto_aplicado->peso_descontado = $row['peso_descontado'];
+                   array_push($resultado,$desconto_aplicado);
+                }
+         } else {
+          $r = new Resposta();
+           // padronizado retorno vazio
+           // se 0 não encontrado o registro
+           $r->status=0;
+            $resultado = $r;
+         }
+       $conn->close();
+       return $resultado;
+  }
+
   public function buscarid_aplicado($id){
           $resultado = null;
           $id2 = $id->id_desconto_aplicado;
