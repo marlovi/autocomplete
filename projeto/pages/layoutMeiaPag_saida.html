@@ -1,8 +1,8 @@
  <div class="row center">
    <div class="col s12">
       <div class="input-field ">
-         <button class="btn waves-effect waves-light" autofocus class="validate" ng-model="pesagem.nome" ng-init="pesagem.nome = '0'" ng-focus="init()" id="enviar" ng-model ="imprimir"  ng-click="printDiv_saida('printable_saida')"   ng-hide ="false"   >imprimir ticket</button> <!--ui-sref="home" vai para a pagina home -->
-         <button class="btn waves-effect waves-light" autofocus class="validate" ng-model="pesagem.nome" ng-init="pesagem.nome = '0'" id="teste" ng-model ="imprimir"  ng-click="consultarIdItensDescontos()"   ng-hide ="false" >testa id pesagem</button>
+         <button class="btn waves-effect waves-light" autofocus class="validate" ng-model="pesagem.nome" ng-init="pesagem.nome = '0'" ng-focus="init_SAIDA()" id="enviar" ng-model ="imprimir"  ng-click="printDiv_saida('printable_saida')"   ng-hide ="false"   >imprimir ticket</button> <!--ui-sref="home" vai para a pagina home -->
+         <button class="btn waves-effect waves-light" autofocus class="validate" ng-model="pesagem.nome" ng-init_SAIDA="pesagem.nome = '0'" id="teste" ng-model ="imprimir"  ng-click="consultarIdItensDescontos()"   ng-hide ="false" >testa id pesagem</button>
  
       </div>
    </div>
@@ -25,7 +25,7 @@
          <div class="col s3 right-align"> {{pesagem.data_entrada}}</div>
          <div class="col s1"> </div>
          <div class="col s1">SAÍDA: </div>
-         <div class="col s3 right-align"> {{pesagem.data}}</div>
+         <div class="col s3 right-align"> {{pesagem.data_saida}}</div>
          <div class="col s1"> </div>
       </div>
       <div class="row">

@@ -20,6 +20,7 @@
            if ($scope.pesquisa.hasOwnProperty('ticket') && $scope.pesquisa.ticket !== "" ) {
             console.log("Pesquisa por ticket");
              $scope.pesagem = consulta;
+
              $cookies.putObject('impressao', consulta);
              // passando busca para cookies para impressao e colocando dados no objeto de impressao
 
@@ -30,7 +31,7 @@
           '<tr>'+
               '<th>Ticket</th>'+
               '<th>Tipo de pesagem</th>'+
-              '<th>Data </th>'+
+              '<th>Data saida </th>'+
               '<th>Placa</th>'+
               '<th>Cliente</th>'+
               '<th>Fornecedor</th>'+
@@ -41,7 +42,7 @@
           '<tr>'+
             '<td>'+ consulta.id_pesagem + '</td>'+
             '<td>'+ consulta.status + '</td>'+
-            '<td>'+ consulta.data + '</td>'+
+            '<td>'+ consulta.data_saida + '</td>'+
             '<td >'+ consulta.placa + '</td>'+
             '<td>'+ consulta.cliente + ' </td>'+
             '<td>'+ consulta.fornecedor + '</td>'+
@@ -192,12 +193,12 @@ $scope.pesquisarpesagem = function() {
                }
            });
                request.then(function(response) {
+                console.log(response.data);
 
                    $scope.myText = "";
                    var filhoScope = $scope.$new();
                    $scope.consulta = response.data;
-                   //console.log($scope.consulta);
-                   //console.log($scope.consulta[0]);
+ 
                     $scope.consulta.resultado =   Object.getOwnPropertyNames(response.data).length - 1;
                    if ($scope.consulta.resultado == 0) {
                        console.log(" if sem resposta");
@@ -225,6 +226,7 @@ $scope.pesquisarpesagem = function() {
                        $('#divdinamica').empty();
                        angular.forEach(response.data, function(value, key) {
                         if($scope.teste === 0){
+ 
                            $scope.myText = $scope.gerarTituloTabela();// gera titulo tabela uma
                            $scope.teste = 1;
                         }

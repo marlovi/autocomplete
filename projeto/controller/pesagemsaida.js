@@ -311,6 +311,7 @@ $scope.pesagem.peso_descontos -=  parseInt( $scope.lines[$scope.lines.length - 1
              $scope.pesagem.peso_liquido = parseInt($scope.pesagem.peso_liquido);
              $scope.pesagem.peso_liquido_final = parseInt($scope.pesagem.peso_liquido_final);
              data_entrada = $scope.pesagem.data_entrada;
+             $scope.pesagem.id_pesagem_entrada = parseInt($scope.pesagem.id_pesagem_entrada);
              //console.log(data_entrada);
 
          }
@@ -341,8 +342,12 @@ $scope.pesagem.peso_descontos -=  parseInt( $scope.lines[$scope.lines.length - 1
              // $scope.Cliente = response.data;
              // foi necessario atualizar o objeto cliente com os dados de id retornado do banco
              // isso faz a atualização do objeto que está na pagina.
+              
+             response.data[0].id_pesagem_entrada = $scope.pesagem.id_pesagem_entrada
              response.data[0].data_entrada = data_entrada;
+             response.data[0].data_saida = response.data[0].data;
             $scope.pesagem = response.data;
+            console.log("vericando se o id entrada foi",$scope.pesagem);
 
             //USAR O RETORNO DA PESAGEM PARA PEGAR O ID PESAGEM
  /*

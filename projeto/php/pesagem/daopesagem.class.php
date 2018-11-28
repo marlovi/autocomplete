@@ -13,8 +13,7 @@ class DaoPesagem
 {
     public
 
-    function relatorioIncompletas()
-    {
+function relatorioIncompletas(){
 
         // pesquisa pesagem por numero do ticket
         // pesquisa pesagem por numero do ticket
@@ -80,8 +79,7 @@ class DaoPesagem
 
     public
 
-    function consultaPesagemIf($operacao)
-    {
+function consultaPesagemIf($operacao){
 
         // testando existencia de cada parametro e se está vazio
 
@@ -496,8 +494,7 @@ class DaoPesagem
 
     public
 
-    function consultaPesagemOperacao($operacao)
-    {
+function consultaPesagemOperacao($operacao){
 
         // OBJETIVO
         // BUSCAR POR STATUS DE ENTRADA --E -- SAIDA SOLICITADOS JUNTOS
@@ -532,7 +529,7 @@ class DaoPesagem
 
         if (isset($operacao->ticket) === true && $operacao->ticket != "") {
             $tipo_operacao = 500; // consulta por periodo
-            $sql = "SELECT DATE_FORMAT(p.`data`, '%d-%m-%Y %h:%i:%s') AS data , p.`status` , p.`cliente_id_cliente` , p.`fornecedor_id_fornecedor` , p.`produto_id_produto` , p.`motorista` , p.`observacao`, p.`id_pesagem`, p.`peso_1`, p.`peso_2`, p.`peso_descontos`, p.`peso_liquido`, c.`nome`AS `cliente` , c.`cpf`AS `cpf_cliente` , c.`cnpj`AS `cnpj_cliente`, f.`nome` AS `fornecedor` , f.`cpf` AS `cpf_fornecedor` , f.`cnpj` AS `cnpj_fornecedor`, v.`placa`, pro.`nome` AS `produto` , pro.`id_produto` AS `cod_prod`  FROM `pesagem` as `p`, `cliente` as `c`, `fornecedor` as `f`, `veiculo` as `v`, `produto` as `pro` WHERE p.`id_pesagem` = " . $operacao->ticket . " AND p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornecedor_id_fornecedor` AND v.`id_veiculo` = p.`veiculo_id_veiculo` AND pro.`id_produto` = p.`produto_id_produto`";
+            $sql = "SELECT DATE_FORMAT(p.`data`, '%d-%m-%Y %h:%i:%s') AS data , p.`id_pesagem_entrada`, p.`status` , p.`cliente_id_cliente` , p.`fornecedor_id_fornecedor` , p.`produto_id_produto` , p.`motorista` , p.`observacao`, p.`id_pesagem`, p.`peso_1`, p.`peso_2`, p.`peso_descontos`, p.`peso_liquido`, c.`nome`AS `cliente` , c.`cpf`AS `cpf_cliente` , c.`cnpj`AS `cnpj_cliente`, f.`nome` AS `fornecedor` , f.`cpf` AS `cpf_fornecedor` , f.`cnpj` AS `cnpj_fornecedor`, v.`placa`, pro.`nome` AS `produto` , pro.`id_produto` AS `cod_prod`  FROM `pesagem` as `p`, `cliente` as `c`, `fornecedor` as `f`, `veiculo` as `v`, `produto` as `pro` WHERE p.`id_pesagem` = " . $operacao->ticket . " AND p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornecedor_id_fornecedor` AND v.`id_veiculo` = p.`veiculo_id_veiculo` AND pro.`id_produto` = p.`produto_id_produto`";
             $result = $conn->query($sql);
         }
 
@@ -1114,6 +1111,10 @@ WHERE p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornece
                 if ($row['cnpj_fornecedor'] != null) {
                     $consultaPesagem->cpf_cnpj_fornecedor = $row['cnpj_fornecedor'];
                 }
+                if ($row['id_pesagem_entrada'] != null) {
+                        $consultaPesagem->id_pesagem_entrada = $row['id_pesagem_entrada'];
+                        $consultaPesagem->data_saida = $row['data'];
+                }
 
                 array_push($resultado, $consultaPesagem);
             }
@@ -1160,6 +1161,7 @@ WHERE p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornece
                     $consultaPesagem->motorista = $row['motorista'];
                     $consultaPesagem->observacao = $row['observacao'];
                     $consultaPesagem->data = $row['data'];
+
                     if ($row['cpf_cliente'] != null) {
                         $consultaPesagem->cpf_cnpj_cliente = $row['cpf_cliente'];
                     }
@@ -1172,9 +1174,7 @@ WHERE p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornece
                         $consultaPesagem->cpf_cnpj_fornecedor = $row['cpf_fornecedor'];
                     }
 
-                    if ($row['cnpj_fornecedor'] != null) {
-                        $consultaPesagem->cpf_cnpj_fornecedor = $row['cnpj_fornecedor'];
-                    }
+                    
 
                     array_push($resultado, $consultaPesagem);
                 }
@@ -1236,6 +1236,13 @@ WHERE p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornece
                     if ($row['cnpj_fornecedor'] != null) {
                         $consultaPesagem->cpf_cnpj_fornecedor = $row['cnpj_fornecedor'];
                     }
+                    if ($row['cpf_cliente'] != null) {
+                        $consultaPesagem->cpf_cnpj_cliente = $row['cpf_cliente'];
+                    }
+                    if ($row['id_pesagem_entrada'] != null) {
+                        $consultaPesagem->id_pesagem_entrada = $row['id_pesagem_entrada'];
+                        $consultaPesagem->data_saida = $row['data'];
+                    }
 
                     array_push($resultado, $consultaPesagem);
                 }
@@ -1280,9 +1287,9 @@ WHERE p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornece
             }
 
             try {
-                $sql = "INSERT INTO `Pesagem` (`status`,`data`,`motorista`,`fornecedor_id_fornecedor`,`empresa_id_empresa`,`produto_id_produto`,`cliente_id_cliente`,`veiculo_id_veiculo`,`tipo_veiculo`,`peso_1`,`peso_2`,`peso_descontos`,`peso_liquido`,`observacao` ) VALUES (?,now(),?,?,?,?,?,?,?,?,?,?,?,?)";
+                $sql = "INSERT INTO `Pesagem` (`status`,`data`,`motorista`,`fornecedor_id_fornecedor`,`empresa_id_empresa`,`produto_id_produto`,`cliente_id_cliente`,`veiculo_id_veiculo`,`tipo_veiculo`,`peso_1`,`peso_2`,`peso_descontos`,`peso_liquido`,`observacao`,`id_pesagem_entrada` ) VALUES (?,now(),?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 $stament = $con->prepare($sql);
-                $stament->bind_param('isiiiiisiiiis', $status, $motorista, $fornecedor_id_fornecedor, $empresa_id_empresa, $produto_id_produto, $cliente_id_cliente, $veiculo_id_veiculo, $tipo_veiculo, $peso_1, $peso_2, $peso_descontos, $peso_liquido, $observacao);
+                $stament->bind_param('isiiiiisiiiisi', $status, $motorista, $fornecedor_id_fornecedor, $empresa_id_empresa, $produto_id_produto, $cliente_id_cliente, $veiculo_id_veiculo, $tipo_veiculo, $peso_1, $peso_2, $peso_descontos, $peso_liquido, $observacao,$id_pesagem_entrada);
                 $status = $pesagem->status;
 
                 // $data = $pesagem->data;
@@ -1299,6 +1306,7 @@ WHERE p.`cliente_id_cliente` = c.`id_cliente` AND f.`id_fornecedor` = p.`fornece
                 $peso_descontos = $pesagem->peso_descontos;
                 $peso_liquido = $pesagem->peso_liquido;
                 $observacao = $pesagem->observacao;
+                $id_pesagem_entrada = $pesagem->id_pesagem_entrada;
                 $stament->execute();
             }
 

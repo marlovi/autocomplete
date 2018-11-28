@@ -18,6 +18,7 @@
 		public $peso_descontos;
 		public $peso_liquido;
 		public $observacao;
+		public $id_pesagem_entrada;
 
 
 
@@ -73,6 +74,9 @@
 		}
 		if(isset($request->observacao )){
 			$this->observacao = $request->observacao;
+		}
+		if(isset($request->id_pesagem_entrada )){
+			$this->id_pesagem_entrada = $request->id_pesagem_entrada;
 		}
 
 		}
@@ -186,6 +190,12 @@
 		}
 		public function setObservacao($observacao){
 			$this->observacao = $observacao;
+		}
+		public function getId_pesagem_entrada(){
+			return $this->id_pesagem_entrada;
+		}
+		public function setId_pesagem_entrada($id_pesagem_entrada){
+			$this->id_pesagem_entrada = $id_pesagem_entrada;
 		}
 
 	}
