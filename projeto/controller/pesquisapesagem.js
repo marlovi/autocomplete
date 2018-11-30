@@ -50,7 +50,7 @@
           '</tr>'+
         '</tbody>'+
       '</table>' +
-      '<button class="btn waves-effect waves-light"  id="pesagemsaida"  ui-sref="layoutMeiaPag_saida"   >Reimprimir Ticket SAIDA</button>');
+      '<button class="btn waves-effect waves-light"  id="reimpressaopesagemsaida"  ui-sref="layoutMeiaPag_saidaReimpressao"   >Reimprimir Ticket SAIDA</button>');
 
             }
 
@@ -179,10 +179,100 @@
                $("#divdinamica").append(content);
            });
        }
+
+$scope.consultarIdItensDescontos = function() {
+            // ORDEM DE CONSULTA
+            // 1 CONSULTA OS ITENS_DESCONTO consultarIdItensDescontos
+            //2 CONSULTA O NOME DO DESCONTO E ADD NO OBJETO consultarNomeDescontos
+            //3 CONSULTA OS DESCONTOS APLICADOS E ADD NO OBJETO consultarDescontosAplicados
+           console.log("pesquisaPesagemController :consultarIdItensDescontos"); 
+            var listaDesconto = [];
+             var request = $http({
+                 method: "post",
+                 url: "php/itens_desconto/pesquisarid_pesagem_itens_desconto.php",
+                 data: $scope.pesquisa.ticket,
+                 headers: {
+                     'Content-Type': 'application/x-www-form-urlencoded'
+                 }
+             });
+                 request.then(function(response) {
+                    if(!angular.isUndefined(response.data.status)){
+                        console.log("SEM DESCONTOS");
+                    }else{
+                         $scope.Lista_descontos =response.data; // colocando os resultados da  
+                        $scope.consultarNomeDescontos();    
+                         } // FIM ELSE
+                 }, function(response) {
+                     console.log("ERROR" + response);
+                 });
+    }
+
+    $scope.consultarNomeDescontos = function() {
+           console.log("pesquisaPesagemController :consultarIdItensDescontos"); 
+           var i = 0; /// variavel usada no do while
+           var listaNomeDesconto = []; // variavel que armazena lista de id desconto
+           var listaRepetida = 0; // varialve que conta as vezes que o id desconto tem no objeto
+           // IF CRIADO POR SEGURANÇA
+           // VAI QUE ESSA MERDA SOLICITA A CONSULTA DO NOME ANTES DO
+           // SERVIDOR RESPONDER A CONSULTA DOS ITENS DE DESCONTO.
+             if ($scope.Lista_descontos == "") {
+                  //SE É A PRIMEIRA DA LISTA
+                  console.log("Lista_descontos vazio");
+              }else{
+                    // PASSANDO A LISTA DE DESCONTOS APLICADOS 
+                    // PARA BUSCAR O NOME DE CADA DESCONTO NO BANCO
+                    // DEVE COLOCAR O NOME DO DESCONTO NA MESMA POSIÇÃO DO ID DESCONTO
+                    var request = $http({
+                                 method: "post",
+                                 url: "php/desconto/pesquisardescontonome_saida_impressao.php",
+                                 data: $scope.Lista_descontos,
+                                 headers: {
+                                     'Content-Type': 'application/x-www-form-urlencoded'
+                                 }
+                             });
+                             request.then(function(response) {
+                             //$scope.Lista_descontos =response.data; // colocando os resultados da 
+                                //console.log("Obj.:Lista_descontos", listaNomeDesconto);  
+                                $scope.Lista_descontos =  response.data;
+                                // console.log("consultar NomeDescontos", $scope.Lista_descontos); 
+                              $scope.consultarDescontosAplicados();
+                             }, function(response) {
+                                 console.log("ERROR" + response);
+                             });
+                    } // fim else
+    }
+
+    $scope.consultarDescontosAplicados = function() {
+            console.log("pesquisaPesagemController :consultarDescontosAplicados");
+              var request = $http({
+                 method: "post",
+                 url: "php/desconto_aplicado/pesquisardescontoaplicado_saida.php",
+                 data: $scope.Lista_descontos,
+                 headers: {
+                     'Content-Type': 'application/x-www-form-urlencoded'
+                 }
+             });
+             request.then(function(response) {
+                $scope.Lista_descontos =response.data; // colocando os resultados da 
+                console.log("consultar DescontosAplicados",$scope.Lista_descontos);
+                $cookies.putObject('impressaoDescontos_TESTE', $scope.Lista_descontos);
+             }, function(response) {
+                 console.log("ERROR" + response);
+             });
+    }
+
 $scope.pesquisarpesagem = function() {
-  console.log($scope.pesquisa)
-  $scope.teste = 0;
+
         console.log("pesquisaPesagemController :pesquisarpesagem");
+if ($scope.pesquisa.hasOwnProperty('ticket') && $scope.pesquisa.ticket !== "" ) {
+  console.log("Pesquisa por ticket: consultar descontos");
+  $scope.consultarIdItensDescontos();
+}
+            
+
+
+          console.log($scope.pesquisa);
+          $scope.teste = 0;
                $('#divdinamica').empty();
            var request = $http({
                method: "post",

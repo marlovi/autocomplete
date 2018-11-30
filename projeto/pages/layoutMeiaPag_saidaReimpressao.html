@@ -1,12 +1,14 @@
  <div class="row center">
    <div class="col s12">
       <div class="input-field ">
-         <button class="btn waves-effect waves-light" autofocus class="validate" ng-model="pesagem.nome" ng-init="pesagem.nome = '0'" ng-focus="init_SAIDA()" id="enviar" ng-model ="imprimir"  ng-click="printDiv_saida('printable_saida')"   ng-hide ="false"   >imprimir ticket</button> <!--ui-sref="home" vai para a pagina home -->
+          
+
+         <button class="btn waves-effect waves-light" autofocus class="validate" ng-model="pesagem.nome" ng-init="pesagem.nome = '0'" ng-focus="init_SAIDA_TESTE()" id="enviar" ng-model ="imprimir" ng-init_SAIDA_TESTE="pesagem.nome = '0'"  ng-click="printDiv_saida_TESTE('printable_saida_TESTE')"   ng-hide ="false"   >imprimir ticket</button> <!--ui-sref="home" vai para a pagina home imprimir ticket -->
  
       </div>
    </div>
 </div>
-<div id="printable_saida"  ng-show="myValue" class="ng-hide" >
+<div id="printable_saida_TESTE"  ng-show="myValue" class="ng-hide" >
    <div id="formConfirmation">
       <div class="container" role="main" style="zoom: 90%" >
          <div class="row">
@@ -90,13 +92,13 @@
                            </tr>
                         </thead>
                         <tbody>
-                           <tr ng-repeat="linha in lines">
-                              <td>{{linha.id_desconto}}</td>
-                              <td>{{linha.nomedesconto}}</td>
-                              <td>{{linha.classificado}}</td>
-                              <td>{{linha.percentual}}</td>
-                              <td>{{linha.absoluto}}</td>
-                              <td>{{linha.peso_descontado}}</td>
+                           <tr ng-repeat="linha_teste in Lista_descontos">
+                              <td>{{linha_teste.desconto_id_desconto}}</td>
+                              <td>{{linha_teste.desconto_nome}}</td>
+                              <td>{{linha_teste.desconto_aplicado_classificado}}</td>
+                              <td>{{linha_teste.desconto_aplicado_percentual}}</td>
+                              <td>{{linha_teste.desconto_aplicado_absoluto}}</td>
+                              <td>{{linha_teste.desconto_aplicado_peso_descontado}}</td>
                            </tr>
                         </tbody>
                      </table>
@@ -136,6 +138,7 @@
       </div>
    </div>
 </div>
- 
+
+<!--DIV TESTE PARA REIMPESSAO COM DESCONTO -->
 
  

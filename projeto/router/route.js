@@ -239,6 +239,14 @@
          controller: "impressaoController"
          
      }
+
+     var layoutMeiaPag_saidaReimpressao = {// pesagem reimpressao
+         name: 'layoutMeiaPag_saidaReimpressao',
+         url: '/impressao_saida_reimpressao', // endereço visivel ao usuario
+         templateUrl: "pages/layoutMeiaPag_saidaReimpressao.html",
+         controller: "impressaoController"
+         
+     }
 /////////////////////////////////////////////////////////////////////////
 
 
@@ -281,6 +289,7 @@
          .state(layoutMeiaPag)
          .state(layoutMeiaPag_entrada)
          .state(layoutMeiaPag_avulsa)
+         .state(layoutMeiaPag_saidaReimpressao)
          .state(layoutMeiaPag_saida);
 
 

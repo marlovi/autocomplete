@@ -5,10 +5,9 @@
 	class DaoDesconto_aplicado{
 
   public function buscarid_aplicado_saida($id){
-    //var_dump("caralho: ",$id);
+   // var_dump("caralho: ",$id);
           $resultado = null;
           $id2 = $id;
-         // var_dump($id2);
           $verificador = true;
           $banco = new Banco();
           $teste = $banco->serverName;
@@ -18,7 +17,7 @@
             die("Problema na conexão ".$conn->connect_error);
           }
 
-  $sql = "SELECT `classificado`, `percentual`, `absoluto`, `peso_descontado`   FROM `desconto_aplicado` WHERE `id_desconto_aplicado` = 194";
+  $sql = "SELECT `classificado`, `percentual`, `absoluto`, `peso_descontado`   FROM `desconto_aplicado` WHERE `id_desconto_aplicado` = ".$id2."";
 
        $result = $conn->query($sql);
          if ($result->num_rows > 0) {
@@ -54,7 +53,7 @@
             die("Problema na conexão ".$conn->connect_error);
           }
 
-  $sql = "SELECT `id_desconto_aplicado`, `classificado`, `percentual`, `absoluto`, `peso_descontado`   FROM `desconto_aplicado` WHERE `id_desconto_aplicado` = ".$id2;
+  $sql = "SELECT `id_desconto_aplicado`, `classificado`, `percentual`, `absoluto`, `peso_descontado`   FROM `desconto_aplicado` WHERE `id_desconto_aplicado` = ".$id2."";
        $result = $conn->query($sql);
          if ($result->num_rows > 0) {
             $resultado = array();
